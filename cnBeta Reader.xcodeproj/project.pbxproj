@@ -8,20 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */; };
-		96C5C8931DFCDE2E00A61681 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* ViewController.swift */; };
-		96C5C8961DFCDE2E00A61681 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8941DFCDE2E00A61681 /* Main.storyboard */; };
+		96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* HomeController.swift */; };
 		96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8971DFCDE2E00A61681 /* Assets.xcassets */; };
 		96C5C89B1DFCDE2E00A61681 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */; };
+		96C5C8A41DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8A21DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld */; };
+		96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8A51DFCE84F00A61681 /* BaseCell.swift */; };
+		96C5C8A81DFCE88500A61681 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8A71DFCE88500A61681 /* Extensions.swift */; };
+		96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8AB1DFCE94200A61681 /* MenuBar.swift */; };
+		96C5C8AF1DFD151B00A61681 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8AE1DFD151B00A61681 /* ApiService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		96C5C88D1DFCDE2E00A61681 /* cnBeta Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cnBeta Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		96C5C8921DFCDE2E00A61681 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		96C5C8951DFCDE2E00A61681 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		96C5C8921DFCDE2E00A61681 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		96C5C8971DFCDE2E00A61681 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		96C5C89A1DFCDE2E00A61681 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		96C5C89C1DFCDE2E00A61681 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96C5C8A31DFCE0AE00A61681 /* cnBeta-reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-reader.xcdatamodel"; sourceTree = "<group>"; };
+		96C5C8A51DFCE84F00A61681 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		96C5C8A71DFCE88500A61681 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		96C5C8AB1DFCE94200A61681 /* MenuBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		96C5C8AE1DFD151B00A61681 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,42 @@
 		96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */ = {
 			isa = PBXGroup;
 			children = (
+				96C5C8AD1DFD14FE00A61681 /* ApiService */,
+				96C5C8A91DFCE90100A61681 /* views */,
 				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
-				96C5C8921DFCDE2E00A61681 /* ViewController.swift */,
-				96C5C8941DFCDE2E00A61681 /* Main.storyboard */,
+				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
 				96C5C8971DFCDE2E00A61681 /* Assets.xcassets */,
 				96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */,
 				96C5C89C1DFCDE2E00A61681 /* Info.plist */,
+				96C5C8A21DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld */,
+				96C5C8A71DFCE88500A61681 /* Extensions.swift */,
 			);
 			path = "cnBeta Reader";
+			sourceTree = "<group>";
+		};
+		96C5C8A91DFCE90100A61681 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				96C5C8AA1DFCE90F00A61681 /* Menubar */,
+				96C5C8A51DFCE84F00A61681 /* BaseCell.swift */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		96C5C8AA1DFCE90F00A61681 /* Menubar */ = {
+			isa = PBXGroup;
+			children = (
+				96C5C8AB1DFCE94200A61681 /* MenuBar.swift */,
+			);
+			name = Menubar;
+			sourceTree = "<group>";
+		};
+		96C5C8AD1DFD14FE00A61681 /* ApiService */ = {
+			isa = PBXGroup;
+			children = (
+				96C5C8AE1DFD151B00A61681 /* ApiService.swift */,
+			);
+			name = ApiService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,7 +162,6 @@
 			files = (
 				96C5C89B1DFCDE2E00A61681 /* LaunchScreen.storyboard in Resources */,
 				96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */,
-				96C5C8961DFCDE2E00A61681 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +172,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96C5C8931DFCDE2E00A61681 /* ViewController.swift in Sources */,
+				96C5C8A81DFCE88500A61681 /* Extensions.swift in Sources */,
+				96C5C8A41DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld in Sources */,
+				96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */,
+				96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */,
+				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
+				96C5C8AF1DFD151B00A61681 /* ApiService.swift in Sources */,
 				96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,14 +185,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		96C5C8941DFCDE2E00A61681 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				96C5C8951DFCDE2E00A61681 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -261,11 +293,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2VVZK2VN8;
 				INFOPLIST_FILE = "cnBeta Reader/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -275,11 +308,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2VVZK2VN8;
 				INFOPLIST_FILE = "cnBeta Reader/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -304,6 +338,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		96C5C8A21DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				96C5C8A31DFCE0AE00A61681 /* cnBeta-reader.xcdatamodel */,
+			);
+			currentVersion = 96C5C8A31DFCE0AE00A61681 /* cnBeta-reader.xcdatamodel */;
+			path = "cnBeta-reader.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 96C5C8851DFCDE2E00A61681 /* Project object */;
 }
