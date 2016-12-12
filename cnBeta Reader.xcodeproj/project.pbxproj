@@ -7,29 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9666F0C91DFF22F00043465D /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C61DFF22F00043465D /* cnBeta-Reader.xcdatamodeld */; };
+		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
 		96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */; };
 		96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* HomeController.swift */; };
 		96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8971DFCDE2E00A61681 /* Assets.xcassets */; };
 		96C5C89B1DFCDE2E00A61681 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */; };
-		96C5C8A41DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8A21DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld */; };
 		96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8A51DFCE84F00A61681 /* BaseCell.swift */; };
 		96C5C8A81DFCE88500A61681 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8A71DFCE88500A61681 /* Extensions.swift */; };
 		96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8AB1DFCE94200A61681 /* MenuBar.swift */; };
 		96C5C8AF1DFD151B00A61681 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8AE1DFD151B00A61681 /* ApiService.swift */; };
+		96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8B01DFE1D6C00A61681 /* MenuCell.swift */; };
+		96C5C8B31DFE1DA600A61681 /* FeedSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8B21DFE1DA600A61681 /* FeedSubCell.swift */; };
+		96C5C8D21DFE761400A61681 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8D11DFE761400A61681 /* FeedCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9666F0C71DFF22F00043465D /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
+		9666F0C81DFF22F00043465D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = "cnBeta Reader/CoreDataStack.swift"; sourceTree = "<group>"; };
 		96C5C88D1DFCDE2E00A61681 /* cnBeta Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cnBeta Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96C5C8921DFCDE2E00A61681 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		96C5C8971DFCDE2E00A61681 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		96C5C89A1DFCDE2E00A61681 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		96C5C89C1DFCDE2E00A61681 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		96C5C8A31DFCE0AE00A61681 /* cnBeta-reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-reader.xcdatamodel"; sourceTree = "<group>"; };
 		96C5C8A51DFCE84F00A61681 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		96C5C8A71DFCE88500A61681 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		96C5C8AB1DFCE94200A61681 /* MenuBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		96C5C8AE1DFD151B00A61681 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		96C5C8B01DFE1D6C00A61681 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		96C5C8B21DFE1DA600A61681 /* FeedSubCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSubCell.swift; sourceTree = "<group>"; };
+		96C5C8D11DFE761400A61681 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,15 +70,16 @@
 		96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */ = {
 			isa = PBXGroup;
 			children = (
+				96C5C8CC1DFE463300A61681 /* Helper */,
+				96C5C8CB1DFE44EB00A61681 /* CoreData */,
 				96C5C8AD1DFD14FE00A61681 /* ApiService */,
 				96C5C8A91DFCE90100A61681 /* views */,
 				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
 				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
+				96C5C8A71DFCE88500A61681 /* Extensions.swift */,
 				96C5C8971DFCDE2E00A61681 /* Assets.xcassets */,
 				96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */,
 				96C5C89C1DFCDE2E00A61681 /* Info.plist */,
-				96C5C8A21DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld */,
-				96C5C8A71DFCE88500A61681 /* Extensions.swift */,
 			);
 			path = "cnBeta Reader";
 			sourceTree = "<group>";
@@ -80,6 +89,8 @@
 			children = (
 				96C5C8AA1DFCE90F00A61681 /* Menubar */,
 				96C5C8A51DFCE84F00A61681 /* BaseCell.swift */,
+				96C5C8B21DFE1DA600A61681 /* FeedSubCell.swift */,
+				96C5C8D11DFE761400A61681 /* FeedCell.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -88,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				96C5C8AB1DFCE94200A61681 /* MenuBar.swift */,
+				96C5C8B01DFE1D6C00A61681 /* MenuCell.swift */,
 			);
 			name = Menubar;
 			sourceTree = "<group>";
@@ -98,6 +110,23 @@
 				96C5C8AE1DFD151B00A61681 /* ApiService.swift */,
 			);
 			name = ApiService;
+			sourceTree = "<group>";
+		};
+		96C5C8CB1DFE44EB00A61681 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				9666F0C61DFF22F00043465D /* cnBeta-Reader.xcdatamodeld */,
+				9666F0C81DFF22F00043465D /* CoreDataStack.swift */,
+			);
+			name = CoreData;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		96C5C8CC1DFE463300A61681 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,12 +202,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				96C5C8A81DFCE88500A61681 /* Extensions.swift in Sources */,
-				96C5C8A41DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld in Sources */,
 				96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */,
 				96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */,
+				96C5C8D21DFE761400A61681 /* FeedCell.swift in Sources */,
 				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
+				9666F0C91DFF22F00043465D /* cnBeta-Reader.xcdatamodeld in Sources */,
+				9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */,
 				96C5C8AF1DFD151B00A61681 /* ApiService.swift in Sources */,
+				96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */,
 				96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */,
+				96C5C8B31DFE1DA600A61681 /* FeedSubCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +331,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -313,7 +346,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -336,17 +369,19 @@
 				96C5C8A11DFCDE2E00A61681 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		96C5C8A21DFCE0AE00A61681 /* cnBeta-reader.xcdatamodeld */ = {
+		9666F0C61DFF22F00043465D /* cnBeta-Reader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				96C5C8A31DFCE0AE00A61681 /* cnBeta-reader.xcdatamodel */,
+				9666F0C71DFF22F00043465D /* cnBeta-Reader.xcdatamodel */,
 			);
-			currentVersion = 96C5C8A31DFCE0AE00A61681 /* cnBeta-reader.xcdatamodel */;
-			path = "cnBeta-reader.xcdatamodeld";
+			currentVersion = 9666F0C71DFF22F00043465D /* cnBeta-Reader.xcdatamodel */;
+			name = "cnBeta-Reader.xcdatamodeld";
+			path = "cnBeta Reader/cnBeta-Reader.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
