@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
+    var managedContext: NSManagedObjectContext?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -24,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let layout = UICollectionViewFlowLayout()
         let homeController = HomeController(collectionViewLayout: layout)
         homeController.managedContext = coreDataStack.context
+        managedContext = coreDataStack.context
+        
+        
+        clearData()
         
         window?.rootViewController = UINavigationController(rootViewController: homeController)
         
@@ -63,6 +68,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         
         coreDataStack.saveContext()
+    }
+    
+    func clearData() {
+        
+        do {
+            
+            let entityNames = ["Feed"]
+            
+            for entityName in entityNames {
+                
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+                let objects = try(managedContext?.fetch(fetchRequest)) as? [NSManagedObject]
+                
+                for object in objects! {
+                    managedContext?.delete(object)
+                }
+            }
+        } catch let err {
+            print(err)
+        }
     }
 
 

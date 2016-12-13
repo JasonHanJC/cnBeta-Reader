@@ -73,7 +73,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 //        }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCell
-        cell.feeds = [currentFeed]
+        //cell.feeds = [currentFeed]
         return cell
     }
     
@@ -101,7 +101,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 //
     // MARK: Lifecycle
     
-    var currentFeed: Feed!
+    //var currentFeed: Feed!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,62 +111,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupCollectionView()
         setupMenuBar()
         
-        let date = "Sun, 11 Dec 2016 18:34:40 -0800"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZZ"
-        let date1 = dateFormatter.date(from: date)
-        print(date1 ?? "something wrong")
         
         
-        
-        //clearData()
-        
-        let feedEntity = NSEntityDescription.entity(forEntityName: "Feed", in: managedContext)
-        let titleName = "[视频]法拉第未来新预告片：对飙宾利、法拉利、特斯拉"
-        
-        
-        let feedFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
-        //feedFetch.predicate = NSPredicate(format: "title == %@", titleName)
-        do {
-            let results = try managedContext.fetch(feedFetch) as! [Feed]
-            if results.count > 0 { //Fido found, use Fido 
-                currentFeed = results.first
-            } else {
-                //Fido not found, create Fido 
-                currentFeed = Feed(entity: feedEntity!, insertInto: managedContext)
-                currentFeed.title = titleName
-                currentFeed.author = ""
-                currentFeed.publishedDate = date1 as NSDate?
-                currentFeed.contentSnippet = "电动汽车初创企业“法拉第未来”（Faraday Future）于12月9日在 YouTube 上发布了一则17秒的新预告片。视频中，疑似全身被罩住的该公司首款量产车，与法拉利 488 Italia、宾利 Bentayga、以及特斯拉 Model S ..."
-                currentFeed.link = "http://www.cnbeta.com/articles/566495.htm"
-                
-                try managedContext.save()
-            }
-        } catch let error as NSError {
-            print("Error: \(error) " +
-                "description \(error.localizedDescription)")
-        }
-        
-    }
-    
-    func clearData() {
-        
-            do {
-                
-                let entityNames = ["Feed"]
-                
-                for entityName in entityNames {
-                    
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-                    let objects = try(managedContext.fetch(fetchRequest)) as? [NSManagedObject]
-                    
-                    for object in objects! {
-                        managedContext.delete(object)
-                    }
-                }
-            } catch let err {
-                print(err)
-            }
     }
 
     override func didReceiveMemoryWarning() {

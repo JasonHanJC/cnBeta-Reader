@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -24,6 +25,15 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
     let cellId = "cellId"
     
     override func setupViews() {
+        
+        ApiService.sharedInstance.fetchFeed(withURL: "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100", completion: { (feeds) in
+            DispatchQueue.main.async {
+                self.feeds = feeds
+                self.collectionView.reloadData()
+            }
+        })
+        
+   
         super.setupViews()
         
         backgroundColor = .white
@@ -38,12 +48,14 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // return feeds?.count ?? 0
-        return 40;
+        return feeds?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedSubCell
+        
+        cell.feed = feeds?[indexPath.item];
+        
         return cell
     }
     
@@ -63,7 +75,13 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width,height: 160)
+        
+        
+        let size = CGSize(width: 281, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrame = NSString(string: (feeds?[indexPath.item].contentSnippet!)!).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
+        
+        return CGSize(width: frame.width,height: estimatedFrame.height + 80)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

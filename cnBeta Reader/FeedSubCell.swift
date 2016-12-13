@@ -15,7 +15,7 @@ class FeedSubCell: BaseCell {
             backgroundColor = isHighlighted ? UIColor(white: 0, alpha: 0.2) : .white
             dateLabel.textColor = isHighlighted ? .white : .black
             titleLabel.textColor = isHighlighted ? .white : .black
-            contentTextView.textColor = isHighlighted ? .white : .gray
+            contentLabel.textColor = isHighlighted ? .white : .gray
         }
     }
     
@@ -28,6 +28,13 @@ class FeedSubCell: BaseCell {
                 dateLabel.text = dateFormatter.string(from: publishedDate as Date)
             }
             
+            if let title = feed?.title {
+                titleLabel.text = title
+            }
+            
+            if let content = feed?.contentSnippet {
+                contentLabel.text = content
+            }
             //
         }
     }
@@ -36,7 +43,7 @@ class FeedSubCell: BaseCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
-        label.text = "2016-12-12 02:34:40"
+        label.text = "Dummy date"
         label.numberOfLines = 1
         return label
     }()
@@ -45,17 +52,17 @@ class FeedSubCell: BaseCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
-        label.text = "索尼公布《蜘蛛侠：归来》续集上映时间：《绝地战警4》为其提档"
+        label.text = "Dummy title"
         label.numberOfLines = 2
         return label
     }()
     
-    let contentTextView: UILabel = {
+    let contentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .gray
-        label.text = "许多影迷翘首以盼的《蜘蛛侠：归来》终于在近日公布了首支预告片。之所以如此令人期待自然有它的原因所在—首部由索尼和漫威合拍的蜘蛛侠电影，并且主角的年龄设备也遵照了原著漫画。虽然《蜘蛛侠：归来》起码要等到明年7月7日才能跟观众见面，但索尼似乎已经等不及要跟人"
-        label.numberOfLines = 5
+        label.text = "Dummy content"
+        label.numberOfLines = 8
         return label
     }()
     
@@ -102,11 +109,11 @@ class FeedSubCell: BaseCell {
         
         feedContentView.addSubview(dateLabel)
         feedContentView.addSubview(titleLabel)
-        feedContentView.addSubview(contentTextView)
+        feedContentView.addSubview(contentLabel)
         
-        feedContentView.addConstraintsWithFormat("V:|-6-[v0]-1-[v1]-8-[v2]", views: dateLabel, titleLabel, contentTextView)
+        feedContentView.addConstraintsWithFormat("V:|-6-[v0]-1-[v1]-8-[v2]", views: dateLabel, titleLabel, contentLabel)
         feedContentView.addConstraintsWithFormat("H:|[v0]|", views: dateLabel)
         feedContentView.addConstraintsWithFormat("H:|[v0]|", views: titleLabel)
-        feedContentView.addConstraintsWithFormat("H:|[v0]|", views: contentTextView)
+        feedContentView.addConstraintsWithFormat("H:|[v0]|", views: contentLabel)
     }
 }
