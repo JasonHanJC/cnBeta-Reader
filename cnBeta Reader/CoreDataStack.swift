@@ -9,7 +9,9 @@
 import CoreData
 
 
-class CoreDataStack {
+class CoreDataStack: NSObject {
+    
+    static let sharedInstance = CoreDataStack()
     
     let modelName = "cnBeta-Reader"
     
@@ -38,7 +40,7 @@ class CoreDataStack {
         return coordinator
     }()
     
-    private lazy var managedObjectModel: NSManagedObjectModel = {
+    fileprivate lazy var managedObjectModel: NSManagedObjectModel = {
         let modelURL = Bundle.main.url(forResource: self.modelName, withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
@@ -53,4 +55,94 @@ class CoreDataStack {
             }
         }
     }
+    
+    private override init() {
+        super.init()
+    }
+}
+
+extension CoreDataStack {
+    
+    func createObjectForEntity(_ entityName: String) -> NSManagedObject? {
+        return NSEntityDescription.insertNewObject(forEntityName: entityName, into: context)
+    }
+    
+    func test(first: Int = 100, second: Int) -> Int {
+        return first + second
+    }
+    
+    func getObjectsForEntity(_ entityName: String, sortByKey key: String? = nil, isAscending: Bool = false, withPredicate predicate: NSPredicate? = nil, limit: Int = 0) -> [Any]? {
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        
+        if key != nil {
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: key, ascending: isAscending)]
+        }
+        
+        if predicate != nil {
+            fetchRequest.predicate = predicate
+        }
+        
+        if limit >= 0 {
+            fetchRequest.fetchLimit = limit
+        }
+        
+        do {
+            return try context.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Error: \(error) " + "description \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func deleteObject(object: NSManagedObject) {
+        context.delete(object)
+        
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print("Error: \(error) " + "description \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteObjectsForEntity(entityName : String, withPredicate predicate: NSPredicate? = nil) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        if predicate != nil {
+            fetchRequest.predicate = predicate
+        }
+        
+        do {
+            let objects = try(context.fetch(fetchRequest)) as? [NSManagedObject]
+            
+            for object in objects! {
+                context.delete(object)
+            }
+            
+            try context.save()
+        } catch let error as NSError {
+            print("Error: \(error) " + "description \(error.localizedDescription)")
+        }
+    }
+    
+    
+    func clearData() {
+        do {
+            let entities = managedObjectModel.entities
+            
+            for entity in entities {
+                
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
+                let objects = try(context.fetch(fetchRequest)) as? [NSManagedObject]
+                
+                for object in objects! {
+                    context.delete(object)
+                }
+            }
+            
+            try context.save()
+        } catch let err {
+            print(err)
+        }
+    }
+    
 }
