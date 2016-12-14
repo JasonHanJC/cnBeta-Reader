@@ -95,6 +95,13 @@ extension CoreDataStack {
         }
     }
     
+    func getLatestFeed() -> Feed? {
+        if let feeds = getObjectsForEntity("Feed", sortByKey: "publishedDate", isAscending: false, withPredicate: nil, limit: 1) {
+            return feeds.first as! Feed?
+        }
+        return nil;
+    }
+    
     func deleteObject(object: NSManagedObject) {
         context.delete(object)
         

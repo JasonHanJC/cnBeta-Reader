@@ -11,8 +11,6 @@ import CoreData
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var managedContext: NSManagedObjectContext!
-    
     let cellId = "cellId"
     let feedCellId = "feedCellId"
     let saveCellId = "saveCellId"
@@ -110,8 +108,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         setupCollectionView()
         setupMenuBar()
-        
-        
         
     }
 

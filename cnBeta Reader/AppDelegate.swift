@@ -13,7 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    lazy var coreDataStack = CoreDataStack()
+    
     var managedContext: NSManagedObjectContext?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -24,11 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let layout = UICollectionViewFlowLayout()
         let homeController = HomeController(collectionViewLayout: layout)
-        homeController.managedContext = coreDataStack.context
-        managedContext = coreDataStack.context
-        
-        
-        clearData()
+        managedContext = CoreDataStack.sharedInstance.context
+    
+    
+        //CoreDataStack.sharedInstance.clearData()
         
         window?.rootViewController = UINavigationController(rootViewController: homeController)
         
@@ -54,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         
-        coreDataStack.saveContext()
+        CoreDataStack.sharedInstance.saveContext()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -67,29 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         
-        coreDataStack.saveContext()
+        CoreDataStack.sharedInstance.saveContext()
     }
-    
-    func clearData() {
-        
-        do {
-            
-            let entityNames = ["Feed"]
-            
-            for entityName in entityNames {
-                
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-                let objects = try(managedContext?.fetch(fetchRequest)) as? [NSManagedObject]
-                
-                for object in objects! {
-                    managedContext?.delete(object)
-                }
-            }
-        } catch let err {
-            print(err)
-        }
-    }
-
-
 }
 

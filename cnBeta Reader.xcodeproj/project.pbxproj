@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9666F0C91DFF22F00043465D /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C61DFF22F00043465D /* cnBeta-Reader.xcdatamodeld */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
+		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
+		967F97931E0120570048D63B /* SavedFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F97921E0120570048D63B /* SavedFeedCell.swift */; };
 		96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */; };
 		96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* HomeController.swift */; };
 		96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8971DFCDE2E00A61681 /* Assets.xcassets */; };
@@ -23,8 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9666F0C71DFF22F00043465D /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
 		9666F0C81DFF22F00043465D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = "cnBeta Reader/CoreDataStack.swift"; sourceTree = "<group>"; };
+		967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
+		967F97921E0120570048D63B /* SavedFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedFeedCell.swift; sourceTree = "<group>"; };
 		96C5C88D1DFCDE2E00A61681 /* cnBeta Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cnBeta Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96C5C8921DFCDE2E00A61681 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -51,6 +53,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		967F97901E011FA90048D63B /* NewFeed */ = {
+			isa = PBXGroup;
+			children = (
+				96C5C8B21DFE1DA600A61681 /* FeedSubCell.swift */,
+				96C5C8D11DFE761400A61681 /* FeedCell.swift */,
+			);
+			name = NewFeed;
+			sourceTree = "<group>";
+		};
+		967F97911E011FC40048D63B /* SavedFeed */ = {
+			isa = PBXGroup;
+			children = (
+				967F97921E0120570048D63B /* SavedFeedCell.swift */,
+			);
+			name = SavedFeed;
+			sourceTree = "<group>";
+		};
 		96C5C8841DFCDE2E00A61681 = {
 			isa = PBXGroup;
 			children = (
@@ -87,10 +106,10 @@
 		96C5C8A91DFCE90100A61681 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				967F97911E011FC40048D63B /* SavedFeed */,
+				967F97901E011FA90048D63B /* NewFeed */,
 				96C5C8AA1DFCE90F00A61681 /* Menubar */,
 				96C5C8A51DFCE84F00A61681 /* BaseCell.swift */,
-				96C5C8B21DFE1DA600A61681 /* FeedSubCell.swift */,
-				96C5C8D11DFE761400A61681 /* FeedCell.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -115,8 +134,8 @@
 		96C5C8CB1DFE44EB00A61681 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				9666F0C61DFF22F00043465D /* cnBeta-Reader.xcdatamodeld */,
 				9666F0C81DFF22F00043465D /* CoreDataStack.swift */,
+				967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */,
 			);
 			name = CoreData;
 			path = ..;
@@ -205,11 +224,12 @@
 				96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */,
 				96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */,
 				96C5C8D21DFE761400A61681 /* FeedCell.swift in Sources */,
+				967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */,
 				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
-				9666F0C91DFF22F00043465D /* cnBeta-Reader.xcdatamodeld in Sources */,
 				9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */,
 				96C5C8AF1DFD151B00A61681 /* ApiService.swift in Sources */,
 				96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */,
+				967F97931E0120570048D63B /* SavedFeedCell.swift in Sources */,
 				96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */,
 				96C5C8B31DFE1DA600A61681 /* FeedSubCell.swift in Sources */,
 			);
@@ -374,14 +394,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9666F0C61DFF22F00043465D /* cnBeta-Reader.xcdatamodeld */ = {
+		967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				9666F0C71DFF22F00043465D /* cnBeta-Reader.xcdatamodel */,
+				967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */,
 			);
-			currentVersion = 9666F0C71DFF22F00043465D /* cnBeta-Reader.xcdatamodel */;
-			name = "cnBeta-Reader.xcdatamodeld";
-			path = "cnBeta Reader/cnBeta-Reader.xcdatamodeld";
+			currentVersion = 967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */;
+			path = "cnBeta-Reader.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
