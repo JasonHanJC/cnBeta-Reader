@@ -11,6 +11,12 @@ import CoreData
 
 class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+//    lazy var refreshControl: UIRefreshControl = {
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+//        return refreshControl
+//    }()
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -41,6 +47,18 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
         addSubview(collectionView)
         addConstraintsWithFormat("H:|[v0]|", views: collectionView)
         addConstraintsWithFormat("V:|[v0]|", views: collectionView)
+        
+        collectionView.mj_header = MJRefreshNormalHeader.init(refreshingBlock: { 
+            ApiService.sharedInstance.fetchFeed(withURL: "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100", completion: { (feeds) in
+                
+                DispatchQueue.main.async {
+                    self.feeds = feeds
+                    self.collectionView.reloadData()
+                    self.collectionView.mj_header.endRefreshing()
+                }
+            })
+        })
+        
         
         collectionView.register(FeedSubCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
