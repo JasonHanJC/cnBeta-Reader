@@ -9,13 +9,39 @@
 import UIKit
 import CoreData
 
-class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
-//    lazy var refreshControl: UIRefreshControl = {
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-//        return refreshControl
-//    }()
+    lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
+        let context = CoreDataStack.sharedInstance.context
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        
+        return frc as! NSFetchedResultsController<Feed>
+    }()
+    
+    lazy var refreshHeader: MJRefreshNormalHeader = {
+        let refreshHeader = MJRefreshNormalHeader.init(refreshingBlock: {
+            ApiService.sharedInstance.fetchFeed(withURL: "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100", completion: { (newFeedsCount) in
+                
+                DispatchQueue.main.async {
+                    self.collectionView.mj_header.endRefreshing()
+                    self.makeToast("\(newFeedsCount) new feeds added", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
+                    
+                }
+            })
+        })
+        return refreshHeader!
+    }()
+    
+    lazy var refreshFooter: MJRefreshAutoFooter = {
+        let refreshFooter = MJRefreshAutoFooter.init(refreshingBlock: {
+            self.makeToast("No more feed", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
+            self.collectionView.mj_footer.endRefreshing()
+        })
+        return refreshFooter!
+    }()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -26,20 +52,19 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
         return cv
     }()
     
-    var feeds: [Feed]?
-    
     let cellId = "cellId"
     
     override func setupViews() {
         
-        ApiService.sharedInstance.fetchFeed(withURL: "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100", completion: { (feeds) in
-            DispatchQueue.main.async {
-                self.feeds = feeds
-                self.collectionView.reloadData()
-            }
-        })
+        do {
+            try fetchedResultsController.performFetch()
+            
+            print(fetchedResultsController.sections?[0].numberOfObjects ?? "nothing")
+            
+        } catch let err {
+            print(err)
+        }
         
-   
         super.setupViews()
         
         backgroundColor = .white
@@ -48,61 +73,83 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
         addConstraintsWithFormat("H:|[v0]|", views: collectionView)
         addConstraintsWithFormat("V:|[v0]|", views: collectionView)
         
-        collectionView.mj_header = MJRefreshNormalHeader.init(refreshingBlock: { 
-            ApiService.sharedInstance.fetchFeed(withURL: "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100", completion: { (feeds) in
-                
-                DispatchQueue.main.async {
-                    self.feeds = feeds
-                    self.collectionView.reloadData()
-                    self.collectionView.mj_header.endRefreshing()
-                }
-            })
-        })
-        
-        
+        collectionView.mj_header = refreshHeader
+        collectionView.mj_footer = refreshFooter
         collectionView.register(FeedSubCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.contentInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
-
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return feeds?.count ?? 0
+        if let count = fetchedResultsController.sections?[0].numberOfObjects {
+            return count
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedSubCell
         
-        cell.feed = feeds?[indexPath.item];
+        let feed = fetchedResultsController.object(at: indexPath) 
+        cell.feed = feed;
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-//        let translation = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-//        
-//        if translation.y < 0 {
-//            cell.alpha = 0
-//            let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, 0, 300, 0)
-//            cell.layer.transform = rotationTransform
-//            UIView.animate(withDuration: 0.6, animations: {
-//                cell.alpha = 1
-//                cell.layer.transform = CATransform3DIdentity
-//            })
-//        }
+        let translation = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
+        
+        if translation.y < 0 && collectionView.contentOffset.y < (collectionView.contentSize.height - collectionView.frame.height){
+            cell.alpha = 0
+            let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, 0, 50, 0)
+            cell.layer.transform = rotationTransform
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.alpha = 1
+                cell.layer.transform = CATransform3DIdentity
+            })
+        }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        
+        let feed = fetchedResultsController.object(at: indexPath)
         let size = CGSize(width: 281, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: (feeds?[indexPath.item].contentSnippet!)!).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
+        let estimatedFrame = NSString(string: feed.contentSnippet!).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
         
         return CGSize(width: frame.width,height: estimatedFrame.height + 80)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    var blockOperation = [BlockOperation]()
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if type == .insert {
+            blockOperation.append(BlockOperation(block: { 
+                self.collectionView.insertItems(at: [newIndexPath!])
+            }))
+        } else if type == .update {
+            
+        } else if type == .delete {
+            
+        } else if type == .move {
+            
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView.performBatchUpdates({ 
+            for operation in self.blockOperation {
+                operation.start()
+            }
+        }, completion: { (completed) in
+            
+            
+        })
+    
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-typealias fetchFeedCompletion = ([Feed]) -> Void
+typealias fetchFeedCompletion = (Int) -> Void
 
 class ApiService: NSObject {
     
@@ -18,6 +18,7 @@ class ApiService: NSObject {
     func fetchFeed(withURL url: String, completion: @escaping fetchFeedCompletion) {
 
         let latestFeedDate = CoreDataStack.sharedInstance.getLatestFeed()?.publishedDate
+        var newFeedsCount: Int = 0
         
         let url = URL(string: url)
         URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
@@ -46,6 +47,8 @@ class ApiService: NSObject {
                                                 newFeed.contentSnippet = object["contentSnippet"] as? String
                                                 newFeed.isRead = false
                                                 newFeed.isSaved = false
+                                                
+                                                newFeedsCount += 1
                                             } else {
                                                 if date?.compare(latestFeedDate as! Date) == .orderedDescending {
                                                     let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed") as! Feed
@@ -56,6 +59,8 @@ class ApiService: NSObject {
                                                     newFeed.contentSnippet = object["contentSnippet"] as? String
                                                     newFeed.isRead = false
                                                     newFeed.isSaved = false
+                                                    
+                                                    newFeedsCount += 1
                                                 }
                                             }
                                         }
@@ -65,9 +70,8 @@ class ApiService: NSObject {
                         }
                     }
                 }
-                var feeds = [Feed]()
-                feeds = CoreDataStack.sharedInstance.getObjectsForEntity("Feed", sortByKey: "publishedDate", isAscending: false, withPredicate: nil, limit: 0) as! [Feed]
-                completion(feeds)
+                
+                completion(newFeedsCount)
                 
             } catch let jsonError {
                 print(jsonError)
