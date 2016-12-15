@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SavedFeedCell: BaseCell {
+class SavedTableView: BaseCell {
 
 
     

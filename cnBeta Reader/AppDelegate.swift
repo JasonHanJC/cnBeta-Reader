@@ -24,14 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let layout = UICollectionViewFlowLayout()
         let homeController = HomeController(collectionViewLayout: layout)
-        managedContext = CoreDataStack.sharedInstance.context
-    
     
         //CoreDataStack.sharedInstance.clearData()
         
         window?.rootViewController = UINavigationController(rootViewController: homeController)
         
-        UINavigationBar.appearance().isHidden = true
+        //UINavigationBar.appearance().isHidden = true
         UINavigationBar.appearance().barTintColor = UIColor.rgb(red: 230, green: 32, blue: 32, alpha: 1.0)
         
         UIApplication.shared.statusBarStyle = .lightContent

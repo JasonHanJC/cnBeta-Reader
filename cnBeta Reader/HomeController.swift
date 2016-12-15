@@ -37,7 +37,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         collectionView?.backgroundColor = .white
-        collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(FeedCollectionView.self, forCellWithReuseIdentifier: cellId)
 //        collectionView?.register(TrendingCell.self, forCellWithReuseIdentifier: trendingId)
 
         collectionView?.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
@@ -61,17 +61,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-//        let identifier: String
-//        if indexPath.item == 1 {
-//            identifier = trendingId
-//        } else if indexPath.item == 2 {
-//            identifier = subscriptionCellId
-//        } else {
-//            identifier = cellId
-//        }
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCell
-        //cell.feeds = [currentFeed]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCollectionView
+        cell.delegate = self
         return cell
     }
     
@@ -96,11 +87,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
         
     }
-//
+
     // MARK: Lifecycle
-    
-    //var currentFeed: Feed!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,6 +98,12 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupMenuBar()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -118,8 +112,17 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
 }
 
-extension HomeController: MenuBarDelegate {
+extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate {
     func didSelectMenuBarAtIndex(index: Int) {
         scrollToMenuIndex(menuIndex: index)
+    }
+    
+    func feedCollectionViewDidSelectFeed(withLink link: String) {
+        print("the link is \(link)")
+        let webDetailController = WebDetailController()
+        webDetailController.URLString = link
+        webDetailController.navigationItem.title = "Detail"
+        
+        navigationController?.pushViewController(webDetailController, animated: true)
     }
 }
