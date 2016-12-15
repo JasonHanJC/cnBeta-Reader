@@ -534,11 +534,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2VVZK2VN8;
 				INFOPLIST_FILE = "cnBeta Reader/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Jason/Desktop/cnBeta Reader/cnBeta Reader/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Jason/Desktop/cnBeta-Reader/cnBeta Reader/Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)";
@@ -551,11 +551,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C2VVZK2VN8;
 				INFOPLIST_FILE = "cnBeta Reader/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Jason/Desktop/cnBeta Reader/cnBeta Reader/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Jason/Desktop/cnBeta-Reader/cnBeta Reader/Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)";
