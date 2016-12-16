@@ -30,10 +30,6 @@ class ApiService: NSObject {
         };
     }
     
-    private override init() {
-        super.init()
-    }
-    
     func parsingData(data: Any?, completion: @escaping fetchFeedCompletion) {
         print(data ?? "nothing")
         print(Thread.current)
@@ -83,10 +79,16 @@ class ApiService: NSObject {
                 }
             }
             
+            CoreDataStack.sharedInstance.saveContext()
+            
             completion(newFeedsCount)
         }
     }
     
+    
+    private override init() {
+        super.init()
+    }
 }
 
 extension ApiService {
