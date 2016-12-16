@@ -1,9 +1,13 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
+source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'cnBeta Reader' do
-    
-  pod 'MJRefresh'
+platform :ios, '10.0'
+
+target 'cnBeta-Reader' do
+    pod 'MJRefresh'
+    pod 'Ji', '~> 2.0.0'
+    pod 'Toast-Swift', '~> 2.0.0'
+    pod 'Alamofire', '~> 4.0'
 
 end

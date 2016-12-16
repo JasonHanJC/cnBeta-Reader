@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Ji
 
 class WebDetailController: UIViewController {
     

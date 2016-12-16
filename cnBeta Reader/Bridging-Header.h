@@ -9,7 +9,7 @@
 #ifndef Bridging_Header_h
 #define Bridging_Header_h
 
-#import "MJRefresh.h"
+#import <MJRefresh/MJRefresh.h>
 
 
 #endif /* Bridging_Header_h */

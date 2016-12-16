@@ -1,0 +1,6 @@
+framework module Pods_cnBeta_Reader {
+  umbrella header "Pods-cnBeta-Reader-umbrella.h"
+
+  export *
+  module * { export * }
+}

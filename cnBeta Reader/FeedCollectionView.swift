@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Toast_Swift
+import MJRefresh
 
 protocol FeedCollectionViewDelegate:class {
     func feedCollectionViewDidSelectFeed(withLink link:String);
