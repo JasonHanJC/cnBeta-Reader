@@ -119,10 +119,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selected")
         let feed = fetchedResultsController.object(at: indexPath)
         if let link = feed.link {
-            print("selected")
             delegate?.feedCollectionViewDidSelectFeed(withLink: link)
         }
     }

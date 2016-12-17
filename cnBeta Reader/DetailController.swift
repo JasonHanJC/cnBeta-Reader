@@ -8,97 +8,103 @@
 
 import UIKit
 import Ji
+import Alamofire
 
-enum ContentType: Int {
+enum ParagraphType: Int {
+    case none
     case image
     case text
     case video
 }
 
-class DetailController: UIViewController, UIWebViewDelegate {
+struct Paragraph {
+    
+    var type: ParagraphType?
+    var paragraphString: String?
+    var paragraphHeight: CGFloat?
+    
+    init(type: ParagraphType, string: String) {
+        self.type = type
+        self.paragraphString = string
+        if type == .text {
+            self.paragraphHeight = computeHeight(string: "        \(string)")
+        } else {
+            self.paragraphHeight = 250;
+        }
+    }
+    
+    private func computeHeight(string: String) -> CGFloat {
+        let size = CGSize(width: Constants.SCREEN_WIDTH - 8 - 8, height: CGFloat(FLT_MAX))
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrame = NSString(string: string).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 18)], context: nil)
+        
+        return CGFloat(ceilf(Float(estimatedFrame.size.height)) + 10)
+    }
+}
+
+typealias contentParsingCompletion = ([Paragraph]?) -> Void
+
+class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var URLString: String?
     
-    var contentIndexDic: [Int : String]?
-    var contentTypeDic: [String : ContentType]?
+    var contentArray: [Paragraph]?
     
-    lazy var webView: UIWebView = {
-        let webView = UIWebView(frame: self.view.bounds)
-        webView.scalesPageToFit = true
-        webView.stringByEvaluatingJavaScript(from: "document.body.style.zoom = 1.5;")
-        webView.delegate = self
-        return webView
-    }()
+    let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        collectionView?.register(WebCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.backgroundColor = .white
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-
-        // Do any additional setup after loading the view.
-        self.view.addSubview(webView)
-        webView.scalesPageToFit = true
         
-        let url = Bundle.main.url(forResource: "test", withExtension: "html")
+        view.backgroundColor = .white
         
-        let request = URLRequest(url: url!)
-        webView.loadRequest(request)
-        
-        
-        if URLString != nil {
+        if let urlString = URLString {
             
-            let url = URL(string: URLString!);
-            
-            
-            let cnbetaData = try? Data(contentsOf: url!)
-            if let cnbetaData = cnbetaData {
-                
-                contentIndexDic = Dictionary()
-                contentTypeDic = Dictionary()
-                
-                var index: Int = 0
-                
-                let jiDoc = Ji(htmlData: cnbetaData)!
-                let htmlNode = jiDoc.rootNode!
-                print("html tagName: \(htmlNode.tagName)") // html tagName: Optional("html")
-                
-                let introduceNode = jiDoc.xPath("/html/body/section/section[2]/section/div/div/section[1]/div[1]")
-                print(introduceNode ?? "")
-                
-                let contentNode = jiDoc.xPath("/html/body/section/section[2]/section/div/div/section[1]/div[2]")
-                print(contentNode ?? "")
-                
-                
-                for content in (contentNode?.first?.children)! {
-                    index += 1
-                    
-                    print("content \(index): \(content)")
-                    print("content \(index): \(content.attributes)")
-                    print("content \(index): \(content.content)")
-                    print("content \(index): \(content.children)")
-                    
-                    if content.content == "" {
-                
-                        
-                        let subContent = content.children.first
-                        print(subContent?.children.first?.attributes["src"] ?? "")
-                    }
-                    
+            contentArray = Array()
+        
+            getWebContentWithUrl(urlString: urlString, completion: { (array) in
+                DispatchQueue.main.async {
+                    print(array ?? "")
+                    self.contentArray = array
+                    self.collectionView?.reloadData()
                 }
-                
-            } else {
-                
-                print("The url is inaccessible")
-            }
+            })
             
         }
     }
     
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1;
+    }
     
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return contentArray?.count ?? 0
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! WebCell
+        
+        cell.paragraph = contentArray?[indexPath.item]
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let height = contentArray?[indexPath.item].paragraphHeight
+        
+        return CGSize(width: collectionView.frame.width, height: height!)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,15 +112,64 @@ class DetailController: UIViewController, UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func getWebContentWithUrl(urlString: String, completion: @escaping contentParsingCompletion) {
+        
+        DispatchQueue.global(qos: .default).async {
+            
+            let url = URL(string: urlString);
+            let cnbetaData = try? Data(contentsOf: url!)
+            
+            if let cnbetaData = cnbetaData {
+                
+                var contentArray = [Paragraph]()
+            
+                let jiDoc = Ji(htmlData: cnbetaData)!
+            
+                let introduceNode = jiDoc.xPath("/html/body/section/section[2]/section/div/div/section[1]/div[1]")
+                for intro in (introduceNode?.first?.children)! {
+                    if let introContent = intro.content {
+                    
+                        if introContent == "" {
+                            // TODO: show image?
+                        } else {
+                            let paragraph = Paragraph.init(type: .text, string: introContent)
+                            contentArray.append(paragraph)
+                        }
+                    }
+                }
+                
+                if let contentNode = jiDoc.xPath("/html/body/section/section[2]/section/div/div/section[1]/div[2]") {
+                    for content in (contentNode.first?.children)! {
 
-    /*
-    // MARK: - Navigation
+                        if let contentString = content.content {
+                        // image? video?e
+                            if contentString == "" {
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+                                if let imageSrc = content.children.first?.children.first?.attributes["src"] {
+                                    let paragraph = Paragraph.init(type: .image, string: imageSrc)
+                                    contentArray.append(paragraph)
+                                }
+                            } else {
+                                if contentString.contains("[广告]活动入口") {
+                                    break
+                                }
+                                let paragraph = Paragraph.init(type: .text, string: contentString)
+                                contentArray.append(paragraph)
+                            }
+                        }
+                    }
+                }
+                
+                if self.URLString == urlString {
+                    completion(contentArray)
+                }
+            } else {
+                print("The url is inaccessible")
+                if self.URLString == urlString {
+                    completion(nil)
+                }
+            }
+        }
     }
-    */
-
 }

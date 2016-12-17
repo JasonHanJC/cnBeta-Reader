@@ -102,7 +102,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.navigationBar.isTranslucent = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -118,11 +119,12 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate {
     }
     
     func feedCollectionViewDidSelectFeed(withLink link: String) {
-        print("the link is \(link)")
-        let webDetailController = WebDetailController()
-        webDetailController.URLString = link
-        webDetailController.navigationItem.title = "Detail"
+        print("Open link: \(link)")
+        let layout = UICollectionViewFlowLayout()
+        let detailController = DetailController(collectionViewLayout: layout)
+        detailController.URLString = link
+        detailController.navigationItem.title = "Detail"
         
-        navigationController?.pushViewController(webDetailController, animated: true)
+        navigationController?.pushViewController(detailController, animated: true)
     }
 }

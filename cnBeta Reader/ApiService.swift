@@ -31,11 +31,7 @@ class ApiService: NSObject {
     }
     
     func parsingData(data: Any?, completion: @escaping fetchFeedCompletion) {
-        print(data ?? "nothing")
-        print(Thread.current)
-        
         DispatchQueue.global(qos: .default).async {
-            print(Thread.current)
             let latestFeedDate = CoreDataStack.sharedInstance.getLatestFeed()?.publishedDate
             var newFeedsCount: Int = 0
             
@@ -80,7 +76,6 @@ class ApiService: NSObject {
             }
             
             CoreDataStack.sharedInstance.saveContext()
-            
             completion(newFeedsCount)
         }
     }

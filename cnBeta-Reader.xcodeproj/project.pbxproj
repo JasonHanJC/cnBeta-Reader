@@ -23,6 +23,9 @@
 		96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8B01DFE1D6C00A61681 /* MenuCell.swift */; };
 		96C5C8B31DFE1DA600A61681 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8B21DFE1DA600A61681 /* FeedCell.swift */; };
 		96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8D11DFE761400A61681 /* FeedCollectionView.swift */; };
+		96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583421E04FBCF0041B9D2 /* CustomImageView.swift */; };
+		96F583461E0500190041B9D2 /* WebCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583451E0500190041B9D2 /* WebCell.swift */; };
+		96F583481E0504BE0041B9D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583471E0504BE0041B9D2 /* Constants.swift */; };
 		BE760AE09ADEB8E545DD84B4 /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CA353D8BF4D1757FC95136 /* Pods_cnBeta_Reader.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +50,9 @@
 		96C5C8B01DFE1D6C00A61681 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		96C5C8B21DFE1DA600A61681 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		96C5C8D11DFE761400A61681 /* FeedCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionView.swift; sourceTree = "<group>"; };
+		96F583421E04FBCF0041B9D2 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		96F583451E0500190041B9D2 /* WebCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCell.swift; sourceTree = "<group>"; };
+		96F583471E0504BE0041B9D2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A1EBE49441C2EE93FA219BE6 /* Pods-cnBeta Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta Reader/Pods-cnBeta Reader.debug.xcconfig"; sourceTree = "<group>"; };
 		A2C669820FE1B658A23745A8 /* Pods-cnBeta-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.debug.xcconfig"; sourceTree = "<group>"; };
 		ACF6B6AD4191585A8798CE5D /* Pods-cnBeta Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta Reader/Pods-cnBeta Reader.release.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +143,7 @@
 		96C5C8A91DFCE90100A61681 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				96F583441E04FC250041B9D2 /* WebDetail */,
 				967F97911E011FC40048D63B /* SavedFeed */,
 				967F97901E011FA90048D63B /* NewFeed */,
 				96C5C8AA1DFCE90F00A61681 /* Menubar */,
@@ -180,8 +187,18 @@
 				96B007B91E01DFD70098BD71 /* Bridging-Header.h */,
 				96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */,
 				96C5C89C1DFCDE2E00A61681 /* Info.plist */,
+				96F583421E04FBCF0041B9D2 /* CustomImageView.swift */,
+				96F583471E0504BE0041B9D2 /* Constants.swift */,
 			);
 			name = Support;
+			sourceTree = "<group>";
+		};
+		96F583441E04FC250041B9D2 /* WebDetail */ = {
+			isa = PBXGroup;
+			children = (
+				96F583451E0500190041B9D2 /* WebCell.swift */,
+			);
+			name = WebDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,12 +328,15 @@
 				96C5C8A81DFCE88500A61681 /* Extensions.swift in Sources */,
 				96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */,
 				96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */,
+				96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */,
 				96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */,
 				967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */,
 				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
+				96F583481E0504BE0041B9D2 /* Constants.swift in Sources */,
 				9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */,
 				962771371E025BC50043F894 /* DetailController.swift in Sources */,
 				96C5C8AF1DFD151B00A61681 /* ApiService.swift in Sources */,
+				96F583461E0500190041B9D2 /* WebCell.swift in Sources */,
 				96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */,
 				967F97931E0120570048D63B /* SavedTableView.swift in Sources */,
 				96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */,
