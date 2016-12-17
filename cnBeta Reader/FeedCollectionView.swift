@@ -12,7 +12,7 @@ import Toast_Swift
 import MJRefresh
 
 protocol FeedCollectionViewDelegate:class {
-    func feedCollectionViewDidSelectFeed(withLink link:String);
+    func feedCollectionViewDidSelectFeed(link:String, title:String);
 }
 
 class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
@@ -31,7 +31,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     lazy var refreshHeader: MJRefreshNormalHeader = {
         let refreshHeader = MJRefreshNormalHeader.init(refreshingBlock: {
-            ApiService.sharedInstance.fetchFeed(withURL: "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100", completion: { (newFeedsCount) in
+            ApiService.sharedInstance.fetchFeed(withURL: Constants.API_URL, completion: { (newFeedsCount) in
                 
                 DispatchQueue.main.async {
                     self.collectionView.mj_header.endRefreshing()
@@ -120,8 +120,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feed = fetchedResultsController.object(at: indexPath)
-        if let link = feed.link {
-            delegate?.feedCollectionViewDidSelectFeed(withLink: link)
+        if let link = feed.link, let title = feed.title {
+            delegate?.feedCollectionViewDidSelectFeed(link: link, title: title)
         }
     }
     

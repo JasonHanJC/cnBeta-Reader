@@ -35,7 +35,6 @@ class FeedCell: BaseCell {
             if let content = feed?.contentSnippet {
                 contentLabel.text = content
             }
-            //
         }
     }
     

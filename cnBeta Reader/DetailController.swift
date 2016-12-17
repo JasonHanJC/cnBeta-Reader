@@ -11,6 +11,7 @@ import Ji
 import Alamofire
 
 enum ParagraphType: Int {
+    case title
     case none
     case image
     case text
@@ -26,7 +27,7 @@ struct Paragraph {
     init(type: ParagraphType, string: String) {
         self.type = type
         self.paragraphString = string
-        if type == .text {
+        if (type == .text) || (type == .title) {
             self.paragraphHeight = computeHeight(string: "        \(string)")
         } else {
             self.paragraphHeight = 250;
@@ -47,6 +48,7 @@ typealias contentParsingCompletion = ([Paragraph]?) -> Void
 class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var URLString: String?
+    var webTitle: String?
     
     var contentArray: [Paragraph]?
     
@@ -65,18 +67,23 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         view.backgroundColor = .white
         
-        if let urlString = URLString {
-            
-            contentArray = Array()
+        contentArray = [Paragraph]()
+        // Create title
+        if let title = webTitle {
+            let titleParagraph = Paragraph.init(type: .title, string: title)
+            contentArray?.append(titleParagraph)
+        }
         
-            getWebContentWithUrl(urlString: urlString, completion: { (array) in
+        if let urlString = URLString {
+                
+            getWebContentWithUrl(urlString: urlString, completion: { contents in
                 DispatchQueue.main.async {
-                    print(array ?? "")
-                    self.contentArray = array
-                    self.collectionView?.reloadData()
+                    if let newFeeds = contents {
+                        self.contentArray? += newFeeds
+                        self.collectionView?.reloadData()
+                    }
                 }
             })
-            
         }
     }
     
@@ -92,7 +99,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! WebCell
         
         cell.paragraph = contentArray?[indexPath.item]
-        
+
         return cell
     }
     
@@ -122,7 +129,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             
             if let cnbetaData = cnbetaData {
                 
-                var contentArray = [Paragraph]()
+                var contents = [Paragraph]()
             
                 let jiDoc = Ji(htmlData: cnbetaData)!
             
@@ -134,7 +141,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                             // TODO: show image?
                         } else {
                             let paragraph = Paragraph.init(type: .text, string: introContent)
-                            contentArray.append(paragraph)
+                            contents.append(paragraph)
                         }
                     }
                 }
@@ -148,21 +155,21 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
 
                                 if let imageSrc = content.children.first?.children.first?.attributes["src"] {
                                     let paragraph = Paragraph.init(type: .image, string: imageSrc)
-                                    contentArray.append(paragraph)
+                                    contents.append(paragraph)
                                 }
                             } else {
                                 if contentString.contains("[广告]活动入口") {
                                     break
                                 }
                                 let paragraph = Paragraph.init(type: .text, string: contentString)
-                                contentArray.append(paragraph)
+                                contents.append(paragraph)
                             }
                         }
                     }
                 }
                 
                 if self.URLString == urlString {
-                    completion(contentArray)
+                    completion(contents)
                 }
             } else {
                 print("The url is inaccessible")

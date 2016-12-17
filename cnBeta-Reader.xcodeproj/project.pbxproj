@@ -90,6 +90,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		966DCA5E1E05DFC500D0172D /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				96C5C8A71DFCE88500A61681 /* Extensions.swift */,
+				96F583421E04FBCF0041B9D2 /* CustomImageView.swift */,
+				96F583471E0504BE0041B9D2 /* Constants.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 		967F97901E011FA90048D63B /* NewFeed */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,7 +138,7 @@
 		96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */ = {
 			isa = PBXGroup;
 			children = (
-				962771941E03AFF40043F894 /* test.html */,
+				966DCA5E1E05DFC500D0172D /* Helper */,
 				96C5C8CB1DFE44EB00A61681 /* CoreData */,
 				96C5C8AD1DFD14FE00A61681 /* ApiService */,
 				96C5C8A91DFCE90100A61681 /* views */,
@@ -182,13 +192,11 @@
 		96C5C8CC1DFE463300A61681 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				96C5C8A71DFCE88500A61681 /* Extensions.swift */,
+				962771941E03AFF40043F894 /* test.html */,
 				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
 				96B007B91E01DFD70098BD71 /* Bridging-Header.h */,
 				96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */,
 				96C5C89C1DFCDE2E00A61681 /* Info.plist */,
-				96F583421E04FBCF0041B9D2 /* CustomImageView.swift */,
-				96F583471E0504BE0041B9D2 /* Constants.swift */,
 			);
 			name = Support;
 			sourceTree = "<group>";

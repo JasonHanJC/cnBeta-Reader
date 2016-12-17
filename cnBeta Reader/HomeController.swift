@@ -118,11 +118,12 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate {
         scrollToMenuIndex(menuIndex: index)
     }
     
-    func feedCollectionViewDidSelectFeed(withLink link: String) {
+    func feedCollectionViewDidSelectFeed(link: String, title: String) {
         print("Open link: \(link)")
         let layout = UICollectionViewFlowLayout()
         let detailController = DetailController(collectionViewLayout: layout)
         detailController.URLString = link
+        detailController.webTitle = title
         detailController.navigationItem.title = "Detail"
         
         navigationController?.pushViewController(detailController, animated: true)

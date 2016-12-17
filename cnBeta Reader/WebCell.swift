@@ -16,17 +16,20 @@ class WebCell: BaseCell {
             if let p = paragraph {
                 if p.type == .text {
                     textLabel.text = "        \(p.paragraphString!)"
+                    textLabel.font = UIFont.systemFont(ofSize: 18, weight: 0)
                     imageView.isHidden = true
                     textLabel.isHidden = false
                 } else if p.type == .image {
                     imageView.loadImageWithURLString(urlString: p.paragraphString!)
                     imageView.isHidden = false
                     textLabel.isHidden = true
-                } else {
-                    
+                } else if p.type == .title {
+                    textLabel.text = p.paragraphString!
+                    textLabel.font = UIFont.systemFont(ofSize: 20, weight: 0.2)
+                    imageView.isHidden = true
+                    textLabel.isHidden = false
                 }
             }
-            
         }
     }
     
@@ -47,7 +50,7 @@ class WebCell: BaseCell {
     override func setupViews() {
         super.setupViews()
         
-        backgroundColor = .lightGray
+        backgroundColor = .white
         
         addSubview(textLabel)
         addSubview(imageView)
