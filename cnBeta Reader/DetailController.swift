@@ -9,6 +9,7 @@
 import UIKit
 import Ji
 import Alamofire
+import Toast_Swift
 
 enum ParagraphType: Int {
     case title
@@ -75,9 +76,13 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         }
         
         if let urlString = URLString {
+            
+            view.makeToastActivity(.center)
                 
             getWebContentWithUrl(urlString: urlString, completion: { contents in
                 DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    
                     if let newFeeds = contents {
                         self.contentArray? += newFeeds
                         self.collectionView?.reloadData()
@@ -150,7 +155,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                     for content in (contentNode.first?.children)! {
 
                         if let contentString = content.content {
-                        // image? video?e
+                        // image? video?
                             if contentString == "" {
 
                                 if let imageSrc = content.children.first?.children.first?.attributes["src"] {

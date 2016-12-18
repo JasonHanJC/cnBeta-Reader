@@ -144,6 +144,8 @@
 				96C5C8A91DFCE90100A61681 /* views */,
 				962771361E025BC50043F894 /* DetailController.swift */,
 				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
+				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
+				96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */,
 				96C5C8CC1DFE463300A61681 /* Support */,
 				96C5C8971DFCDE2E00A61681 /* Assets.xcassets */,
 			);
@@ -193,9 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				962771941E03AFF40043F894 /* test.html */,
-				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
 				96B007B91E01DFD70098BD71 /* Bridging-Header.h */,
-				96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */,
 				96C5C89C1DFCDE2E00A61681 /* Info.plist */,
 			);
 			name = Support;

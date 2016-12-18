@@ -14,36 +14,38 @@ class CustomImageView: UIImageView {
     
     var imageURLString: String?
     
-    func loadImageWithURLString(urlString: String) {
+    func loadImageWithURLString(urlString: String?) {
         
-        imageURLString = urlString
+        if let urlStr = urlString {
+            imageURLString = urlStr
         
-        if let imageFromCache = imageCache.object(forKey: urlString as NSString ) {
-            self.image = imageFromCache
-            return
-        }
-        
-        let url = URL(string: urlString)
-        image = nil
-        
-        URLSession.shared.dataTask(with: url!, completionHandler: { (data, respones, error) in
-            
-            if error != nil {
-                print(error.debugDescription)
+            if let imageFromCache = imageCache.object(forKey: urlStr as NSString ) {
+                self.image = imageFromCache
                 return
             }
+        
+            let url = URL(string: urlStr)
+            image = nil
+        
+            URLSession.shared.dataTask(with: url!, completionHandler: { (data, respones, error) in
             
-            DispatchQueue.main.async(execute: {
-                
-                let imageToCache = UIImage(data: data!)
-                
-                if self.imageURLString == urlString {
-                    self.image = imageToCache
+                if error != nil {
+                    print(error.debugDescription)
+                    return
                 }
-                
-                imageCache.setObject(imageToCache!, forKey: urlString as NSString)
-            })
             
-        }).resume()
+                DispatchQueue.main.async(execute: {
+                
+                    let imageToCache = UIImage(data: data!)
+                
+                    if self.imageURLString == urlString {
+                        self.image = imageToCache
+                    }
+                
+                    imageCache.setObject(imageToCache!, forKey: urlStr as NSString)
+                })
+            
+            }).resume()
+        }
     }
 }

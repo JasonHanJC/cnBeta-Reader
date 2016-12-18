@@ -15,4 +15,7 @@ struct Constants {
     // api
     static let API_URL = "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100"
     
+    
+    // fetch number
+    static let FETCH_LIMIT = 20
 }

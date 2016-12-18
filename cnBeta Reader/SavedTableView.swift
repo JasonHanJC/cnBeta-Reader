@@ -9,8 +9,12 @@
 import UIKit
 
 class SavedTableView: BaseCell {
-
-
+    
     
 
+    override func setupViews() {
+        super.setupViews()
+        
+        
+    }
 }
