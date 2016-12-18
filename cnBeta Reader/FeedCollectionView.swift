@@ -22,6 +22,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
+        fetchRequest.fetchLimit = Constants.FETCH_LIMIT
+
         let context = CoreDataStack.sharedInstance.context
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
@@ -43,10 +45,41 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshHeader!
     }()
     
-    lazy var refreshFooter: MJRefreshAutoFooter = {
-        let refreshFooter = MJRefreshAutoFooter.init(refreshingBlock: {
-            self.makeToast("No more feed", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
-            self.collectionView.mj_footer.endRefreshing()
+    lazy var refreshFooter: MJRefreshBackStateFooter = {
+        let refreshFooter = MJRefreshBackStateFooter.init(refreshingBlock: {
+            
+            let lastItem = self.collectionView.numberOfItems(inSection: 0)
+            self.fetchedResultsController.fetchRequest.fetchLimit += Constants.FETCH_LIMIT
+
+            do {
+                try self.fetchedResultsController.performFetch()
+                
+                if let numberOfObjects = self.fetchedResultsController.sections?[0].numberOfObjects {
+                    
+                    let newItemCount = numberOfObjects - lastItem
+                    
+                    if newItemCount != 0 {
+                        var indexPaths = [IndexPath]()
+                        for i in 1...newItemCount {
+                            let indexPath = IndexPath(item: lastItem - 1 + i, section: 0)
+                            indexPaths.append(indexPath)
+                        }
+                
+                        self.collectionView.performBatchUpdates({
+                            self.collectionView.insertItems(at: indexPaths)
+                        }, completion: { (completed) in
+                           //
+                        })
+                    } else {
+                        self.makeToast("No more feed", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
+                    }
+                }
+                self.collectionView.mj_footer.endRefreshing()
+            } catch let err {
+                print(err)
+            }
+            
+            
         })
         return refreshFooter!
     }()
@@ -105,17 +138,17 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        let translation = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-        
-        if translation.y < 0 && collectionView.contentOffset.y < (collectionView.contentSize.height - collectionView.frame.height) && collectionView.contentOffset.y > collectionView.frame.height {
-            cell.alpha = 0
-            let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, 0, 50, 0)
-            cell.layer.transform = rotationTransform
-            UIView.animate(withDuration: 0.3, animations: {
-                cell.alpha = 1
-                cell.layer.transform = CATransform3DIdentity
-            })
-        }
+//        let translation = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
+//        
+//        if translation.y < 0 && collectionView.contentOffset.y < (collectionView.contentSize.height - collectionView.frame.height) && collectionView.contentOffset.y > collectionView.frame.height {
+//            cell.alpha = 0
+//            let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, 0, 50, 0)
+//            cell.layer.transform = rotationTransform
+//            UIView.animate(withDuration: 0.3, animations: {
+//                cell.alpha = 1
+//                cell.layer.transform = CATransform3DIdentity
+//            })
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -144,6 +177,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     var blockOperation = [BlockOperation]()
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
 //        if type == .insert {
 //            blockOperation.append(BlockOperation(block: {
 //                UIView.animate(withDuration: 1, animations: {
@@ -169,6 +203,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
 //            
 //            
 //        })
+        
         
         do {
             try fetchedResultsController.performFetch()
