@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class WebCell: BaseCell {
     
@@ -44,6 +45,7 @@ class WebCell: BaseCell {
         let imageView = CustomImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
+        imageView.image = UIImage(named: "LoadingImage")
         return imageView
     }()
     
