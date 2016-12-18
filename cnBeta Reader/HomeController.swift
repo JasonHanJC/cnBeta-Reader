@@ -44,7 +44,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0)
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.showsHorizontalScrollIndicator = false
-        
         collectionView?.isPagingEnabled = true
     }
     
@@ -119,7 +118,11 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate {
     }
     
     func feedCollectionViewDidSelectFeed(link: String, title: String) {
-        print("Open link: \(link)")
+    
+        let mobileLink = link.replacingOccurrences(of: "www", with: "m", options:[NSString.CompareOptions(rawValue: 0)], range: link.startIndex..<link.index(link.startIndex, offsetBy: 11))
+        
+        print("Open link: \(mobileLink)")
+        
         let layout = UICollectionViewFlowLayout()
         let detailController = DetailController(collectionViewLayout: layout)
         detailController.URLString = link
