@@ -10,14 +10,14 @@ import UIKit
 import Alamofire
 import Toast_Swift
 import Kanna
+import CoreData
 
 typealias contentParsingCompletion = ([Paragraph]?) -> Void
 
 class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var URLString: String?
-    var webTitle: String?
-    //var timeString: String?
+    var selectedFeed: Feed?
+    private var URLString: String?
     
     var contentArray: [Paragraph]?
     
@@ -28,22 +28,23 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         collectionView?.register(WebCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
-        
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        
+
         view.backgroundColor = .white
         
+        setupNavigationBar()
+        
         contentArray = [Paragraph]()
+
         // Create title
-        if let title = webTitle {
+        if let title = selectedFeed?.title {
             let titleParagraph = Paragraph.init(type: .title, content: title, alignment: .alignmentLeft, textStyle: .strong)
             contentArray?.append(titleParagraph)
         }
         
-        if let urlString = URLString {
+        if let urlString = selectedFeed?.link?.replacingOccurrences(of: "http://www.cnbeta.com/articles/", with: "http://m.cnbeta.com/view/") {
+            
+            print(urlString)
+            URLString = urlString
             
             view.makeToastActivity(.center)
                 
@@ -60,6 +61,37 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         }
     }
     
+    func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        let saveButton = UIBarButtonItem(image: UIImage(named: "Save")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSave))
+        let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNavMore))
+        
+        navigationItem.rightBarButtonItems = [moreButton, saveButton]
+    }
+    
+    func handleSave(sender: UIBarButtonItem) {
+        
+        if selectedFeed?.isSaved == false {
+            view.makeToast("Feed saved", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+            sender.image = UIImage(named: "Saved")?.withRenderingMode(.alwaysOriginal)
+        } else {
+            view.makeToast("Feed unsaved", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+            sender.image = UIImage(named: "Save")?.withRenderingMode(.alwaysOriginal)
+        }
+        
+        selectedFeed?.isSaved = !(selectedFeed?.isSaved)!
+    }
+    
+    func handleNavMore(sender: UIBarButtonItem) {
+        view.makeToast("Nothing in here yet", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+    }
+    
+    
+    // MARK: Collection View Delegate and Data source
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1;
     }

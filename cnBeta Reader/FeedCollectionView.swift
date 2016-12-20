@@ -12,7 +12,7 @@ import Toast_Swift
 import MJRefresh
 
 protocol FeedCollectionViewDelegate:class {
-    func feedCollectionViewDidSelectFeed(link:String, title:String);
+    func feedCollectionViewDidSelectFeed(feed: Feed);
 }
 
 class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
@@ -37,7 +37,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 
                 DispatchQueue.main.async {
                     self.collectionView.mj_header.endRefreshing()
-                    self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
+                    self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
                     
                 }
             })
@@ -152,10 +152,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let feed = fetchedResultsController.object(at: indexPath)
-        if let link = feed.link, let title = feed.title {
-            delegate?.feedCollectionViewDidSelectFeed(link: link, title: title)
-        }
+        let feedObject = fetchedResultsController.object(at: indexPath)
+        delegate?.feedCollectionViewDidSelectFeed(feed: feedObject)
     }
     
     // MARK: CollectionView layout delegate
@@ -178,6 +176,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
+        print("core data has change")
 //        if type == .insert {
 //            blockOperation.append(BlockOperation(block: {
 //                UIView.animate(withDuration: 1, animations: {

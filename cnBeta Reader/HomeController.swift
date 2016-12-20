@@ -117,15 +117,11 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate {
         scrollToMenuIndex(menuIndex: index)
     }
     
-    func feedCollectionViewDidSelectFeed(link: String, title: String) {
-    
-        let mobileLink = link.replacingOccurrences(of: "http://www.cnbeta.com/articles/", with: "http://m.cnbeta.com/view/")
-        
-        print("Open link: \(mobileLink)")
+    func feedCollectionViewDidSelectFeed(feed: Feed) {
+
         let layout = UICollectionViewFlowLayout()
         let detailController = DetailController(collectionViewLayout: layout)
-        detailController.URLString = mobileLink
-        detailController.webTitle = title
+        detailController.selectedFeed = feed
         detailController.navigationItem.title = "Detail"
         
         navigationController?.pushViewController(detailController, animated: true)
