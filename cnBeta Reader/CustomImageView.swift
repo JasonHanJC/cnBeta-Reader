@@ -25,7 +25,6 @@ class CustomImageView: UIImageView {
             }
         
             let url = URL(string: urlStr)
-            image = nil
         
             URLSession.shared.dataTask(with: url!, completionHandler: { (data, respones, error) in
             

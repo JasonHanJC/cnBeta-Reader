@@ -119,13 +119,12 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate {
     
     func feedCollectionViewDidSelectFeed(link: String, title: String) {
     
-        let mobileLink = link.replacingOccurrences(of: "www", with: "m", options:[NSString.CompareOptions(rawValue: 0)], range: link.startIndex..<link.index(link.startIndex, offsetBy: 11))
+        let mobileLink = link.replacingOccurrences(of: "http://www.cnbeta.com/articles/", with: "http://m.cnbeta.com/view/")
         
         print("Open link: \(mobileLink)")
-        
         let layout = UICollectionViewFlowLayout()
         let detailController = DetailController(collectionViewLayout: layout)
-        detailController.URLString = link
+        detailController.URLString = mobileLink
         detailController.webTitle = title
         detailController.navigationItem.title = "Detail"
         

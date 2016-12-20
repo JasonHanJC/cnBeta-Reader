@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		962771371E025BC50043F894 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962771361E025BC50043F894 /* DetailController.swift */; };
 		962771951E03AFF40043F894 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = 962771941E03AFF40043F894 /* test.html */; };
+		964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964963B01E08DE8D00EA079C /* Paragraph.swift */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
 		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
 		967F97931E0120570048D63B /* SavedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F97921E0120570048D63B /* SavedTableView.swift */; };
@@ -33,6 +34,7 @@
 		25CA353D8BF4D1757FC95136 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		962771361E025BC50043F894 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		962771941E03AFF40043F894 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		964963B01E08DE8D00EA079C /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		9666F0C81DFF22F00043465D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = "cnBeta Reader/CoreDataStack.swift"; sourceTree = "<group>"; };
 		967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
 		967F97921E0120570048D63B /* SavedTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedTableView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		964963B21E08DEDB00EA079C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				964963B01E08DE8D00EA079C /* Paragraph.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		966DCA5E1E05DFC500D0172D /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +148,7 @@
 		96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */ = {
 			isa = PBXGroup;
 			children = (
+				964963B21E08DEDB00EA079C /* Model */,
 				966DCA5E1E05DFC500D0172D /* Helper */,
 				96C5C8CB1DFE44EB00A61681 /* CoreData */,
 				96C5C8AD1DFD14FE00A61681 /* ApiService */,
@@ -339,6 +350,7 @@
 				96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */,
 				96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */,
 				967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */,
+				964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */,
 				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
 				96F583481E0504BE0041B9D2 /* Constants.swift in Sources */,
 				9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */,

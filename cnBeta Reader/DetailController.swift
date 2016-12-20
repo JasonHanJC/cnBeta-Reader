@@ -7,42 +7,9 @@
 //
 
 import UIKit
-import Ji
 import Alamofire
 import Toast_Swift
-
-enum ParagraphType: Int {
-    case title
-    case none
-    case image
-    case text
-    case video
-}
-
-struct Paragraph {
-    
-    var type: ParagraphType?
-    var paragraphString: String?
-    var paragraphHeight: CGFloat?
-    
-    init(type: ParagraphType, string: String) {
-        self.type = type
-        self.paragraphString = string
-        if (type == .text) || (type == .title) {
-            self.paragraphHeight = computeHeight(string: "        \(string)")
-        } else {
-            self.paragraphHeight = 250;
-        }
-    }
-    
-    private func computeHeight(string: String) -> CGFloat {
-        let size = CGSize(width: Constants.SCREEN_WIDTH - 8 - 8, height: CGFloat(FLT_MAX))
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: string).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 18)], context: nil)
-        
-        return CGFloat(ceilf(Float(estimatedFrame.size.height)) + 10)
-    }
-}
+import Kanna
 
 typealias contentParsingCompletion = ([Paragraph]?) -> Void
 
@@ -50,6 +17,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     var URLString: String?
     var webTitle: String?
+    //var timeString: String?
     
     var contentArray: [Paragraph]?
     
@@ -71,7 +39,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         contentArray = [Paragraph]()
         // Create title
         if let title = webTitle {
-            let titleParagraph = Paragraph.init(type: .title, string: title)
+            let titleParagraph = Paragraph.init(type: .title, content: title, alignment: .alignmentLeft, textStyle: .strong)
             contentArray?.append(titleParagraph)
         }
         
@@ -135,40 +103,48 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             if let cnbetaData = cnbetaData {
                 
                 var contents = [Paragraph]()
-            
-                let jiDoc = Ji(htmlData: cnbetaData)!
-            
-                let introduceNode = jiDoc.xPath("/html/body/section/section[2]/section/div/div/section[1]/div[1]")
-                for intro in (introduceNode?.first?.children)! {
-                    if let introContent = intro.content {
+                
+                
+                if let doc = HTML(html: cnbetaData, encoding: .utf8) {
                     
-                        if introContent == "" {
-                            // TODO: show image?
-                        } else {
-                            let paragraph = Paragraph.init(type: .text, string: introContent)
+                    // article sum
+                    for link in doc.css("div.article-summ") {
+                        if link.text != "" {
+                            let paragraph = Paragraph.init(type: .summary, content: link.text!, alignment: .alignmentLeft,  textStyle: .normal)
                             contents.append(paragraph)
+
                         }
                     }
-                }
-                
-                if let contentNode = jiDoc.xPath("/html/body/section/section[2]/section/div/div/section[1]/div[2]") {
-                    for content in (contentNode.first?.children)! {
 
-                        if let contentString = content.content {
-                        // image? video?
-                            if contentString == "" {
-
-                                if let imageSrc = content.children.first?.children.first?.attributes["src"] {
-                                    let paragraph = Paragraph.init(type: .image, string: imageSrc)
+                    // article content
+                    for link in doc.css("div.articleCont p") {
+                        
+                        if link.text == "" {
+                            // image or video
+                            for imageNode in link.css("img") {
+                                if let imageSrc = imageNode["src"] {
+                                    let paragraph = Paragraph.init(type: .image, content: imageSrc, alignment: .alignmentCenter)
                                     contents.append(paragraph)
                                 }
-                            } else {
-                                if contentString.contains("[广告]活动入口") {
-                                    break
-                                }
-                                let paragraph = Paragraph.init(type: .text, string: contentString)
-                                contents.append(paragraph)
                             }
+                            
+                        } else {
+                            
+                            var textStyle: TextStyle = .normal
+                            if link.css("strong").first?.text != nil {
+                                textStyle = .strong
+                            }
+                            
+                            var textAlignment: ParagraphAlignment = .alignmentLeft
+                            if link["style"] == "text-align: center;" {
+                                textAlignment = .alignmentCenter
+                            } else if link["style"] == "text-align: right;"{
+                                textAlignment = .alignmentRight
+                            }
+                            
+                            let paragraph = Paragraph.init(type: .text, content: link.text!, alignment: textAlignment,  textStyle: textStyle)
+                            contents.append(paragraph)
+                            
                         }
                     }
                 }

@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Ji.xcscheme</key>
+		<key>Kanna.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,12 +32,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>42E68C024F0E41495C505F917CAB4426</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4D226B21EDBA4FF769506FEAF9395B7E</key>
+		<key>4D10E4FF5A483B852B47CCA0B994E340</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -47,7 +42,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CDEBB415C8843ED59C1ADA4EF2FDAF32</key>
+		<key>C20610CA10512DBD784170C4CE02058A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CC02C5CDD0C9C89238679A966F99D976</key>
 		<dict>
 			<key>primary</key>
 			<true/>
