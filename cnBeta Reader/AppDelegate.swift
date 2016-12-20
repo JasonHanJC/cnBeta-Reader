@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,7 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.addSubview(statusBarBackgroudView)
         window?.addConstraintsWithFormat("H:|[v0]|", views: statusBarBackgroudView)
         window?.addConstraintsWithFormat("V:|[v0(20)]", views: statusBarBackgroudView)
-        
+
+        Fabric.with([Crashlytics.self])
         
         return true
     }

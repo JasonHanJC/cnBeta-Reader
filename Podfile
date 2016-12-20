@@ -9,4 +9,6 @@ target 'cnBeta-Reader' do
     pod 'Toast-Swift', '~> 2.0.0'
     pod 'Alamofire', '~> 4.0'
     pod 'Kanna', '~> 2.1.0'
+    pod 'Fabric'
+    pod 'Crashlytics'
 end
