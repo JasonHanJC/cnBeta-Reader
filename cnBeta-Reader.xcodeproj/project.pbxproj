@@ -494,6 +494,7 @@
 			baseConfigurationReference = A2C669820FE1B658A23745A8 /* Pods-cnBeta-Reader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = C2VVZK2VN8;
 				INFOPLIST_FILE = "cnBeta Reader/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
