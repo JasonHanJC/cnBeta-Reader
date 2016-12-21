@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import CoreData
 
 class SavedCell: BaseCell {
 
-
-
+    override func setupViews() {
+        super.setupViews()
+        
+        
+    }
 }

@@ -8,7 +8,11 @@
 
 import UIKit
 
-let imageCache = NSCache<NSString, UIImage>()
+let imageCache: NSCache<NSString, UIImage> = {
+    let imageCache = NSCache<NSString, UIImage>()
+    imageCache.countLimit = 40
+    return imageCache
+}()
 
 class CustomImageView: UIImageView {
     

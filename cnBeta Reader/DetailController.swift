@@ -46,18 +46,27 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             print(urlString)
             URLString = urlString
             
-            view.makeToastActivity(.center)
+            if let data = selectedFeed?.savedContent as? Data {
                 
-            getWebContentWithUrl(urlString: urlString, completion: { contents in
-                DispatchQueue.main.async {
-                    self.view.hideToastActivity()
-                    
-                    if let newFeeds = contents {
-                        self.contentArray? += newFeeds
-                        self.collectionView?.reloadData()
-                    }
+                if let content = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Paragraph] {
+                    contentArray? += content
+                    collectionView?.reloadData()
                 }
-            })
+            } else {
+                view.makeToastActivity(.center)
+                DispatchQueue.global(qos: .default).async {
+                    self.getWebContentWithUrl(urlString: urlString, completion: { contents in
+                        DispatchQueue.main.async {
+                            self.view.hideToastActivity()
+                        
+                            if let newFeeds = contents {
+                                self.contentArray? += newFeeds
+                                self.collectionView?.reloadData()
+                            }
+                        }
+                    })
+                }
+            }
         }
     }
     
@@ -67,7 +76,9 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-        let saveButton = UIBarButtonItem(image: UIImage(named: "Save")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSave))
+        let saveImage = (selectedFeed?.isSaved)! ? "Saved" : "Save"
+        let saveButton = UIBarButtonItem(image: UIImage(named: saveImage)?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSave))
+        
         let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNavMore))
         
         navigationItem.rightBarButtonItems = [moreButton, saveButton]
@@ -84,6 +95,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         }
         
         selectedFeed?.isSaved = !(selectedFeed?.isSaved)!
+        CoreDataStack.sharedInstance.saveContext()
     }
     
     func handleNavMore(sender: UIBarButtonItem) {
@@ -112,7 +124,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         let height = contentArray?[indexPath.item].paragraphHeight
         
-        return CGSize(width: collectionView.frame.width, height: height!)
+        return CGSize(width: collectionView.frame.width, height: CGFloat(height!))
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -127,8 +139,6 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     func getWebContentWithUrl(urlString: String, completion: @escaping contentParsingCompletion) {
         
-        DispatchQueue.global(qos: .default).async {
-            
             let url = URL(string: urlString);
             let cnbetaData = try? Data(contentsOf: url!)
             
@@ -175,11 +185,15 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                             }
                             
                             let paragraph = Paragraph.init(type: .text, content: link.text!, alignment: textAlignment,  textStyle: textStyle)
+                            
                             contents.append(paragraph)
                             
                         }
                     }
                 }
+                
+                let data = NSKeyedArchiver.archivedData(withRootObject: contents)
+                self.selectedFeed?.savedContent = data as NSData
                 
                 if self.URLString == urlString {
                     completion(contents)
@@ -191,5 +205,5 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 }
             }
         }
-    }
+    
 }

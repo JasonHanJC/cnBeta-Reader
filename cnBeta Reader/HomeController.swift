@@ -38,7 +38,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         collectionView?.backgroundColor = .white
         collectionView?.register(FeedCollectionView.self, forCellWithReuseIdentifier: cellId)
-//        collectionView?.register(TrendingCell.self, forCellWithReuseIdentifier: trendingId)
+        collectionView?.register(SavedTableView.self, forCellWithReuseIdentifier: saveCellId)
 
         collectionView?.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0)
@@ -60,9 +60,15 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCollectionView
-        cell.delegate = self
-        return cell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCollectionView
+            cell.delegate = self
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: saveCellId, for: indexPath) as! SavedTableView
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

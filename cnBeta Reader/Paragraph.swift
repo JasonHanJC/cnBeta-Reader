@@ -27,15 +27,16 @@ enum ParagraphAlignment: Int {
     case alignmentRight = 2
 }
 
-struct Paragraph {
+class Paragraph: NSObject, NSCoding {
     
     var type: ParagraphType?
     var alignment: ParagraphAlignment?
     var textStyle: TextStyle?
     var paragraphString: String?
-    var paragraphHeight: CGFloat?
+    var paragraphHeight: Float?
     
     init(type: ParagraphType, content: String, alignment: ParagraphAlignment, textStyle: TextStyle = .normal) {
+        super.init()
         self.type = type
         self.paragraphString = content
         self.alignment = alignment
@@ -46,15 +47,31 @@ struct Paragraph {
         } else if (type == .text) || (type == .summary) {
             self.paragraphHeight = computeHeight(string: content ,fontSize: Constants.CONTENT_FONT_SIZE_DETAIL)
         } else {
-            self.paragraphHeight = Constants.SCREEN_WIDTH / 4 * 3 + 8 + 8;
+            self.paragraphHeight = Float(Constants.SCREEN_WIDTH / 4 * 3 + 8 + 8)
         }
     }
     
-    private func computeHeight(string: String, fontSize: CGFloat) -> CGFloat {
+    private func computeHeight(string: String, fontSize: CGFloat) -> Float {
         let size = CGSize(width: Constants.SCREEN_WIDTH - 8 - 8, height: CGFloat(FLT_MAX))
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let estimatedFrame = NSString(string: string).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize)], context: nil)
         
-        return CGFloat(ceilf(Float(estimatedFrame.size.height)) + 20)
+        return ceilf(Float(estimatedFrame.size.height)) + 20
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        type = ParagraphType(rawValue: (aDecoder.decodeObject(forKey: "type") as! NSNumber).intValue)
+        alignment = ParagraphAlignment(rawValue: (aDecoder.decodeObject(forKey: "alignment") as! NSNumber).intValue)
+        textStyle = TextStyle(rawValue: (aDecoder.decodeObject(forKey: "style") as! NSNumber).intValue)
+        paragraphString = aDecoder.decodeObject(forKey: "paragraphString") as! String?
+        paragraphHeight = (aDecoder.decodeObject(forKey: "height") as! NSNumber).floatValue
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(NSNumber.init(value: (type?.rawValue)!) , forKey: "type")
+        aCoder.encode(NSNumber.init(value: (alignment?.rawValue)!), forKey: "alignment")
+        aCoder.encode(NSNumber.init(value: (textStyle?.rawValue)!), forKey: "style")
+        aCoder.encode(paragraphString, forKey: "paragraphString")
+        aCoder.encode(NSNumber.init(value: paragraphHeight!), forKey: "height")
     }
 }

@@ -19,7 +19,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     weak var delegate: FeedCollectionViewDelegate?
     
-    lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
+    private lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
         fetchRequest.fetchLimit = Constants.FETCH_LIMIT
@@ -31,7 +31,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return frc as! NSFetchedResultsController<Feed>
     }()
     
-    lazy var refreshHeader: MJRefreshNormalHeader = {
+    private lazy var refreshHeader: MJRefreshNormalHeader = {
         let refreshHeader = MJRefreshNormalHeader.init(refreshingBlock: {
             ApiService.sharedInstance.fetchFeed(withURL: Constants.API_URL, completion: { (newFeedsCount) in
                 
@@ -45,7 +45,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshHeader!
     }()
     
-    lazy var refreshFooter: MJRefreshBackStateFooter = {
+    private lazy var refreshFooter: MJRefreshBackStateFooter = {
         let refreshFooter = MJRefreshBackStateFooter.init(refreshingBlock: {
             
             let lastItem = self.collectionView.numberOfItems(inSection: 0)
@@ -84,7 +84,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshFooter!
     }()
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor.white
@@ -93,7 +93,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return cv
     }()
     
-    let cellId = "cellId"
+    private let cellId = "NewFeedCellId"
     
     override func setupViews() {
         
