@@ -62,7 +62,7 @@ class SavedCell: BaseCell {
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .gray
         label.text = "Dummy content"
-        label.numberOfLines = 8
+        label.numberOfLines = 3
         return label
     }()
     

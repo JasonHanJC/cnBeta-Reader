@@ -110,12 +110,12 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
             estimatedTitleFrame = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 18)], context: nil)
         }
         
-        var estimatedContentFrame: CGRect = .zero
-        if let content = feed.contentSnippet {
-            estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
-        }
+//        var estimatedContentFrame: CGRect = .zero
+//        if let content = feed.contentSnippet {
+//            estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
+//        }
         
-        return CGSize(width: frame.width,height: estimatedContentFrame.height + estimatedTitleFrame.height + 50)
+        return CGSize(width: frame.width,height: estimatedTitleFrame.height + 110)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
