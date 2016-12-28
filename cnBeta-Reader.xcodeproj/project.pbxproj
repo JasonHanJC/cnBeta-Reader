@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		962771371E025BC50043F894 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962771361E025BC50043F894 /* DetailController.swift */; };
-		962771951E03AFF40043F894 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = 962771941E03AFF40043F894 /* test.html */; };
 		964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964963B01E08DE8D00EA079C /* Paragraph.swift */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
 		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
@@ -29,13 +28,13 @@
 		96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583421E04FBCF0041B9D2 /* CustomImageView.swift */; };
 		96F583461E0500190041B9D2 /* WebCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583451E0500190041B9D2 /* WebCell.swift */; };
 		96F583481E0504BE0041B9D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583471E0504BE0041B9D2 /* Constants.swift */; };
-		BE760AE09ADEB8E545DD84B4 /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CA353D8BF4D1757FC95136 /* Pods_cnBeta_Reader.framework */; };
+		CACEB891E1DCCDBB8CA5DF55 /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FBCBED3BF4B375AFFD15123 /* Pods_cnBeta_Reader.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		25CA353D8BF4D1757FC95136 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FBCBED3BF4B375AFFD15123 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FD7CBC443BBBDB7F88BCB6B /* Pods-cnBeta-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.debug.xcconfig"; sourceTree = "<group>"; };
 		962771361E025BC50043F894 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
-		962771941E03AFF40043F894 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		964963B01E08DE8D00EA079C /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		9666F0C81DFF22F00043465D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = "cnBeta Reader/CoreDataStack.swift"; sourceTree = "<group>"; };
 		967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
@@ -59,10 +58,7 @@
 		96F583421E04FBCF0041B9D2 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		96F583451E0500190041B9D2 /* WebCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCell.swift; sourceTree = "<group>"; };
 		96F583471E0504BE0041B9D2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		A1EBE49441C2EE93FA219BE6 /* Pods-cnBeta Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta Reader/Pods-cnBeta Reader.debug.xcconfig"; sourceTree = "<group>"; };
-		A2C669820FE1B658A23745A8 /* Pods-cnBeta-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.debug.xcconfig"; sourceTree = "<group>"; };
-		ACF6B6AD4191585A8798CE5D /* Pods-cnBeta Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta Reader/Pods-cnBeta Reader.release.xcconfig"; sourceTree = "<group>"; };
-		DC5B660D184588EB074FFCB7 /* Pods-cnBeta-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.release.xcconfig"; sourceTree = "<group>"; };
+		F5CFD074C63EFC9BBFA341B3 /* Pods-cnBeta-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,32 +66,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE760AE09ADEB8E545DD84B4 /* Pods_cnBeta_Reader.framework in Frameworks */,
+				CACEB891E1DCCDBB8CA5DF55 /* Pods_cnBeta_Reader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1DE86DA3843A6A5AF3784740 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A1EBE49441C2EE93FA219BE6 /* Pods-cnBeta Reader.debug.xcconfig */,
-				ACF6B6AD4191585A8798CE5D /* Pods-cnBeta Reader.release.xcconfig */,
-				A2C669820FE1B658A23745A8 /* Pods-cnBeta-Reader.debug.xcconfig */,
-				DC5B660D184588EB074FFCB7 /* Pods-cnBeta-Reader.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		736809E896998B6FF60E884D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				25CA353D8BF4D1757FC95136 /* Pods_cnBeta_Reader.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		964963B21E08DEDB00EA079C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,8 +114,8 @@
 			children = (
 				96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */,
 				96C5C88E1DFCDE2E00A61681 /* Products */,
-				1DE86DA3843A6A5AF3784740 /* Pods */,
-				736809E896998B6FF60E884D /* Frameworks */,
+				9EEB8C9E237BCEEC2BE95E5D /* Pods */,
+				BD182837ED7BA14ECB2DF973 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,7 +188,6 @@
 		96C5C8CC1DFE463300A61681 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				962771941E03AFF40043F894 /* test.html */,
 				96B007B91E01DFD70098BD71 /* Bridging-Header.h */,
 				96C5C89C1DFCDE2E00A61681 /* Info.plist */,
 			);
@@ -226,6 +202,23 @@
 			name = WebDetail;
 			sourceTree = "<group>";
 		};
+		9EEB8C9E237BCEEC2BE95E5D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8FD7CBC443BBBDB7F88BCB6B /* Pods-cnBeta-Reader.debug.xcconfig */,
+				F5CFD074C63EFC9BBFA341B3 /* Pods-cnBeta-Reader.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BD182837ED7BA14ECB2DF973 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1FBCBED3BF4B375AFFD15123 /* Pods_cnBeta_Reader.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -233,13 +226,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96C5C89F1DFCDE2E00A61681 /* Build configuration list for PBXNativeTarget "cnBeta-Reader" */;
 			buildPhases = (
-				7F56BF76B768C922E944D6FA /* [CP] Check Pods Manifest.lock */,
+				8D9C4769A6AE3232114CFA1E /* [CP] Check Pods Manifest.lock */,
 				96C5C8891DFCDE2E00A61681 /* Sources */,
 				96C5C88A1DFCDE2E00A61681 /* Frameworks */,
 				96C5C88B1DFCDE2E00A61681 /* Resources */,
-				BB67959A0E3605E5415D1C71 /* [CP] Embed Pods Frameworks */,
-				24C09492758460DAE51603AB /* [CP] Copy Pods Resources */,
 				968872281E0915F100A45385 /* ShellScript */,
+				D0BA6D488C69B0FBF9ADD2DA /* [CP] Embed Pods Frameworks */,
+				4CFA3A5098C7E46CA58FFC84 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -292,14 +285,13 @@
 			files = (
 				96C5C89B1DFCDE2E00A61681 /* LaunchScreen.storyboard in Resources */,
 				96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */,
-				962771951E03AFF40043F894 /* test.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		24C09492758460DAE51603AB /* [CP] Copy Pods Resources */ = {
+		4CFA3A5098C7E46CA58FFC84 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,7 +306,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7F56BF76B768C922E944D6FA /* [CP] Check Pods Manifest.lock */ = {
+		8D9C4769A6AE3232114CFA1E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -342,7 +334,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" fc4241c937e243a3b48b4a50cfba2b291910144c c4611082081fbab89770d1e25c71354b32c4d74013854b78f77d64d522b7b621";
 		};
-		BB67959A0E3605E5415D1C71 /* [CP] Embed Pods Frameworks */ = {
+		D0BA6D488C69B0FBF9ADD2DA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -495,15 +487,17 @@
 		};
 		96C5C8A01DFCDE2E00A61681 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2C669820FE1B658A23745A8 /* Pods-cnBeta-Reader.debug.xcconfig */;
+			baseConfigurationReference = 8FD7CBC443BBBDB7F88BCB6B /* Pods-cnBeta-Reader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = C2VVZK2VN8;
 				INFOPLIST_FILE = "cnBeta Reader/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
+				PRODUCT_BUNDLE_IDENTIFIER = com.juncheng.app.cnBetaReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Jason/Desktop/cnBeta-Reader/cnBeta Reader/Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -514,14 +508,16 @@
 		};
 		96C5C8A11DFCDE2E00A61681 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC5B660D184588EB074FFCB7 /* Pods-cnBeta-Reader.release.xcconfig */;
+			baseConfigurationReference = F5CFD074C63EFC9BBFA341B3 /* Pods-cnBeta-Reader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = C2VVZK2VN8;
 				INFOPLIST_FILE = "cnBeta Reader/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.juncheng.app.cnBeta-Reader";
+				PRODUCT_BUNDLE_IDENTIFIER = com.juncheng.app.cnBetaReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Jason/Desktop/cnBeta-Reader/cnBeta Reader/Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

@@ -45,8 +45,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshHeader!
     }()
     
-    private lazy var refreshFooter: MJRefreshAutoNormalFooter = {
-        let refreshFooter = MJRefreshAutoNormalFooter.init(refreshingBlock: {
+    private lazy var refreshFooter: MJRefreshAutoStateFooter = {
+        let refreshFooter = MJRefreshAutoStateFooter.init(refreshingBlock: {
             
             let lastItem = self.collectionView.numberOfItems(inSection: 0)
             self.fetchedResultsController.fetchRequest.fetchLimit += Constants.FETCH_LIMIT
