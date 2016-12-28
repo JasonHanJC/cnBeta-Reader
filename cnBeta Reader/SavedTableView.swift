@@ -39,22 +39,18 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         
         do {
             try fetchedResultsController.performFetch()
-            
-            print(fetchedResultsController.sections?[0].numberOfObjects ?? "SAVED nothing")
-            
         } catch let err {
             print(err)
         }
         
         super.setupViews()
         
-        backgroundColor = .white
-        
         addSubview(collectionView)
         addConstraintsWithFormat("H:|[v0]|", views: collectionView)
         addConstraintsWithFormat("V:|[v0]|", views: collectionView)
         
-        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.backgroundColor = UIColor(white: 0.90, alpha: 1)
+        collectionView.register(SavedCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
@@ -66,7 +62,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SavedCell
         
         let feed = fetchedResultsController.object(at: indexPath)
         cell.feed = feed;
@@ -78,11 +74,20 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let feed = fetchedResultsController.object(at: indexPath)
-        let size = CGSize(width: 281, height: 1000)
+        let size = CGSize(width: Constants.SCREEN_WIDTH - 24, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: feed.contentSnippet!).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
         
-        return CGSize(width: frame.width,height: estimatedFrame.height + 80)
+        var estimatedTitleFrame: CGRect = .zero
+        if let title = feed.title {
+            estimatedTitleFrame = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 18)], context: nil)
+        }
+        
+        var estimatedContentFrame: CGRect = .zero
+        if let content = feed.contentSnippet {
+            estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
+        }
+        
+        return CGSize(width: frame.width,height: estimatedContentFrame.height + estimatedTitleFrame.height + 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

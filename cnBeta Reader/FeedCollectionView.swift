@@ -45,8 +45,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshHeader!
     }()
     
-    private lazy var refreshFooter: MJRefreshBackStateFooter = {
-        let refreshFooter = MJRefreshBackStateFooter.init(refreshingBlock: {
+    private lazy var refreshFooter: MJRefreshAutoNormalFooter = {
+        let refreshFooter = MJRefreshAutoNormalFooter.init(refreshingBlock: {
             
             let lastItem = self.collectionView.numberOfItems(inSection: 0)
             self.fetchedResultsController.fetchRequest.fetchLimit += Constants.FETCH_LIMIT
@@ -160,11 +160,20 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let feed = fetchedResultsController.object(at: indexPath)
-        let size = CGSize(width: 281, height: 1000)
+        let size = CGSize(width: Constants.SCREEN_WIDTH - 40, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: feed.contentSnippet!).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
         
-        return CGSize(width: frame.width,height: estimatedFrame.height + 80)
+        var estimatedTitleFrame: CGRect = .zero
+        if let title = feed.title {
+            estimatedTitleFrame = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 18)], context: nil)
+        }
+        
+        var estimatedContentFrame: CGRect = .zero
+        if let content = feed.contentSnippet {
+            estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
+        }
+        
+        return CGSize(width: frame.width,height: estimatedContentFrame.height + estimatedTitleFrame.height + 35)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

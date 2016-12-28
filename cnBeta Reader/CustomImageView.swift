@@ -36,16 +36,15 @@ class CustomImageView: UIImageView {
                     print(error.debugDescription)
                     return
                 }
+                
+                let imageToCache = UIImage(data: data!)
+                
+                imageCache.setObject(imageToCache!, forKey: urlStr as NSString)
             
                 DispatchQueue.main.async(execute: {
-                
-                    let imageToCache = UIImage(data: data!)
-                
                     if self.imageURLString == urlString {
                         self.image = imageToCache
                     }
-                
-                    imageCache.setObject(imageToCache!, forKey: urlStr as NSString)
                 })
             
             }).resume()

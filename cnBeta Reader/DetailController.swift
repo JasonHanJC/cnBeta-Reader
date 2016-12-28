@@ -25,7 +25,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         collectionView?.register(WebCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.backgroundColor = .white
 
@@ -87,10 +87,10 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     func handleSave(sender: UIBarButtonItem) {
         
         if selectedFeed?.isSaved == false {
-            view.makeToast("Feed saved", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+            view.makeToast("Feed saved", duration: 0.5, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
             sender.image = UIImage(named: "Saved")?.withRenderingMode(.alwaysOriginal)
         } else {
-            view.makeToast("Feed unsaved", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+            view.makeToast("Feed unsaved", duration: 0.5, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
             sender.image = UIImage(named: "Save")?.withRenderingMode(.alwaysOriginal)
         }
         
@@ -100,6 +100,9 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     func handleNavMore(sender: UIBarButtonItem) {
         view.makeToast("Nothing in here yet", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+        
+        // TODO: open in browser and share
+        //UIApplication.shared.openURL(URL(string: (selectedFeed?.link)!)!)
     }
     
     

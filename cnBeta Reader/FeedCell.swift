@@ -12,7 +12,7 @@ class FeedCell: BaseCell {
     
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? UIColor(white: 0, alpha: 0.2) : .white
+            backgroundColor = isHighlighted ? UIColor(white: 0.80, alpha: 1) : .white
             dateLabel.textColor = isHighlighted ? .white : .black
             titleLabel.textColor = isHighlighted ? .white : .black
             contentLabel.textColor = isHighlighted ? .white : .gray
@@ -40,7 +40,7 @@ class FeedCell: BaseCell {
     
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
         label.text = "Dummy date"
         label.numberOfLines = 1
@@ -49,7 +49,7 @@ class FeedCell: BaseCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
         label.text = "Dummy title"
         label.numberOfLines = 2
