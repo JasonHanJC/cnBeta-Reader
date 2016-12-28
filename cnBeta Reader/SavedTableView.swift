@@ -8,8 +8,15 @@
 
 import UIKit
 import CoreData
+import MJRefresh
+
+protocol SavedTableViewDelegate:class {
+    func savedTableViewDidSelectFeed(feed: Feed);
+}
 
 class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    weak var delegate: SavedTableViewDelegate?
     
     lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
@@ -23,6 +30,21 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         
         return frc as! NSFetchedResultsController<Feed>
     }()
+    
+    private lazy var refreshHeader: MJRefreshStateHeader = {
+        let refreshHeader = MJRefreshStateHeader.init(refreshingBlock: {
+            do {
+                try self.fetchedResultsController.performFetch()
+                self.collectionView.mj_header.endRefreshing()
+                self.collectionView.reloadData()
+            } catch let err {
+                print(err)
+            }
+        })
+        refreshHeader?.lastUpdatedTimeLabel.isHidden = true
+        return refreshHeader!
+    }()
+
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,6 +71,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         addConstraintsWithFormat("H:|[v0]|", views: collectionView)
         addConstraintsWithFormat("V:|[v0]|", views: collectionView)
         
+        collectionView.mj_header = refreshHeader
         collectionView.backgroundColor = UIColor(white: 0.90, alpha: 1)
         collectionView.register(SavedCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -68,6 +91,11 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         cell.feed = feed;
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let feedObject = fetchedResultsController.object(at: indexPath)
+        delegate?.savedTableViewDidSelectFeed(feed: feedObject)
     }
     
     // MARK: CollectionView layout delegate

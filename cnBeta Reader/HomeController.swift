@@ -66,6 +66,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: saveCellId, for: indexPath) as! SavedTableView
+            cell.delegate = self
             return cell
         }
         
@@ -118,13 +119,23 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
 }
 
-extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate {
+extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTableViewDelegate {
     func didSelectMenuBarAtIndex(index: Int) {
         scrollToMenuIndex(menuIndex: index)
     }
     
     func feedCollectionViewDidSelectFeed(feed: Feed) {
 
+        let layout = UICollectionViewFlowLayout()
+        let detailController = DetailController(collectionViewLayout: layout)
+        detailController.selectedFeed = feed
+        detailController.navigationItem.title = "Detail"
+        
+        navigationController?.pushViewController(detailController, animated: true)
+    }
+    
+    func savedTableViewDidSelectFeed(feed: Feed) {
+        
         let layout = UICollectionViewFlowLayout()
         let detailController = DetailController(collectionViewLayout: layout)
         detailController.selectedFeed = feed

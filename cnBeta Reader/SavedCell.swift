@@ -14,7 +14,7 @@ class SavedCell: BaseCell {
     override var isHighlighted: Bool {
         didSet {
             viewHolder.backgroundColor = isHighlighted ? UIColor(white: 0.80, alpha: 1) : .white
-            dateLabel.textColor = isHighlighted ? .white : .black
+            dateLabel.textColor = isHighlighted ? .white : .lightGray
             titleLabel.textColor = isHighlighted ? .white : .black
             contentLabel.textColor = isHighlighted ? .white : .gray
         }
