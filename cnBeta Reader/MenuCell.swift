@@ -13,6 +13,7 @@ class MenuCell: BaseCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Feed")?.withRenderingMode(.alwaysTemplate)
+        imageView.contentMode = .scaleAspectFill
         imageView.tintColor = UIColor.rgb(red: 91, green: 14, blue: 13, alpha: 1.0)
         return imageView
     }()
