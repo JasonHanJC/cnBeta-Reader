@@ -13,6 +13,9 @@
 		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
 		967F97931E0120570048D63B /* SavedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F97921E0120570048D63B /* SavedTableView.swift */; };
 		968872271E0905D000A45385 /* SavedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968872261E0905D000A45385 /* SavedCell.swift */; };
+		968C5CF11E14756200DFAE46 /* SettingLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968C5CF01E14756200DFAE46 /* SettingLauncher.swift */; };
+		968C5CF41E1475F900DFAE46 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968C5CF31E1475F900DFAE46 /* SettingCell.swift */; };
+		968C5CF61E14765800DFAE46 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968C5CF51E14765800DFAE46 /* Setting.swift */; };
 		96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */; };
 		96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* HomeController.swift */; };
 		96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8971DFCDE2E00A61681 /* Assets.xcassets */; };
@@ -40,6 +43,9 @@
 		967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
 		967F97921E0120570048D63B /* SavedTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedTableView.swift; sourceTree = "<group>"; };
 		968872261E0905D000A45385 /* SavedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedCell.swift; sourceTree = "<group>"; };
+		968C5CF01E14756200DFAE46 /* SettingLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingLauncher.swift; sourceTree = "<group>"; };
+		968C5CF31E1475F900DFAE46 /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		968C5CF51E14765800DFAE46 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		96B007B91E01DFD70098BD71 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		96C5C88D1DFCDE2E00A61681 /* cnBeta-Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cnBeta-Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				964963B01E08DE8D00EA079C /* Paragraph.swift */,
+				968C5CF51E14765800DFAE46 /* Setting.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -109,6 +116,14 @@
 			name = SavedFeed;
 			sourceTree = "<group>";
 		};
+		968C5CF21E1475E300DFAE46 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				968C5CF31E1475F900DFAE46 /* SettingCell.swift */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 		96C5C8841DFCDE2E00A61681 = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +150,7 @@
 				96C5C8CB1DFE44EB00A61681 /* CoreData */,
 				96C5C8AD1DFD14FE00A61681 /* ApiService */,
 				96C5C8A91DFCE90100A61681 /* views */,
+				968C5CF01E14756200DFAE46 /* SettingLauncher.swift */,
 				962771361E025BC50043F894 /* DetailController.swift */,
 				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
 				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
@@ -148,6 +164,7 @@
 		96C5C8A91DFCE90100A61681 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				968C5CF21E1475E300DFAE46 /* Setting */,
 				96F583441E04FC250041B9D2 /* WebDetail */,
 				967F97911E011FC40048D63B /* SavedFeed */,
 				967F97901E011FA90048D63B /* NewFeed */,
@@ -362,10 +379,13 @@
 				96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */,
 				96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */,
 				96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */,
+				968C5CF61E14765800DFAE46 /* Setting.swift in Sources */,
 				967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */,
 				964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */,
+				968C5CF11E14756200DFAE46 /* SettingLauncher.swift in Sources */,
 				96EE0AE11E0C830E0099892B /* FetchContentOperation.swift in Sources */,
 				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
+				968C5CF41E1475F900DFAE46 /* SettingCell.swift in Sources */,
 				96F583481E0504BE0041B9D2 /* Constants.swift in Sources */,
 				9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */,
 				962771371E025BC50043F894 /* DetailController.swift in Sources */,

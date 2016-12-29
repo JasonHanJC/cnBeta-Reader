@@ -45,8 +45,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshHeader!
     }()
     
-    private lazy var refreshFooter: MJRefreshAutoStateFooter = {
-        let refreshFooter = MJRefreshAutoStateFooter.init(refreshingBlock: {
+    private lazy var refreshFooter: MJRefreshBackFooter = {
+        let refreshFooter = MJRefreshBackFooter.init(refreshingBlock: {
             
             let lastItem = self.collectionView.numberOfItems(inSection: 0)
             self.fetchedResultsController.fetchRequest.fetchLimit += Constants.FETCH_LIMIT
@@ -99,9 +99,6 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         
         do {
             try fetchedResultsController.performFetch()
-            
-            print(fetchedResultsController.sections?[0].numberOfObjects ?? "nothing")
-            
         } catch let err {
             print(err)
         }
@@ -184,8 +181,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     var blockOperation = [BlockOperation]()
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
-        print("core data has change")
+
 //        if type == .insert {
 //            blockOperation.append(BlockOperation(block: {
 //                UIView.animate(withDuration: 1, animations: {
@@ -216,7 +212,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         do {
             try fetchedResultsController.performFetch()
             
-            collectionView.reloadData()
+            self.collectionView.reloadData()
             
         } catch let err {
             print(err)
