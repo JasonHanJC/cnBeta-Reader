@@ -15,6 +15,12 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     let feedCellId = "feedCellId"
     let saveCellId = "saveCellId"
     
+    lazy var settingLauncher: SettingLauncher = {
+        let launcher = SettingLauncher()
+        launcher.delegate = self
+        return launcher
+    }()
+    
     lazy var menuBar: MenuBar = {
         let mb = MenuBar()
         mb.delegate = self
@@ -72,6 +78,10 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        collectionView.backgroundColor = indexPath.item == 1 ? UIColor.white : UIColor(white: 0.95, alpha: 1)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 44 - 20)
@@ -84,7 +94,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let retio = scrollView.frame.width / menuBar.collectionView.frame.width
         
         menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / retio / CGFloat(menuBar.imageNames.count)
-        
     }
 
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -119,11 +128,18 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
 }
 
-extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTableViewDelegate {
+extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTableViewDelegate, SettingLauncherDelegate {
+    
+    // MARK: MenuBarDelegate
     func didSelectMenuBarAtIndex(index: Int) {
         scrollToMenuIndex(menuIndex: index)
     }
     
+    func didSelectSettings() {
+        settingLauncher.showSettingLauncher()
+    }
+    
+    // MARK: FeedCollectionViewDelegate
     func feedCollectionViewDidSelectFeed(feed: Feed) {
 
         let layout = UICollectionViewFlowLayout()
@@ -134,6 +150,7 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTabl
         navigationController?.pushViewController(detailController, animated: true)
     }
     
+    // MARK: SavedTableViewDelegate
     func savedTableViewDidSelectFeed(feed: Feed) {
         
         let layout = UICollectionViewFlowLayout()
@@ -142,5 +159,15 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTabl
         detailController.navigationItem.title = "Detail"
         
         navigationController?.pushViewController(detailController, animated: true)
+    }
+    
+    
+    // MARK: SettingLauncherDelegate
+    func didSelectSetting(setting: Setting) {
+        print(setting.name)
+    }
+    
+    func didCancelByUser() {
+
     }
 }
