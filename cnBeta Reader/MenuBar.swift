@@ -10,6 +10,7 @@ import UIKit
 
 protocol MenuBarDelegate: class {
     func didSelectMenuBarAtIndex(index: Int)
+    func didSelectSettings()
 }
 
 class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -23,11 +24,21 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         return collectionView
     }()
     
-    let logoImageView: UIImageView = {
+    lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .white
+        imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "Whitelogo")
+        imageView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLogoImageTap))
+        imageView.addGestureRecognizer(tapGesture)
         return imageView
     }()
+    
+    func handleLogoImageTap(sender: UITapGestureRecognizer) {
+        print("tapped")
+        delegate?.didSelectSettings()
+    }
     
     let cellId = "cellId"
     let imageNames = ["Feed", "Saved"]
@@ -44,9 +55,9 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         addSubview(collectionView)
         addSubview(logoImageView)
         
-        addConstraintsWithFormat("H:|-8-[v0(40)]-(>=60)-[v1(150)]|", views: logoImageView, collectionView)
+        addConstraintsWithFormat("H:|[v0(40)]-(>=60)-[v1(150)]|", views: logoImageView, collectionView)
         addConstraintsWithFormat("V:|[v0]|", views: collectionView)
-        addConstraintsWithFormat("V:[v0(40)]", views: logoImageView)
+        addConstraintsWithFormat("V:[v0(46)]", views: logoImageView)
         
         addConstraint(NSLayoutConstraint(item: logoImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
