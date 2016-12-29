@@ -46,6 +46,7 @@ class WebCell: BaseCell {
                     imageView.isHidden = true
                     textLabel.isHidden = false
                 } else if p.type == .image {
+                    imageView.image = UIImage(named: "LoadingImage")
                     imageView.loadImageWithURLString(urlString: p.paragraphString!)
                     timeLabel.isHidden = true
                     sperateLine.isHidden = true
