@@ -73,7 +73,7 @@ class SavedCell: BaseCell {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 0.0, height: 1.0);
         view.layer.shadowOpacity = 0.5
-        view.layer.shadowRadius = 1.0
+        view.layer.shadowRadius = 2.0
         return view
     }()
 

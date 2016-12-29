@@ -72,7 +72,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         addConstraintsWithFormat("V:|[v0]|", views: collectionView)
         
         collectionView.mj_header = refreshHeader
-        collectionView.backgroundColor = UIColor(white: 0.90, alpha: 1)
+        collectionView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         collectionView.register(SavedCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
