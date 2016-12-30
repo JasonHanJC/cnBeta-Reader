@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Toast_Swift
 import MJRefresh
+import DZNEmptyDataSet
 
 protocol FeedCollectionViewDelegate:class {
     func feedCollectionViewDidSelectFeed(feed: Feed);
@@ -45,8 +46,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshHeader!
     }()
     
-    private lazy var refreshFooter: MJRefreshBackFooter = {
-        let refreshFooter = MJRefreshBackFooter.init(refreshingBlock: {
+    private lazy var refreshFooter: MJRefreshBackNormalFooter = {
+        let refreshFooter = MJRefreshBackNormalFooter.init(refreshingBlock: {
             
             let lastItem = self.collectionView.numberOfItems(inSection: 0)
             self.fetchedResultsController.fetchRequest.fetchLimit += Constants.FETCH_LIMIT
@@ -115,6 +116,9 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         collectionView.mj_footer = refreshFooter
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        collectionView.emptyDataSetSource = self
+        collectionView.emptyDataSetDelegate = self
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -219,4 +223,30 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         }
     
     }
+}
+
+extension FeedCollectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    
+    // MARK: DZNEmptyDataSetSource
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "No new feeds yet, try pull down to refreash"
+        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
+        
+        return NSAttributedString(string: text, attributes: attribute)
+    }
+    
+//    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+//        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
+//        return NSAttributedString(string: "Hit", attributes: attribute)
+//    }
+    
+    // MARK: DZNEmptyDataSetDelegate
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
+        return true
+    }
+    
+//    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
+//        print("tap")
+//    }
+    
 }

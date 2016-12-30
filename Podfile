@@ -11,4 +11,5 @@ target 'cnBeta-Reader' do
     pod 'Kanna', '~> 2.1.0'
     pod 'Fabric'
     pod 'Crashlytics'
+    pod 'DZNEmptyDataSet'
 end

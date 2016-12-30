@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import MJRefresh
+import DZNEmptyDataSet
 
 protocol SavedTableViewDelegate:class {
     func savedTableViewDidSelectFeed(feed: Feed);
@@ -75,6 +76,9 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         collectionView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         collectionView.register(SavedCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        collectionView.emptyDataSetDelegate = self
+        collectionView.emptyDataSetSource = self
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -128,15 +132,17 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         if type == .insert {
-            if let indexPath = newIndexPath {
-                collectionView.insertItems(at: [indexPath])
-            }
+//            if let indexPath = newIndexPath {
+//                collectionView.insertItems(at: [indexPath])
+//            }
+            collectionView.reloadData()
         } else if type == .update {
             // re configure the cell
         } else if type == .delete {
-            if let indexPath = indexPath {
-                collectionView.deleteItems(at: [indexPath])
-            }
+//            if let indexPath = indexPath {
+//                collectionView.deleteItems(at: [indexPath])
+//            }
+            collectionView.reloadData()
         } else if type == .move {
             if let indexPath = indexPath {
                 collectionView.deleteItems(at: [indexPath])
@@ -160,4 +166,30 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
    
     }
 
+}
+
+extension SavedTableView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    
+    // MARK: DZNEmptyDataSetSource
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "No saved feed yet, try save some interesting one."
+        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
+        
+        return NSAttributedString(string: text, attributes: attribute)
+    }
+    
+//    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+//        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
+//        return NSAttributedString(string: "Hit", attributes: attribute)
+//    }
+    
+    // MARK: DZNEmptyDataSetDelegate
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
+        return false
+    }
+    
+//    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
+//        print("tap")
+//    }
+    
 }

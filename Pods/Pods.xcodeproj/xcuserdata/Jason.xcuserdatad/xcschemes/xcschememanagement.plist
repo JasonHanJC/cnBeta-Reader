@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DZNEmptyDataSet.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Kanna.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,6 +37,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>49DDE832599A634BE27D10EF5326B4C2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4D10E4FF5A483B852B47CCA0B994E340</key>
 		<dict>
 			<key>primary</key>
@@ -42,12 +52,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C20610CA10512DBD784170C4CE02058A</key>
+		<key>8C38A64076828499DEF163664C5BD2C0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC02C5CDD0C9C89238679A966F99D976</key>
+		<key>D386C75EFD4F03725E4EFB866B600B9A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

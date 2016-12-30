@@ -110,8 +110,8 @@
 		967F97911E011FC40048D63B /* SavedFeed */ = {
 			isa = PBXGroup;
 			children = (
-				967F97921E0120570048D63B /* SavedTableView.swift */,
 				968872261E0905D000A45385 /* SavedCell.swift */,
+				967F97921E0120570048D63B /* SavedTableView.swift */,
 			);
 			name = SavedFeed;
 			sourceTree = "<group>";

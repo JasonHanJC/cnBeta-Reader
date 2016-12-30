@@ -10,6 +10,7 @@
 #define Bridging_Header_h
 
 #import <MJRefresh/MJRefresh.h>
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
 
 #endif /* Bridging_Header_h */
