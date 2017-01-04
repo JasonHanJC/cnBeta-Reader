@@ -32,7 +32,7 @@ class ApiService: NSObject {
     
     func parsingData(data: Any?, completion: @escaping fetchFeedCompletion) {
         DispatchQueue.global(qos: .default).async {
-            let latestFeedDate = CoreDataStack.sharedInstance.getLatestFeed()?.publishedDate
+            let latestFeedDate: NSDate? = CoreDataStack.sharedInstance.getLatestFeed()?.publishedDate
             var newFeedsCount: Int = 0
             
             if let jsonDictionaries = data as? [String : AnyObject] {
@@ -52,6 +52,7 @@ class ApiService: NSObject {
                                         newFeed.contentSnippet = object["contentSnippet"] as? String
                                         newFeed.isRead = false
                                         newFeed.isSaved = false
+                                        newFeed.sectionIdentifier = self.getSectionIdentifier(date: date!)
                                         
                                         newFeedsCount += 1
                                     } else {
@@ -64,6 +65,7 @@ class ApiService: NSObject {
                                             newFeed.contentSnippet = object["contentSnippet"] as? String
                                             newFeed.isRead = false
                                             newFeed.isSaved = false
+                                            newFeed.sectionIdentifier = self.getSectionIdentifier(date: date!)
                                             
                                             newFeedsCount += 1
                                         }
@@ -97,4 +99,9 @@ extension ApiService {
         return nil
     }
     
+    func getSectionIdentifier(date: NSDate) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MMM-yyyy"
+        return dateFormatter.string(from: date as Date)
+    }
 }

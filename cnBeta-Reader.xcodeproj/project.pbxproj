@@ -16,6 +16,7 @@
 		968C5CF11E14756200DFAE46 /* SettingLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968C5CF01E14756200DFAE46 /* SettingLauncher.swift */; };
 		968C5CF41E1475F900DFAE46 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968C5CF31E1475F900DFAE46 /* SettingCell.swift */; };
 		968C5CF61E14765800DFAE46 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968C5CF51E14765800DFAE46 /* Setting.swift */; };
+		96B662E21E1C5CAA006DCEF3 /* ZoomImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */; };
 		96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */; };
 		96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* HomeController.swift */; };
 		96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8971DFCDE2E00A61681 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8B01DFE1D6C00A61681 /* MenuCell.swift */; };
 		96C5C8B31DFE1DA600A61681 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8B21DFE1DA600A61681 /* FeedCell.swift */; };
 		96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8D11DFE761400A61681 /* FeedCollectionView.swift */; };
+		96EBAF351E19BD8000D45BD7 /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 96EBAF341E19BD8000D45BD7 /* Model.xcmappingmodel */; };
 		96EE0AE11E0C830E0099892B /* FetchContentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EE0AE01E0C830E0099892B /* FetchContentOperation.swift */; };
 		96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583421E04FBCF0041B9D2 /* CustomImageView.swift */; };
 		96F583461E0500190041B9D2 /* WebCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583451E0500190041B9D2 /* WebCell.swift */; };
@@ -47,6 +49,7 @@
 		968C5CF31E1475F900DFAE46 /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		968C5CF51E14765800DFAE46 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		96B007B91E01DFD70098BD71 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomImageController.swift; sourceTree = "<group>"; };
 		96C5C88D1DFCDE2E00A61681 /* cnBeta-Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cnBeta-Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96C5C8921DFCDE2E00A61681 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -60,6 +63,8 @@
 		96C5C8B01DFE1D6C00A61681 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		96C5C8B21DFE1DA600A61681 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		96C5C8D11DFE761400A61681 /* FeedCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionView.swift; sourceTree = "<group>"; };
+		96EBAF331E19BD0500D45BD7 /* cnBeta-Reader 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader 2.xcdatamodel"; sourceTree = "<group>"; };
+		96EBAF341E19BD8000D45BD7 /* Model.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model.xcmappingmodel; sourceTree = "<group>"; };
 		96EE0AE01E0C830E0099892B /* FetchContentOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchContentOperation.swift; sourceTree = "<group>"; };
 		96F583421E04FBCF0041B9D2 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		96F583451E0500190041B9D2 /* WebCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCell.swift; sourceTree = "<group>"; };
@@ -150,6 +155,7 @@
 				96C5C8CB1DFE44EB00A61681 /* CoreData */,
 				96C5C8AD1DFD14FE00A61681 /* ApiService */,
 				96C5C8A91DFCE90100A61681 /* views */,
+				96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */,
 				968C5CF01E14756200DFAE46 /* SettingLauncher.swift */,
 				962771361E025BC50043F894 /* DetailController.swift */,
 				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
@@ -197,6 +203,7 @@
 			children = (
 				9666F0C81DFF22F00043465D /* CoreDataStack.swift */,
 				967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */,
+				96EBAF341E19BD8000D45BD7 /* Model.xcmappingmodel */,
 			);
 			name = CoreData;
 			path = ..;
@@ -380,6 +387,7 @@
 				96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */,
 				96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */,
 				968C5CF61E14765800DFAE46 /* Setting.swift in Sources */,
+				96B662E21E1C5CAA006DCEF3 /* ZoomImageController.swift in Sources */,
 				967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */,
 				964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */,
 				968C5CF11E14756200DFAE46 /* SettingLauncher.swift in Sources */,
@@ -390,6 +398,7 @@
 				9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */,
 				962771371E025BC50043F894 /* DetailController.swift in Sources */,
 				96C5C8AF1DFD151B00A61681 /* ApiService.swift in Sources */,
+				96EBAF351E19BD8000D45BD7 /* Model.xcmappingmodel in Sources */,
 				96F583461E0500190041B9D2 /* WebCell.swift in Sources */,
 				96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */,
 				967F97931E0120570048D63B /* SavedTableView.swift in Sources */,
@@ -573,9 +582,10 @@
 		967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				96EBAF331E19BD0500D45BD7 /* cnBeta-Reader 2.xcdatamodel */,
 				967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */,
 			);
-			currentVersion = 967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */;
+			currentVersion = 96EBAF331E19BD0500D45BD7 /* cnBeta-Reader 2.xcdatamodel */;
 			path = "cnBeta-Reader.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

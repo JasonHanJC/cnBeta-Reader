@@ -56,7 +56,7 @@ class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
-    func handleDismiss(setting: Setting) {
+    @objc private func handleDismiss(setting: Setting) {
         
         if let window = UIApplication.shared.keyWindow {
             UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseIn], animations: {
