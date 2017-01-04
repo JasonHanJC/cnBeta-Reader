@@ -46,13 +46,21 @@ class WebCell: BaseCell {
                     imageView.isHidden = true
                     textLabel.isHidden = false
                 } else if p.type == .image {
+                    backgroundColor = .white
                     imageView.image = UIImage(named: "LoadingImage")
-                    imageView.loadImageWithURLString(urlString: p.paragraphString!)
+                    self.isUserInteractionEnabled = false
+                    if let imageURL = p.paragraphString {
+                        imageView.loadImageWithURLString(urlString: imageURL, completion: { (success) in
+                            self.isUserInteractionEnabled = true
+                        })
+                    }
+                    
                     timeLabel.isHidden = true
                     sperateLine.isHidden = true
                     imageView.isHidden = false
                     textLabel.isHidden = true
                 } else if p.type == .title {
+                    backgroundColor = .white
                     textLabel.text = p.paragraphString!
                     textLabel.font = UIFont.systemFont(ofSize: Constants.TITLE_FONT_SIZE_DETAIL, weight: 0.3)
                     
@@ -112,7 +120,7 @@ class WebCell: BaseCell {
         addConstraintsWithFormat("H:|-8-[v0]", views: timeLabel)
         addConstraintsWithFormat("H:|[v0]|", views: sperateLine)
         
-        
+        isUserInteractionEnabled = false
     }
     
 }

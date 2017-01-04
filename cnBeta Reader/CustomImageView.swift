@@ -8,23 +8,26 @@
 
 import UIKit
 
-let imageCache: NSCache<NSString, UIImage> = {
+let imageCaches: NSCache<NSString, UIImage> = {
     let imageCache = NSCache<NSString, UIImage>()
     imageCache.countLimit = 40
     return imageCache
 }()
 
+typealias loadImageCompletion = (Bool) -> Void
+
 class CustomImageView: UIImageView {
     
     var imageURLString: String?
     
-    func loadImageWithURLString(urlString: String?) {
+    func loadImageWithURLString(urlString: String?, completion: @escaping loadImageCompletion) {
         
         if let urlStr = urlString {
             imageURLString = urlStr
         
-            if let imageFromCache = imageCache.object(forKey: urlStr as NSString ) {
+            if let imageFromCache = imageCaches.object(forKey: urlStr as NSString ) {
                 self.image = imageFromCache
+                completion(true)
                 return
             }
         
@@ -39,11 +42,12 @@ class CustomImageView: UIImageView {
                 
                 let imageToCache = UIImage(data: data!)
                 
-                imageCache.setObject(imageToCache!, forKey: urlStr as NSString)
+                imageCaches.setObject(imageToCache!, forKey: urlStr as NSString)
             
                 DispatchQueue.main.async(execute: {
                     if self.imageURLString == urlString {
                         self.image = imageToCache
+                        completion(true)
                     }
                 })
             
