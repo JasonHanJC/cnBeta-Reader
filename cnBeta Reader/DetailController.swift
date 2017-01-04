@@ -23,6 +23,11 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     let cellId = "cellId"
     
+    let zoomImageController: ZoomImageController = {
+        let controller = ZoomImageController()
+        return controller
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -121,6 +126,14 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         cell.paragraph = contentArray?[indexPath.item]
 
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let paragragh = contentArray?[indexPath.item]
+        if paragragh?.type == .image {
+            zoomImageController.imageView.loadImageWithURLString(urlString: paragragh?.paragraphString, completion: {_ in })
+            zoomImageController.show()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
