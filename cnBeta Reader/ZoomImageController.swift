@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class ZoomImageController: NSObject, UIScrollViewDelegate {
     
@@ -17,6 +18,13 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
     
     let imageScrollView = UIScrollView()
     let imageView = CustomImageView()
+    
+    lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "Store"), for: .normal)
+        button.addTarget(self, action: #selector(handleSaveAction), for: .touchUpInside)
+        return button
+    }()
     
     func show() {
         if let window = UIApplication.shared.keyWindow {
@@ -32,6 +40,8 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
             
             // setup scrollView
             if let image = imageView.image {
+                
+                zoomImage = image
                 
                 let ratio = window.frame.width / image.size.width
                 let imageViewH = image.size.height * ratio
@@ -65,12 +75,18 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
                 imageView.isUserInteractionEnabled = true
                 imageScrollView.addSubview(imageView)
                 
+                saveButton.alpha = 0
+                window.addSubview(saveButton)
+                window.addConstraintsWithFormat("V:[v0(33)]-20-|", views: saveButton)
+                window.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .centerX, relatedBy: .equal, toItem: window, attribute: .centerX, multiplier: 1, constant: 0))
+
             }
             
             UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
                 self.blackView.alpha = 1
                 self.imageScrollView.alpha = 1
                 self.imageView.alpha = 1
+                self.saveButton.alpha = 1
             }, completion: nil)
         }
     }
@@ -84,13 +100,34 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
             self.blackView.alpha = 0
             self.imageScrollView.alpha = 0
             self.imageView.alpha = 0
+            self.saveButton.alpha = 0
         }, completion: { _ in
             self.blackView.removeFromSuperview()
             self.imageScrollView.removeFromSuperview()
             self.imageView.removeFromSuperview()
+            self.saveButton.removeFromSuperview()
         })
     }
     
+    @objc private func handleSaveAction() {
+        if let savedImage = zoomImage {
+            UIImageWriteToSavedPhotosAlbum(savedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil);
+        }
+    }
+    
+    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            print("Image save failed\(error.localizedDescription)")
+            if let window = UIApplication.shared.keyWindow {
+                window.makeToast("Failed. Try again.", duration: 0.5, position: CGPoint(x: window.frame.width / 2.0, y: window.frame.height - 80))
+            }
+        } else {
+            if let window = UIApplication.shared.keyWindow {
+                window.makeToast("Successed.", duration: 0.5, position: CGPoint(x: window.frame.width / 2.0, y: window.frame.height - 80))
+            }
+        }
+    }
     
     // MARK: Lifecycle
     override init() {

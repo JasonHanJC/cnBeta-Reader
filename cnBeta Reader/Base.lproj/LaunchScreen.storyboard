@@ -19,28 +19,7 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black_logo" translatesAutoresizingMaskIntoConstraints="NO" id="3Ge-Lv-JVS">
-                                <rect key="frame" x="122" y="269" width="131" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="131" id="VeO-Zz-pOK"/>
-                                    <constraint firstAttribute="height" constant="128" id="mkW-H1-g2Q"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="cnBeta Feeder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbu-Gb-qR8">
-                                <rect key="frame" x="109" y="425" width="169" height="21"/>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="19"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="3Ge-Lv-JVS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Tr7-ly-PeD"/>
-                            <constraint firstItem="3Ge-Lv-JVS" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="bKB-3q-qYr"/>
-                            <constraint firstItem="dbu-Gb-qR8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="6" id="gOh-0M-gr5"/>
-                            <constraint firstItem="dbu-Gb-qR8" firstAttribute="top" secondItem="3Ge-Lv-JVS" secondAttribute="bottom" constant="28" id="hKN-F1-FQE"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -48,7 +27,4 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="black_logo" width="131" height="129"/>
-    </resources>
 </document>
