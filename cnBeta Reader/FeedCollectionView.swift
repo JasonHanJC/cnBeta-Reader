@@ -25,7 +25,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
         fetchRequest.fetchLimit = Constants.FETCH_LIMIT
 
-        let context = CoreDataStack.sharedInstance.context
+        let context = CoreDataStack.sharedInstance.mainContext
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         
@@ -55,22 +55,24 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
             do {
                 try self.fetchedResultsController.performFetch()
                 
+                self.collectionView.reloadData()
+                
                 if let numberOfObjects = self.fetchedResultsController.sections?[0].numberOfObjects {
                     
                     let newItemCount = numberOfObjects - lastItem
                     
                     if newItemCount != 0 {
-                        var indexPaths = [IndexPath]()
-                        for i in 1...newItemCount {
-                            let indexPath = IndexPath(item: lastItem - 1 + i, section: 0)
-                            indexPaths.append(indexPath)
-                        }
-                
-                        self.collectionView.performBatchUpdates({
-                            self.collectionView.insertItems(at: indexPaths)
-                        }, completion: { (completed) in
-                           //
-                        })
+//                        var indexPaths = [IndexPath]()
+//                        for i in 1...newItemCount {
+//                            let indexPath = IndexPath(item: lastItem - 1 + i, section: 0)
+//                            indexPaths.append(indexPath)
+//                        }
+//                
+//                        self.collectionView.performBatchUpdates({
+//                            self.collectionView.insertItems(at: indexPaths)
+//                        }, completion: { (completed) in
+//                           //
+//                        })
                     } else {
                         self.makeToast("No more feed", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
                     }
@@ -182,24 +184,25 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     }
     
     // MARK: NSFetchedResultsController delegate
-    var blockOperation = [BlockOperation]()
+    
+//    var blockOperation = [BlockOperation]()
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
 
-//        if type == .insert {
+        if type == .insert {
 //            blockOperation.append(BlockOperation(block: {
 //                UIView.animate(withDuration: 1, animations: {
 //                    self.collectionView.insertItems(at: [newIndexPath!])
 //                    print(newIndexPath!)
 //                })
 //            }))
-//        } else if type == .update {
-//            
-//        } else if type == .delete {
-//            
-//        } else if type == .move {
-//            
-//        }
+        } else if type == .update {
+            
+        } else if type == .delete {
+            
+        } else if type == .move {
+            
+        }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

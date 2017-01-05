@@ -100,7 +100,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         }
         
         selectedFeed?.isSaved = !(selectedFeed?.isSaved)!
-        CoreDataStack.sharedInstance.saveContext()
+        CoreDataStack.sharedInstance.save()
     }
     
     func handleNavMore(sender: UIBarButtonItem) {

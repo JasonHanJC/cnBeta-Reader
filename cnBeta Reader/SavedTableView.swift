@@ -25,7 +25,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         fetchRequest.predicate = NSPredicate(format: "isSaved == 1", argumentArray: nil)
         //fetchRequest.fetchLimit = Constants.FETCH_LIMIT
         
-        let context = CoreDataStack.sharedInstance.context
+        let context = CoreDataStack.sharedInstance.mainContext
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         

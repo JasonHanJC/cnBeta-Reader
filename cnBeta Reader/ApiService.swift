@@ -31,7 +31,11 @@ class ApiService: NSObject {
     }
     
     func parsingData(data: Any?, completion: @escaping fetchFeedCompletion) {
-        DispatchQueue.global(qos: .default).async {
+        
+        let privateContext = CoreDataStack.sharedInstance.privateContext
+        
+        privateContext.perform { 
+                    
             let latestFeedDate: NSDate? = CoreDataStack.sharedInstance.getLatestFeed()?.publishedDate
             var newFeedsCount: Int = 0
             
@@ -44,7 +48,7 @@ class ApiService: NSObject {
                                     let dateString = object["publishedDate"] as? String
                                     let date = self.getNSDateFromString(dateString: dateString!)
                                     if latestFeedDate == nil {
-                                        let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed") as! Feed
+                                        let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed", context: privateContext) as! Feed
                                         newFeed.title = object["title"] as? String
                                         newFeed.author = object["author"] as? String
                                         newFeed.publishedDate = date
@@ -57,7 +61,7 @@ class ApiService: NSObject {
                                         newFeedsCount += 1
                                     } else {
                                         if date?.compare(latestFeedDate as! Date) == .orderedDescending {
-                                            let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed") as! Feed
+                                            let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed", context: privateContext) as! Feed
                                             newFeed.title = object["title"] as? String
                                             newFeed.author = object["author"] as? String
                                             newFeed.publishedDate = date
@@ -77,9 +81,12 @@ class ApiService: NSObject {
                 }
             }
             
-            CoreDataStack.sharedInstance.saveContext()
+            CoreDataStack.sharedInstance.save()
             completion(newFeedsCount)
         }
+        
+     //   DispatchQueue.global(qos: .default).async {
+     //  }
     }
     
     

@@ -21,7 +21,14 @@ class CoreDataStack: NSObject {
         return urls[urls.endIndex - 1]
     }()
     
-    lazy var context: NSManagedObjectContext = {
+    lazy var privateContext: NSManagedObjectContext = {
+        var managedObjectContext = NSManagedObjectContext(
+            concurrencyType: .privateQueueConcurrencyType)
+        managedObjectContext.parent = self.mainContext
+        return managedObjectContext
+    }()
+    
+    lazy var mainContext: NSManagedObjectContext = {
         var managedObjectContext = NSManagedObjectContext(
             concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.psc
@@ -45,10 +52,26 @@ class CoreDataStack: NSObject {
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
             
-    func saveContext () {
-        if context.hasChanges {
+    func save() {
+        
+        if !mainContext.hasChanges && !privateContext.hasChanges {
+            return
+        }
+        
+        mainContext.performAndWait {
+            
             do {
-                try context.save()
+                try self.mainContext.save()
+                
+                self.privateContext.perform({ 
+                    do {
+                        try self.privateContext.save()
+                    } catch let error as NSError {
+                        print("Error: \(error.localizedDescription)")
+                        abort()
+                    }
+                })
+
             } catch let error as NSError {
                 print("Error: \(error.localizedDescription)")
                 abort()
@@ -63,15 +86,11 @@ class CoreDataStack: NSObject {
 
 extension CoreDataStack {
     
-    func createObjectForEntity(_ entityName: String) -> NSManagedObject? {
+    func createObjectForEntity(_ entityName: String, context: NSManagedObjectContext) -> NSManagedObject? {
         return NSEntityDescription.insertNewObject(forEntityName: entityName, into: context)
     }
     
-    func test(first: Int = 100, second: Int) -> Int {
-        return first + second
-    }
-    
-    func getObjectsForEntity(_ entityName: String, sortByKey key: String? = nil, isAscending: Bool = false, withPredicate predicate: NSPredicate? = nil, limit: Int = 0) -> [Any]? {
+    func getObjectsForEntity(context: NSManagedObjectContext, entityName: String, sortByKey key: String? = nil, isAscending: Bool = false, withPredicate predicate: NSPredicate? = nil, limit: Int = 0) -> [Any]? {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         
@@ -96,13 +115,13 @@ extension CoreDataStack {
     }
     
     func getLatestFeed() -> Feed? {
-        if let feeds = getObjectsForEntity("Feed", sortByKey: "publishedDate", isAscending: false, withPredicate: nil, limit: 1) {
+        if let feeds = getObjectsForEntity(context: mainContext, entityName: "Feed", sortByKey: "publishedDate", isAscending: false, withPredicate: nil, limit: 1) {
             return feeds.first as! Feed?
         }
         return nil;
     }
     
-    func deleteObject(object: NSManagedObject) {
+    func deleteObject(object: NSManagedObject, context: NSManagedObjectContext) {
         context.delete(object)
         
         do {
@@ -112,7 +131,7 @@ extension CoreDataStack {
         }
     }
     
-    func deleteObjectsForEntity(entityName : String, withPredicate predicate: NSPredicate? = nil) {
+    func deleteObjectsForEntity(context: NSManagedObjectContext, entityName : String, withPredicate predicate: NSPredicate? = nil) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         if predicate != nil {
             fetchRequest.predicate = predicate
@@ -139,14 +158,14 @@ extension CoreDataStack {
             for entity in entities {
                 
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
-                let objects = try(context.fetch(fetchRequest)) as? [NSManagedObject]
+                let objects = try(mainContext.fetch(fetchRequest)) as? [NSManagedObject]
                 
                 for object in objects! {
-                    context.delete(object)
+                    mainContext.delete(object)
                 }
             }
             
-            try context.save()
+            try mainContext.save()
         } catch let err {
             print(err)
         }
