@@ -11,7 +11,6 @@ import CoreData
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let cellId = "cellId"
     let feedCellId = "feedCellId"
     let saveCellId = "saveCellId"
     
@@ -43,7 +42,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         collectionView?.backgroundColor = .white
-        collectionView?.register(FeedCollectionView.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(FeedCollectionView.self, forCellWithReuseIdentifier: feedCellId)
         collectionView?.register(SavedTableView.self, forCellWithReuseIdentifier: saveCellId)
 
         collectionView?.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
@@ -67,7 +66,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCollectionView
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedCellId, for: indexPath) as! FeedCollectionView
             cell.delegate = self
             return cell
         } else {
@@ -97,7 +96,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
 
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let index = Int(targetContentOffset.pointee.x / view.frame.width)
+        let index = Int(targetContentOffset.pointee.x / scrollView.frame.width)
         let indexPath = IndexPath(item: index, section: 0)
         menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
         

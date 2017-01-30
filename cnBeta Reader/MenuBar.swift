@@ -36,7 +36,6 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }()
     
     func handleLogoImageTap(sender: UITapGestureRecognizer) {
-        print("tapped")
         delegate?.didSelectSettings()
     }
     

@@ -34,7 +34,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     private lazy var refreshHeader: MJRefreshNormalHeader = {
         let refreshHeader = MJRefreshNormalHeader.init(refreshingBlock: {
-            ApiService.sharedInstance.fetchFeed(withURL: Constants.API_URL, completion: { (newFeedsCount) in
+            ApiService.sharedInstance.fetchFeed(withURL: Constants.API_URL_2, completion: { (newFeedsCount) in
                 
                 DispatchQueue.main.async {
                     self.collectionView.mj_header.endRefreshing()
@@ -176,7 +176,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
             estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
         }
         
-        return CGSize(width: frame.width,height: estimatedContentFrame.height + estimatedTitleFrame.height + 35)
+        return CGSize(width: frame.width, height: estimatedContentFrame.height + estimatedTitleFrame.height + 35)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

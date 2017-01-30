@@ -47,7 +47,7 @@ class WebCell: BaseCell {
                     textLabel.isHidden = false
                 } else if p.type == .image {
                     backgroundColor = .white
-                    imageView.image = UIImage(named: "LoadingImage")
+                    imageView.image = UIImage(named: "image_placeholder")
                     self.isUserInteractionEnabled = false
                     if let imageURL = p.paragraphString {
                         imageView.loadImageWithURLString(urlString: imageURL, completion: { (success) in
@@ -84,7 +84,7 @@ class WebCell: BaseCell {
         let imageView = CustomImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
-        imageView.image = UIImage(named: "LoadingImage")
+        imageView.image = UIImage(named: "image_placeholder")
         return imageView
     }()
     

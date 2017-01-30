@@ -61,7 +61,7 @@ class FeedCell: BaseCell {
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .gray
         label.text = "Dummy content"
-        label.numberOfLines = 8
+        label.numberOfLines = 0
         return label
     }()
     
