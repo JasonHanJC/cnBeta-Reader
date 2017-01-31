@@ -18,6 +18,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     var selectedFeed: Feed?
     fileprivate var URLString: String?
+    var timeLabelText: String?
     
     var contentArray: [Paragraph]?
     
@@ -39,16 +40,23 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         setupNavigationBar()
         
         contentArray = [Paragraph]()
+        
+        if let date = selectedFeed?.publishedDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MMM-yyyy HH:mm"
+            timeLabelText = dateFormatter.string(from: date as Date)
+        }
 
         // Create title
         if let title = selectedFeed?.title {
+            // print(title)
             let titleParagraph = Paragraph.init(type: .title, content: title, alignment: .alignmentLeft, textStyle: .strong)
             contentArray?.append(titleParagraph)
         }
         
         if let urlString = selectedFeed?.link?.replacingOccurrences(of: "http://www.cnbeta.com/articles/", with: "http://m.cnbeta.com/view/") {
             
-            print(urlString)
+            // print(urlString)
             URLString = urlString
             
             if let data = selectedFeed?.savedContent as? Data {
@@ -124,6 +132,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! WebCell
         
         cell.paragraph = contentArray?[indexPath.item]
+        cell.timeLabel.text = timeLabelText
 
         return cell
     }
@@ -177,17 +186,20 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                     // article content
                     for link in doc.css("div.articleCont p") {
                         
-                        if link.text == "" {
+                        let text = link.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                        
+                        if text == "" {
                             // image or video
+                            // print("image")
                             for imageNode in link.css("img") {
                                 if let imageSrc = imageNode["src"] {
+                                    //print(imageSrc)
                                     let paragraph = Paragraph.init(type: .image, content: imageSrc, alignment: .alignmentCenter)
                                     contents.append(paragraph)
                                 }
                             }
                             
                         } else {
-                            
                             var textStyle: TextStyle = .normal
                             if link.css("strong").first?.text != nil {
                                 textStyle = .strong
@@ -200,7 +212,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                                 textAlignment = .alignmentRight
                             }
                             
-                            let paragraph = Paragraph.init(type: .text, content: link.text!, alignment: textAlignment,  textStyle: textStyle)
+                            let paragraph = Paragraph.init(type: .text, content: text!, alignment: textAlignment,  textStyle: textStyle)
                             
                             contents.append(paragraph)
                             

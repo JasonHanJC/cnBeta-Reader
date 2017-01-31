@@ -24,8 +24,15 @@ struct Constants {
     static let TITLE_FONT_SIZE_DETAIL: CGFloat = 21.0
     static let TITLE_FONT_SIZE: CGFloat = 21.0
     
+    static let TITLE_FONT_DETAIL: UIFont = UIFont.systemFont(ofSize: 21.0, weight: 0.3)
+    
     static let CONTENT_FONT_SIZE_DETAIL: CGFloat = 18.0
     static let CONTENT_FONT_SIZE: CGFloat = 18.0
+    
+    static let CONTENT_FONT_DETAIL_BOLD: UIFont = UIFont.systemFont(ofSize: 18.0, weight: 0.3)
+    static let CONTENT_FONT_DETAIL_NORMAL: UIFont = UIFont.systemFont(ofSize: 18.0, weight: 0.0)
+    
+
     
     static let TIME_FONT_SIZE_DETAIL: CGFloat = 13.0
     static let TIME_FONT_SIZE: CGFloat = 12.0

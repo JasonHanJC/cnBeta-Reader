@@ -37,9 +37,9 @@ class WebCell: BaseCell {
                     
                     // set style
                     if p.textStyle == .normal {
-                        textLabel.font = UIFont.systemFont(ofSize: Constants.CONTENT_FONT_SIZE_DETAIL, weight: 0)
+                        textLabel.font = Constants.CONTENT_FONT_DETAIL_NORMAL
                     } else if p.textStyle == .strong {
-                        textLabel.font = UIFont.systemFont(ofSize: Constants.CONTENT_FONT_SIZE_DETAIL, weight: 0.3)
+                        textLabel.font = Constants.CONTENT_FONT_DETAIL_BOLD
                     }
                     timeLabel.isHidden = true
                     sperateLine.isHidden = true
@@ -62,7 +62,7 @@ class WebCell: BaseCell {
                 } else if p.type == .title {
                     backgroundColor = .white
                     textLabel.text = p.paragraphString!
-                    textLabel.font = UIFont.systemFont(ofSize: Constants.TITLE_FONT_SIZE_DETAIL, weight: 0.3)
+                    textLabel.font = Constants.TITLE_FONT_DETAIL
                     
                     timeLabel.isHidden = false
                     sperateLine.isHidden = false
