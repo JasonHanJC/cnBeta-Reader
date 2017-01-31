@@ -20,7 +20,7 @@ class CustomImageView: UIImageView {
     
     var imageURLString: String?
     
-    func loadImageWithURLString(urlString: String?, completion: @escaping loadImageCompletion) {
+    func loadImageWithURLString(_ urlString: String?, completion:@escaping loadImageCompletion) {
         
         if let urlStr = urlString {
             imageURLString = urlStr

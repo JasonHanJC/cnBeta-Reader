@@ -12,7 +12,7 @@ import MJRefresh
 import DZNEmptyDataSet
 
 protocol SavedTableViewDelegate:class {
-    func savedTableViewDidSelectFeed(feed: Feed);
+    func savedTableViewDidSelectFeed(_ feed: Feed);
 }
 
 class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -32,7 +32,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         return frc as! NSFetchedResultsController<Feed>
     }()
     
-    private lazy var refreshHeader: MJRefreshStateHeader = {
+    fileprivate lazy var refreshHeader: MJRefreshStateHeader = {
         let refreshHeader = MJRefreshStateHeader.init(refreshingBlock: {
             do {
                 try self.fetchedResultsController.performFetch()
@@ -47,7 +47,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     }()
 
     
-    private lazy var collectionView: UICollectionView = {
+    fileprivate lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor.white
@@ -56,7 +56,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         return cv
     }()
     
-    private let cellId = "SavedFeedCellId"
+    fileprivate let cellId = "SavedFeedCellId"
     
     override func setupViews() {
         
@@ -99,7 +99,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feedObject = fetchedResultsController.object(at: indexPath)
-        delegate?.savedTableViewDidSelectFeed(feed: feedObject)
+        delegate?.savedTableViewDidSelectFeed(feedObject)
     }
     
     // MARK: CollectionView layout delegate

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MenuBarDelegate: class {
-    func didSelectMenuBarAtIndex(index: Int)
+    func didSelectMenuBarAtIndex(_ index: Int)
     func didSelectSettings()
 }
 
@@ -18,7 +18,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.rgb(red: 230, green: 32, blue: 32, alpha: 1.0)
+        collectionView.backgroundColor = UIColor.rgb(230, green: 32, blue: 32, alpha: 1.0)
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -35,7 +35,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         return imageView
     }()
     
-    func handleLogoImageTap(sender: UITapGestureRecognizer) {
+    func handleLogoImageTap(_ sender: UITapGestureRecognizer) {
         delegate?.didSelectSettings()
     }
     
@@ -46,7 +46,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor =  UIColor.rgb(red: 230, green: 32, blue: 32, alpha: 1)
+        backgroundColor =  UIColor.rgb(230, green: 32, blue: 32, alpha: 1)
 
         
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
@@ -108,7 +108,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.didSelectMenuBarAtIndex(index: indexPath.item)
+        delegate?.didSelectMenuBarAtIndex(indexPath.item)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -95,7 +95,7 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
         return imageView
     }
     
-    @objc private func handleDismiss() {
+    @objc fileprivate func handleDismiss() {
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseIn], animations: {
             self.blackView.alpha = 0
             self.imageScrollView.alpha = 0
@@ -109,7 +109,7 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
         })
     }
     
-    @objc private func handleSaveAction() {
+    @objc fileprivate func handleSaveAction() {
         if let savedImage = zoomImage {
             UIImageWriteToSavedPhotosAlbum(savedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil);
         }

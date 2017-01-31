@@ -14,7 +14,7 @@ class MenuCell: BaseCell {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Feed")?.withRenderingMode(.alwaysTemplate)
         imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = UIColor.rgb(red: 91, green: 14, blue: 13, alpha: 1.0)
+        imageView.tintColor = UIColor.rgb(91, green: 14, blue: 13, alpha: 1.0)
         return imageView
     }()
     
@@ -23,22 +23,22 @@ class MenuCell: BaseCell {
         label.text = "test"
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor.rgb(red: 91, green: 14, blue: 13, alpha: 1.0)
+        label.textColor = UIColor.rgb(91, green: 14, blue: 13, alpha: 1.0)
         
         return label
     }()
     
     override var isHighlighted: Bool {
         didSet {
-            imageView.tintColor = isHighlighted ? UIColor.white : UIColor.rgb(red: 91, green: 14, blue: 13, alpha: 1.0)
-            label.textColor = isHighlighted ? UIColor.white : UIColor.rgb(red: 91, green: 14, blue: 13, alpha: 1.0)
+            imageView.tintColor = isHighlighted ? UIColor.white : UIColor.rgb(91, green: 14, blue: 13, alpha: 1.0)
+            label.textColor = isHighlighted ? UIColor.white : UIColor.rgb(91, green: 14, blue: 13, alpha: 1.0)
         }
     }
     
     override var isSelected: Bool {
         didSet {
-            imageView.tintColor = isSelected ? UIColor.white : UIColor.rgb(red: 91, green: 14, blue: 13, alpha: 1.0)
-            label.textColor = isSelected ? UIColor.white : UIColor.rgb(red: 91, green: 14, blue: 13, alpha: 1.0)
+            imageView.tintColor = isSelected ? UIColor.white : UIColor.rgb(91, green: 14, blue: 13, alpha: 1.0)
+            label.textColor = isSelected ? UIColor.white : UIColor.rgb(91, green: 14, blue: 13, alpha: 1.0)
         }
     }
     

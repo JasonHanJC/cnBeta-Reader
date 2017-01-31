@@ -13,14 +13,14 @@ import MJRefresh
 import DZNEmptyDataSet
 
 protocol FeedCollectionViewDelegate:class {
-    func feedCollectionViewDidSelectFeed(feed: Feed);
+    func feedCollectionViewDidSelectFeed(_ feed: Feed);
 }
 
 class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
     weak var delegate: FeedCollectionViewDelegate?
     
-    private lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
         fetchRequest.fetchLimit = Constants.FETCH_LIMIT
@@ -32,7 +32,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return frc as! NSFetchedResultsController<Feed>
     }()
     
-    private lazy var refreshHeader: MJRefreshNormalHeader = {
+    fileprivate lazy var refreshHeader: MJRefreshNormalHeader = {
         let refreshHeader = MJRefreshNormalHeader.init(refreshingBlock: {
             ApiService.sharedInstance.fetchFeed(withURL: Constants.API_URL_2, completion: { (newFeedsCount) in
                 
@@ -46,7 +46,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshHeader!
     }()
     
-    private lazy var refreshFooter: MJRefreshBackNormalFooter = {
+    fileprivate lazy var refreshFooter: MJRefreshBackNormalFooter = {
         let refreshFooter = MJRefreshBackNormalFooter.init(refreshingBlock: {
             
             let lastItem = self.collectionView.numberOfItems(inSection: 0)
@@ -87,7 +87,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return refreshFooter!
     }()
     
-    private lazy var collectionView: UICollectionView = {
+    fileprivate lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor.white
@@ -96,7 +96,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         return cv
     }()
     
-    private let cellId = "NewFeedCellId"
+    fileprivate let cellId = "NewFeedCellId"
     
     override func setupViews() {
         
@@ -156,7 +156,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feedObject = fetchedResultsController.object(at: indexPath)
-        delegate?.feedCollectionViewDidSelectFeed(feed: feedObject)
+        delegate?.feedCollectionViewDidSelectFeed(feedObject)
     }
     
     // MARK: CollectionView layout delegate

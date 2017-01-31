@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingLauncherDelegate: class {
-    func didSelectSetting(setting: Setting)
+    func didSelectSetting(_ setting: Setting)
     
     func didCancelByUser()
 }
@@ -56,7 +56,7 @@ class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
-    @objc private func handleDismiss(setting: Setting) {
+    @objc fileprivate func handleDismiss(_ setting: Setting) {
         
         if let window = UIApplication.shared.keyWindow {
             UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseIn], animations: {
@@ -67,7 +67,7 @@ class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataS
                 self.collectionView.removeFromSuperview()
                 if setting.name != .cancel {
                     //self.superController?.showControllerForSetting(setting: setting)
-                    if let didSeletctSetting = self.delegate?.didSelectSetting(setting: setting) {
+                    if let didSeletctSetting = self.delegate?.didSelectSetting(setting) {
                         didSeletctSetting
                     }
                 } else {
@@ -101,7 +101,7 @@ class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let setting = settings[indexPath.item]
-        handleDismiss(setting: setting)
+        handleDismiss(setting)
     }
     
     

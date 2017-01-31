@@ -24,14 +24,14 @@ class ApiService: NSObject {
             switch response.result {
             case .success:
                 //print(response.result.value ?? "nothing")
-                self.parsingData(data: response.result.value, completion: completion)
+                self.parsingData(response.result.value, completion: completion)
             case .failure(let error):
                 print(error)
             }
         };
     }
     
-    func parsingData(data: Any?, completion: @escaping fetchFeedCompletion) {
+    func parsingData(_ data: Any?, completion: @escaping fetchFeedCompletion) {
         
         let privateContext = CoreDataStack.sharedInstance.privateContext
         
@@ -45,12 +45,12 @@ class ApiService: NSObject {
                     for item in items {
                         if item is [String : AnyObject] {
                             let publishDate = item["published"] as? Double
-                            let date = self.getNSDateFromTimestamp(timestamp: publishDate! / 1000.0)
+                            let date = self.getNSDateFromTimestamp(publishDate! / 1000.0)
                             if latestFeedDate == nil {
                                 let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed", context: privateContext) as! Feed
                                 newFeed.title = item["title"] as? String
                                 newFeed.author = "cnBeta Reader"
-                                newFeed.publishedDate = date
+                                newFeed.publishedDate = date as NSDate?
                                 newFeed.link = item["originId"] as? String
                                 if let summary = item["summary"] as? [String : AnyObject] {
                                     if let content = summary["content"] as? String {
@@ -64,7 +64,7 @@ class ApiService: NSObject {
                                 }
                                 newFeed.isRead = false
                                 newFeed.isSaved = false
-                                newFeed.sectionIdentifier = self.getSectionIdentifier(date: date!)
+                                newFeed.sectionIdentifier = self.getSectionIdentifier(date!)
                                 
                                 newFeedsCount += 1
                             } else {
@@ -72,18 +72,22 @@ class ApiService: NSObject {
                                     let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed", context: privateContext) as! Feed
                                     newFeed.title = item["title"] as? String
                                     newFeed.author = "cnBeta Reader"
-                                    newFeed.publishedDate = date
+                                    newFeed.publishedDate = date as NSDate?
                                     newFeed.link = item["originId"] as? String
                                     if let summary = item["summary"] as? [String : AnyObject] {
-                                        if var content = summary["content"] as? String {
-                                            content = content.replacingOccurrences(of: "strong", with: "sss", options: .literal, range: nil)
-                                            
-                                            newFeed.contentSnippet = content
+                                        if let content = summary["content"] as? String {
+                                            let content_1 = content.replacingOccurrences(of: "<strong>", with: "")
+                                            var content_2 = content_1.replacingOccurrences(of: "</strong>", with: "")
+                                            if let removeRange = content_2.range(of: "<a target=") {
+                                                content_2.removeSubrange(removeRange.lowerBound..<content_2.endIndex)
+                                            }
+                                            newFeed.contentSnippet = content_2
                                         }
                                     }
+
                                     newFeed.isRead = false
                                     newFeed.isSaved = false
-                                    newFeed.sectionIdentifier = self.getSectionIdentifier(date: date!)
+                                    newFeed.sectionIdentifier = self.getSectionIdentifier(date!)
                                 
                                     newFeedsCount += 1
                                 }
@@ -104,29 +108,29 @@ class ApiService: NSObject {
     }
     
     
-    private override init() {
+    fileprivate override init() {
         super.init()
     }
 }
 
 extension ApiService {
     
-    func getNSDateFromString(dateString: String) -> NSDate? {
+    func getNSDateFromString(_ dateString: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZZ"
         if let date = dateFormatter.date(from: dateString) {
-            return date as NSDate
+            return (date as NSDate) as Date
         }
         return nil
     }
     
-    func getSectionIdentifier(date: NSDate) -> String? {
+    func getSectionIdentifier(_ date: Date) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MMM-yyyy"
         return dateFormatter.string(from: date as Date)
     }
     
-    func getNSDateFromTimestamp(timestamp: Double) -> NSDate? {
-        return NSDate(timeIntervalSince1970: TimeInterval(timestamp))
+    func getNSDateFromTimestamp(_ timestamp: Double) -> Date? {
+        return Date(timeIntervalSince1970: TimeInterval(timestamp))
     }
 }

@@ -15,7 +15,7 @@ class CoreDataStack: NSObject {
     
     let modelName = "cnBeta-Reader"
     
-    private lazy var applicationDocumentsDirectory: URL = {
+    fileprivate lazy var applicationDocumentsDirectory: URL = {
         let urls = FileManager.default.urls(
             for: .documentDirectory, in: .userDomainMask)
         return urls[urls.endIndex - 1]
@@ -35,7 +35,7 @@ class CoreDataStack: NSObject {
         return managedObjectContext
     }()
     
-    private lazy var psc: NSPersistentStoreCoordinator = {
+    fileprivate lazy var psc: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("\(self.modelName).sqlite")
         do {
@@ -79,7 +79,7 @@ class CoreDataStack: NSObject {
         }
     }
     
-    private override init() {
+    fileprivate override init() {
         super.init()
     }
 }
@@ -90,7 +90,7 @@ extension CoreDataStack {
         return NSEntityDescription.insertNewObject(forEntityName: entityName, into: context)
     }
     
-    func getObjectsForEntity(context: NSManagedObjectContext, entityName: String, sortByKey key: String? = nil, isAscending: Bool = false, withPredicate predicate: NSPredicate? = nil, limit: Int = 0) -> [Any]? {
+    func getObjectsForEntity(_ context: NSManagedObjectContext, entityName: String, sortByKey key: String? = nil, isAscending: Bool = false, withPredicate predicate: NSPredicate? = nil, limit: Int = 0) -> [Any]? {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         
@@ -115,13 +115,13 @@ extension CoreDataStack {
     }
     
     func getLatestFeed() -> Feed? {
-        if let feeds = getObjectsForEntity(context: mainContext, entityName: "Feed", sortByKey: "publishedDate", isAscending: false, withPredicate: nil, limit: 1) {
+        if let feeds = getObjectsForEntity(mainContext, entityName: "Feed", sortByKey: "publishedDate", isAscending: false, withPredicate: nil, limit: 1) {
             return feeds.first as! Feed?
         }
         return nil;
     }
     
-    func deleteObject(object: NSManagedObject, context: NSManagedObjectContext) {
+    func deleteObject(_ object: NSManagedObject, context: NSManagedObjectContext) {
         context.delete(object)
         
         do {
@@ -131,7 +131,7 @@ extension CoreDataStack {
         }
     }
     
-    func deleteObjectsForEntity(context: NSManagedObjectContext, entityName : String, withPredicate predicate: NSPredicate? = nil) {
+    func deleteObjectsForEntity(_ context: NSManagedObjectContext, entityName : String, withPredicate predicate: NSPredicate? = nil) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         if predicate != nil {
             fetchRequest.predicate = predicate

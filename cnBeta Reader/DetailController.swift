@@ -17,7 +17,7 @@ typealias contentParsingCompletion = ([Paragraph]?) -> Void
 class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var selectedFeed: Feed?
-    private var URLString: String?
+    fileprivate var URLString: String?
     
     var contentArray: [Paragraph]?
     
@@ -60,7 +60,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             } else {
                 view.makeToastActivity(.center)
                 DispatchQueue.global(qos: .default).async {
-                    self.getWebContentWithUrl(urlString: urlString, completion: { contents in
+                    self.getWebContentWithUrl(urlString, completion: { contents in
                         DispatchQueue.main.async {
                             self.view.hideToastActivity()
                         
@@ -89,7 +89,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         navigationItem.rightBarButtonItems = [moreButton, saveButton]
     }
     
-    func handleSave(sender: UIBarButtonItem) {
+    func handleSave(_ sender: UIBarButtonItem) {
         
         if selectedFeed?.isSaved == false {
             view.makeToast("Feed saved", duration: 0.5, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
@@ -103,7 +103,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         CoreDataStack.sharedInstance.save()
     }
     
-    func handleNavMore(sender: UIBarButtonItem) {
+    func handleNavMore(_ sender: UIBarButtonItem) {
         view.makeToast("Nothing in here yet", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
         
         // TODO: open in browser and share
@@ -131,7 +131,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let paragragh = contentArray?[indexPath.item]
         if paragragh?.type == .image {
-            zoomImageController.imageView.loadImageWithURLString(urlString: paragragh?.paragraphString, completion: {_ in })
+            zoomImageController.imageView.loadImageWithURLString(paragragh?.paragraphString, completion: {_ in })
             zoomImageController.show()
         }
     }
@@ -153,7 +153,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     
-    func getWebContentWithUrl(urlString: String, completion: @escaping contentParsingCompletion) {
+    func getWebContentWithUrl(_ urlString: String, completion: @escaping contentParsingCompletion) {
         
             let url = URL(string: urlString);
             let cnbetaData = try? Data(contentsOf: url!)

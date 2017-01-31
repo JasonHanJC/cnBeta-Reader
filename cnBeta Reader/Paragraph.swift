@@ -43,15 +43,15 @@ class Paragraph: NSObject, NSCoding {
         self.textStyle = textStyle
         
         if type == .title {
-            self.paragraphHeight = computeHeight(string: content ,fontSize: Constants.TITLE_FONT_SIZE_DETAIL)
+            self.paragraphHeight = computeHeight(content ,fontSize: Constants.TITLE_FONT_SIZE_DETAIL)
         } else if (type == .text) || (type == .summary) {
-            self.paragraphHeight = computeHeight(string: content ,fontSize: Constants.CONTENT_FONT_SIZE_DETAIL)
+            self.paragraphHeight = computeHeight(content ,fontSize: Constants.CONTENT_FONT_SIZE_DETAIL)
         } else {
             self.paragraphHeight = Float(Constants.SCREEN_WIDTH / 4 * 3 + 8 + 8)
         }
     }
     
-    private func computeHeight(string: String, fontSize: CGFloat) -> Float {
+    fileprivate func computeHeight(_ string: String, fontSize: CGFloat) -> Float {
         let size = CGSize(width: Constants.SCREEN_WIDTH - 8 - 8, height: CGFloat(FLT_MAX))
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let estimatedFrame = NSString(string: string).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize)], context: nil)

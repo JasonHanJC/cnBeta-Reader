@@ -50,7 +50,7 @@ class WebCell: BaseCell {
                     imageView.image = UIImage(named: "image_placeholder")
                     self.isUserInteractionEnabled = false
                     if let imageURL = p.paragraphString {
-                        imageView.loadImageWithURLString(urlString: imageURL, completion: { (success) in
+                        imageView.loadImageWithURLString(imageURL, completion: { (success) in
                             self.isUserInteractionEnabled = true
                         })
                     }
