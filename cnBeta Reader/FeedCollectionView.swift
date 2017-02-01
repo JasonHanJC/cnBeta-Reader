@@ -26,7 +26,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         fetchRequest.fetchLimit = Constants.FETCH_LIMIT
 
         let context = CoreDataStack.sharedInstance.mainContext
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         frc.delegate = self
         
         return frc as! NSFetchedResultsController<Feed>
@@ -49,7 +49,6 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     fileprivate lazy var refreshFooter: MJRefreshBackNormalFooter = {
         let refreshFooter = MJRefreshBackNormalFooter.init(refreshingBlock: {
             
-            let lastItem = self.collectionView.numberOfItems(inSection: 0)
             self.fetchedResultsController.fetchRequest.fetchLimit += Constants.FETCH_LIMIT
 
             do {
@@ -57,26 +56,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 
                 self.collectionView.reloadData()
                 
-                if let numberOfObjects = self.fetchedResultsController.sections?[0].numberOfObjects {
-                    
-                    let newItemCount = numberOfObjects - lastItem
-                    
-                    if newItemCount != 0 {
-//                        var indexPaths = [IndexPath]()
-//                        for i in 1...newItemCount {
-//                            let indexPath = IndexPath(item: lastItem - 1 + i, section: 0)
-//                            indexPaths.append(indexPath)
-//                        }
-//                
-//                        self.collectionView.performBatchUpdates({
-//                            self.collectionView.insertItems(at: indexPaths)
-//                        }, completion: { (completed) in
-//                           //
-//                        })
-                    } else {
-                        self.makeToast("No more feed", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
-                    }
-                }
+                //  self.makeToast("No more feed", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
+
                 self.collectionView.mj_footer.endRefreshing()
             } catch let err {
                 print(err)
@@ -97,6 +78,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     }()
     
     fileprivate let cellId = "NewFeedCellId"
+    fileprivate let headerId = "headerId"
     
     override func setupViews() {
         
@@ -117,14 +99,22 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         collectionView.mj_header = refreshHeader
         collectionView.mj_footer = refreshFooter
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         collectionView.emptyDataSetSource = self
         collectionView.emptyDataSetDelegate = self
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if let count = fetchedResultsController.sections?.count {
+            return count;
+        }
+        return 0;
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = fetchedResultsController.sections?[0].numberOfObjects {
+        if let count = fetchedResultsController.sections?[section].numberOfObjects {
             return count
         }
         return 0
@@ -181,6 +171,25 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+
+    // collection view header
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 0);
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        var reusableView : UICollectionReusableView? = nil
+        
+        // Create header
+        if (kind == UICollectionElementKindSectionHeader) {
+            // Create Header
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId, for: indexPath)
+//            headerView.frame = CGRectMake(0, 0, view.frame.width, 50)
+            headerView.backgroundColor = .red
+            reusableView = headerView
+        }
+        return reusableView!
     }
     
     // MARK: NSFetchedResultsController delegate

@@ -28,7 +28,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }()
     
     func setBezierPath() -> UIBezierPath {
-        let strokeColor = UIColor(red: 0.521, green: 0.521, blue: 0.521, alpha: 1.000)
         
         let path2Path = UIBezierPath()
         path2Path.move(to: CGPoint(x: -34.17, y: -64.4))
@@ -79,9 +78,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         path2Path.close()
         path2Path.miterLimit = 4;
         
-        path2Path.usesEvenOddFillRule = true;
-        
-        strokeColor.setStroke()
+        path2Path.usesEvenOddFillRule = false;
+    
         path2Path.lineWidth = 1
         path2Path.stroke()        
         return path2Path

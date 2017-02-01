@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let layout = UICollectionViewFlowLayout()
         let homeController = HomeController(collectionViewLayout: layout)
     
-        CoreDataStack.sharedInstance.clearData()
+        //CoreDataStack.sharedInstance.clearData()
         
         window?.rootViewController = UINavigationController(rootViewController: homeController)
         
