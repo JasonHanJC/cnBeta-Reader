@@ -286,6 +286,7 @@
 					96C5C88C1DFCDE2E00A61681 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = C2VVZK2VN8;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
