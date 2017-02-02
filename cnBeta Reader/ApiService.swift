@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Alamofire
+import Kanna
 
 typealias fetchFeedCompletion = (Int) -> Void
 
@@ -54,12 +55,16 @@ class ApiService: NSObject {
                                 newFeed.link = item["originId"] as? String
                                 if let summary = item["summary"] as? [String : AnyObject] {
                                     if let content = summary["content"] as? String {
-                                        let content_1 = content.replacingOccurrences(of: "<strong>", with: "")
-                                        var content_2 = content_1.replacingOccurrences(of: "</strong>", with: "")
-                                        if let removeRange = content_2.range(of: "<a target=") {
-                                            content_2.removeSubrange(removeRange.lowerBound..<content_2.endIndex)
+                                        if let doc = HTML(html: content, encoding: .utf8) {
+                                            newFeed.contentSnippet = doc.text ?? ""
                                         }
-                                        newFeed.contentSnippet = content_2
+                                        
+//                                        let content_1 = content.replacingOccurrences(of: "<strong>", with: "")
+//                                        var content_2 = content_1.replacingOccurrences(of: "</strong>", with: "")
+//                                        if let removeRange = content_2.range(of: "<a target=") {
+//                                            content_2.removeSubrange(removeRange.lowerBound..<content_2.endIndex)
+//                                        }
+//                                        newFeed.contentSnippet = content_2
                                     }
                                 }
                                 newFeed.isRead = false
@@ -76,12 +81,15 @@ class ApiService: NSObject {
                                     newFeed.link = item["originId"] as? String
                                     if let summary = item["summary"] as? [String : AnyObject] {
                                         if let content = summary["content"] as? String {
-                                            let content_1 = content.replacingOccurrences(of: "<strong>", with: "")
-                                            var content_2 = content_1.replacingOccurrences(of: "</strong>", with: "")
-                                            if let removeRange = content_2.range(of: "<a target=") {
-                                                content_2.removeSubrange(removeRange.lowerBound..<content_2.endIndex)
+                                            if let doc = HTML(html: content, encoding: .utf8) {
+                                                newFeed.contentSnippet = doc.text ?? ""
                                             }
-                                            newFeed.contentSnippet = content_2
+//                                            let content_1 = content.replacingOccurrences(of: "<strong>", with: "")
+//                                            var content_2 = content_1.replacingOccurrences(of: "</strong>", with: "")
+//                                            if let removeRange = content_2.range(of: "<a target=") {
+//                                                content_2.removeSubrange(removeRange.lowerBound..<content_2.endIndex)
+//                                            }
+//                                            newFeed.contentSnippet = content_2
                                         }
                                     }
 
@@ -95,9 +103,7 @@ class ApiService: NSObject {
                         }
                     }
                 }
-                
             }
-            
             
             CoreDataStack.sharedInstance.save()
             completion(newFeedsCount)

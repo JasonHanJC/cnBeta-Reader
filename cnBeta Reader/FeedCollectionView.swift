@@ -26,7 +26,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         fetchRequest.fetchLimit = Constants.FETCH_LIMIT
 
         let context = CoreDataStack.sharedInstance.mainContext
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         
         return frc as! NSFetchedResultsController<Feed>
@@ -39,7 +39,6 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 DispatchQueue.main.async {
                     self.collectionView.mj_header.endRefreshing()
                     self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
-                    
                 }
             })
         })
@@ -223,7 +222,6 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
 //            
 //            
 //        })
-        
         
         do {
             try fetchedResultsController.performFetch()

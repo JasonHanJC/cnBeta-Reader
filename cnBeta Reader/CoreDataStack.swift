@@ -58,25 +58,27 @@ class CoreDataStack: NSObject {
             return
         }
         
-        mainContext.performAndWait {
-            
+        privateContext.perform({
             do {
-                try self.mainContext.save()
+                try self.privateContext.save()
                 
-                self.privateContext.perform({ 
+                self.mainContext.performAndWait {
                     do {
-                        try self.privateContext.save()
+                        try self.mainContext.save()
+                        
+                        print("saved")
                     } catch let error as NSError {
                         print("Error: \(error.localizedDescription)")
                         abort()
                     }
-                })
-
+                }
             } catch let error as NSError {
                 print("Error: \(error.localizedDescription)")
                 abort()
             }
-        }
+        })
+
+        
     }
     
     fileprivate override init() {
