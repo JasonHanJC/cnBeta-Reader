@@ -19,7 +19,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return launchView
     }()
     
-
     lazy var settingLauncher: SettingLauncher = {
         let launcher = SettingLauncher()
         launcher.delegate = self

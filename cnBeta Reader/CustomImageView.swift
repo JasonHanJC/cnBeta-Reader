@@ -10,7 +10,7 @@ import UIKit
 
 let imageCaches: NSCache<NSString, UIImage> = {
     let imageCache = NSCache<NSString, UIImage>()
-    imageCache.countLimit = 40
+    imageCache.countLimit = 60
     return imageCache
 }()
 

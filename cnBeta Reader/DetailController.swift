@@ -21,11 +21,17 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     var timeLabelText: String?
     
     var contentArray: [Paragraph]?
+    var allImageParagraphs: [Paragraph]?
     
     let cellId = "cellId"
     
     let zoomImageController: ZoomImageController = {
         let controller = ZoomImageController()
+        return controller
+    }()
+    
+    let imageDisplayController: ImageDisplayController = {
+        let controller = ImageDisplayController()
         return controller
     }()
     
@@ -40,6 +46,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         setupNavigationBar()
         
         contentArray = [Paragraph]()
+        allImageParagraphs = [Paragraph]()
         
         if let date = selectedFeed?.publishedDate {
             let dateFormatter = DateFormatter()
@@ -64,6 +71,8 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 if let content = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Paragraph] {
                     contentArray? += content
                     collectionView?.reloadData()
+                    
+                    self.getAllImageParagraphs(self.contentArray)
                 }
             } else {
                 view.makeToastActivity(.center)
@@ -75,9 +84,21 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                             if let newFeeds = contents {
                                 self.contentArray? += newFeeds
                                 self.collectionView?.reloadData()
+                                
+                                self.getAllImageParagraphs(self.contentArray)
                             }
                         }
                     })
+                }
+            }
+        }
+    }
+    
+    func getAllImageParagraphs(_ allContents: [Paragraph]?) {
+        if let allContents = allContents {
+            for paragraph in allContents {
+                if paragraph.type == .image {
+                    allImageParagraphs?.append(paragraph)
                 }
             }
         }
@@ -138,10 +159,19 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let paragragh = contentArray?[indexPath.item]
-        if paragragh?.type == .image {
-            zoomImageController.imageView.loadImageWithURLString(paragragh?.paragraphString, completion: {_ in })
-            zoomImageController.show()
+        let currentParagragh = contentArray?[indexPath.item]
+        if currentParagragh?.type == .image {
+            // get all images paragraph
+            var imageIndex: Int = 0
+            for imageParagraph in allImageParagraphs! {
+                if imageParagraph == currentParagragh {
+                    break
+                }
+                imageIndex += 1
+            }
+            
+            imageDisplayController.imagesInfo = (allImageParagraphs!, imageIndex)
+            imageDisplayController.show()
         }
     }
     

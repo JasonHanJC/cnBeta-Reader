@@ -16,6 +16,7 @@ class LaunchingView: UIView {
         let path = CAShapeLayer()
         path.frame = CGRect(x: -0, y: 0, width: 140, height: 140)
         path.path = self.setBezierPath().cgPath
+        path.fillColor = UIColor.white.cgColor
         layer.addSublayer(path)
         
         return layer
@@ -102,15 +103,15 @@ class LaunchingView: UIView {
                                             NSValue(caTransform3D: CATransform3DMakeScale(0.5, 0.5, 1)),
                                             NSValue(caTransform3D: CATransform3DMakeScale(20, 20, 1))]
         pathTransformAnim.keyTimes       = [0, 0.4, 1]
-        pathTransformAnim.duration       = 0.5
+        pathTransformAnim.duration       = 0.8
         pathTransformAnim.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut)
         
         logoLayer.add(pathTransformAnim, forKey: "pathUntitled1Anim")
         
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             //self.logoLayer.transform = CATransform3DMakeScale(0, 0, 1)
         }) { (finished) in
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 //self.logoLayer.transform = CATransform3DMakeScale(20, 20, 1)
                 self.alpha = 0.0
             }, completion: { (finished) in
