@@ -73,11 +73,7 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
             pageControl.currentPage = imagesInfo.imageIndex
 
             window.addSubview(self.collectionView)
-            window.addSubview(self.pageControl)
             window.addSubview(self.fakeNavigationBar)
-            
-            window.addConstraintsWithFormat("H:|[v0]|", views: self.pageControl)
-            window.addConstraintsWithFormat("V:[v0]-30-|", views: self.pageControl)
             
             window.addConstraintsWithFormat("H:|[v0]|", views: self.collectionView)
             window.addConstraintsWithFormat("H:|[v0]|", views: self.fakeNavigationBar)
@@ -95,6 +91,10 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
         fakeNavigationBar.addSubview(saveButton)
         fakeNavigationBar.addConstraintsWithFormat("H:[v0(24)]-10-|", views: saveButton)
         fakeNavigationBar.addConstraintsWithFormat("V:|-30-[v0(24)]", views: saveButton)
+        
+        fakeNavigationBar.addSubview(self.pageControl)
+        fakeNavigationBar.addConstraintsWithFormat("H:|-40-[v0]-40-|", views: self.pageControl)
+        fakeNavigationBar.addConstraintsWithFormat("V:|-20-[v0]|", views: self.pageControl)
     }
     
     // MARK: UICollectionViewDataSource
