@@ -21,7 +21,7 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
     
     lazy var saveButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "Store"), for: .normal)
+        button.setImage(UIImage(named: "image_download_icon"), for: .normal)
         button.addTarget(self, action: #selector(handleSaveAction), for: .touchUpInside)
         return button
     }()
