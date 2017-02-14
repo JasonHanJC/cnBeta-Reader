@@ -33,7 +33,7 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
     
     let fakeNavigationBar: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor(white: 0.2, alpha: 0.95)
+        view.backgroundColor = UIColor(white: 0.3, alpha: 0.95)
         return view
     }()
     
@@ -54,19 +54,21 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
     
     @objc fileprivate func dismis() {
         
-        collectionView.removeFromSuperview()
-        pageControl.removeFromSuperview()
-        fakeNavigationBar.removeFromSuperview()
-        
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+            self.collectionView.alpha = 0
+            self.fakeNavigationBar.alpha = 0
+        }, completion: {_ in
+            self.collectionView.removeFromSuperview()
+            self.pageControl.removeFromSuperview()
+            self.fakeNavigationBar.removeFromSuperview()
+        })
+
     }
     
     func show() {
         print(imagesInfo)
         
         if let window = UIApplication.shared.keyWindow {
-            collectionView.backgroundColor = UIColor(white: 0, alpha: 0.9)
-            collectionView.frame = CGRect(x: 0, y: 0, width: window.frame.width, height: window.frame.height)
-            
             
             // Setup Page Control
             pageControl.numberOfPages = imagesInfo.imageContent.count
@@ -75,26 +77,38 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
             window.addSubview(self.collectionView)
             window.addSubview(self.fakeNavigationBar)
             
+            collectionView.backgroundColor = UIColor(white: 0, alpha: 0.85)
+            collectionView.alpha = 0
+            
             window.addConstraintsWithFormat("H:|[v0]|", views: self.collectionView)
             window.addConstraintsWithFormat("H:|[v0]|", views: self.fakeNavigationBar)
-            window.addConstraintsWithFormat("V:|[v0(64)][v1]|", views: self.fakeNavigationBar ,self.collectionView)
+            window.addConstraintsWithFormat("V:|-20-[v0][v1(44)]|", views: self.collectionView, self.fakeNavigationBar)
+            
+            setupFakeNavigationBar()
             
             // scroll to selected image
             let indexPath = IndexPath(item: imagesInfo.imageIndex, section: 0)
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             
-            setupFakeNavigationBar()
+            
+            // show the display view animated
+            UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+                self.collectionView.alpha = 1
+                self.fakeNavigationBar.alpha = 1
+            }, completion: nil)
         }
     }
     
     func setupFakeNavigationBar() {
         fakeNavigationBar.addSubview(saveButton)
         fakeNavigationBar.addConstraintsWithFormat("H:[v0(24)]-10-|", views: saveButton)
-        fakeNavigationBar.addConstraintsWithFormat("V:|-30-[v0(24)]", views: saveButton)
+        fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0(24)]", views: saveButton)
         
         fakeNavigationBar.addSubview(self.pageControl)
         fakeNavigationBar.addConstraintsWithFormat("H:|-40-[v0]-40-|", views: self.pageControl)
-        fakeNavigationBar.addConstraintsWithFormat("V:|-20-[v0]|", views: self.pageControl)
+        fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0]-10-|", views: self.pageControl)
+        
+        fakeNavigationBar.alpha = 0
     }
     
     // MARK: UICollectionViewDataSource
