@@ -63,7 +63,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         if let urlString = selectedFeed?.link?.replacingOccurrences(of: "http://www.cnbeta.com/articles/", with: "http://m.cnbeta.com/view/") {
             
-            // print(urlString)
+            print(urlString)
             URLString = urlString
             
             if let data = selectedFeed?.savedContent as? Data {
@@ -105,16 +105,22 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     func setupNavigationBar() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        let myLogoView = UIImageView(image: UIImage(named: "logo"))
+        navigationItem.titleView = myLogoView
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "nav_back")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNavBack))
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        fixedSpace.width = -8
         
         let saveImage = (selectedFeed?.isSaved)! ? "Saved" : "Save"
-        let saveButton = UIBarButtonItem(image: UIImage(named: saveImage)?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSave))
+        let saveButton = UIBarButtonItem(image: UIImage(named: saveImage), style: .plain, target: self, action: #selector(handleSave))
+        saveButton.tintColor = Constants.All_ICONS_COLOR
         
-        let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNavMore))
+        let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more"), style: .plain, target: self, action: #selector(handleNavMore))
+        moreButton.tintColor = Constants.All_ICONS_COLOR
         
+        navigationItem.leftBarButtonItems = [fixedSpace, backButton]
         navigationItem.rightBarButtonItems = [moreButton, saveButton]
     }
     
@@ -130,6 +136,10 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         selectedFeed?.isSaved = !(selectedFeed?.isSaved)!
         CoreDataStack.sharedInstance.save()
+    }
+    
+    func handleNavBack(_ sender: UIBarButtonItem) {
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func handleNavMore(_ sender: UIBarButtonItem) {
@@ -172,6 +182,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             
             imageDisplayController.imagesInfo = (allImageParagraphs!, imageIndex)
             imageDisplayController.show()
+            
         }
     }
     

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+import Kingfisher
 
 class WebCell: BaseCell {
     
@@ -39,7 +39,7 @@ class WebCell: BaseCell {
                     if p.textStyle == .normal {
                         textLabel.font = Constants.CONTENT_FONT_DETAIL_NORMAL
                     } else if p.textStyle == .strong {
-                        textLabel.font = Constants.CONTENT_FONT_DETAIL_BOLD
+                        textLabel.font = Constants.CONTENT_FONT_DETAIL_NORMAL
                     }
                     timeLabel.isHidden = true
                     sperateLine.isHidden = true
@@ -50,8 +50,10 @@ class WebCell: BaseCell {
                     imageView.image = UIImage(named: "image_placeholder")
                     self.isUserInteractionEnabled = false
                     if let imageURL = p.paragraphString {
-                        imageView.loadImageWithURLString(imageURL, completion: { (success) in
-                            self.isUserInteractionEnabled = true
+                        let resource = ImageResource(downloadURL: URL(string: imageURL)!, cacheKey: imageURL)
+                        imageView.kf.setImage(with: resource, completionHandler: {
+                            (image, error, cacheType, imageUrl) in
+                             self.isUserInteractionEnabled = true
                         })
                     }
                     
@@ -63,7 +65,8 @@ class WebCell: BaseCell {
                     backgroundColor = .white
                     textLabel.text = p.paragraphString!
                     textLabel.font = Constants.TITLE_FONT_DETAIL
-                    
+                    textLabel.textAlignment = .left
+
                     timeLabel.isHidden = false
                     sperateLine.isHidden = false
                     imageView.isHidden = true
@@ -75,13 +78,13 @@ class WebCell: BaseCell {
     
     let textLabel: UILabel = {
         let textLabel = UILabel()
-        textLabel.font = UIFont.systemFont(ofSize: Constants.CONTENT_FONT_SIZE_DETAIL)
+        textLabel.font =  Constants.CONTENT_FONT_DETAIL_NORMAL;
         textLabel.numberOfLines = 0
         return textLabel
     }()
     
-    let imageView: CustomImageView = {
-        let imageView = CustomImageView()
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         imageView.image = UIImage(named: "image_placeholder")
@@ -90,10 +93,11 @@ class WebCell: BaseCell {
     
     let timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.font = UIFont.systemFont(ofSize: Constants.TIME_FONT_SIZE_DETAIL)
+        timeLabel.font = Constants.TIME_FONT_FONT_DETAIL
+        timeLabel.textColor = Constants.TIME_LABEL_TEXT_COLOR
         timeLabel.numberOfLines = 0
         timeLabel.backgroundColor = .white
-        timeLabel.text = "2016-12-19 07:19:17"
+        timeLabel.text = "0000-00-00 00:00:00"
         return timeLabel
     }()
 

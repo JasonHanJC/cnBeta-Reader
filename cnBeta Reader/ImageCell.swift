@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ImageCell: UICollectionViewCell, UIScrollViewDelegate {
     
@@ -17,7 +18,7 @@ class ImageCell: UICollectionViewCell, UIScrollViewDelegate {
     }
     
     let imageScrollView = UIScrollView()
-    let imageView = CustomImageView()
+    let imageView = UIImageView()
     
     var imageString: String? {
         didSet {
@@ -30,7 +31,9 @@ class ImageCell: UICollectionViewCell, UIScrollViewDelegate {
             // make the toast
             self.makeToastActivity(self.center)
             
-            imageView.loadImageWithURLString(imageString, completion: {_ in
+            let resource = ImageResource(downloadURL: URL(string: imageString!)!, cacheKey: imageString)
+            imageView.kf.setImage(with: resource, completionHandler: {
+                (image, error, cacheType, imageUrl) in
                 self.hideToastActivity()
             })
         }

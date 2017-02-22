@@ -30,14 +30,31 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         mb.delegate = self
         return mb
     }()
+    
+    func setupNavigationBar() {
+        
+        let myLogoView = UIImageView(image: UIImage(named: "logo"))
+        navigationItem.titleView = myLogoView
+        
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        fixedSpace.width = -8
+        
+        let settingBtn = UIBarButtonItem(image: UIImage(named: "setting"), style: .plain, target: self, action: #selector(handleSetting))
+        settingBtn.tintColor = Constants.All_ICONS_COLOR
+        
+        navigationItem.rightBarButtonItems = [fixedSpace, settingBtn]
+    }
+    
+    @objc fileprivate func handleSetting() {
+        
+    }
+
 
     fileprivate func setupMenuBar() {
         
         view.addSubview(menuBar)
         view.addConstraintsWithFormat("H:|[v0]|", views: menuBar)
-        view.addConstraintsWithFormat("V:[v0(44)]", views: menuBar)
-        
-        menuBar.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        view.addConstraintsWithFormat("V:[v0(50)]|", views: menuBar)
     }
     
     fileprivate func setupCollectionView() {
@@ -49,9 +66,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.backgroundColor = .white
         collectionView?.register(FeedCollectionView.self, forCellWithReuseIdentifier: feedCellId)
         collectionView?.register(SavedTableView.self, forCellWithReuseIdentifier: saveCellId)
-
-        collectionView?.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
-        collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0)
+        collectionView?.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 50, 0)
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.showsHorizontalScrollIndicator = false
         collectionView?.isPagingEnabled = true
@@ -87,9 +103,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 44 - 20)
-
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 64 - 50)
     }
     
     // MARK: scrollview delegate
@@ -97,7 +111,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
       
         let retio = scrollView.frame.width / menuBar.collectionView.frame.width
         
-        menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / retio / CGFloat(menuBar.imageNames.count)
+        menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / retio / CGFloat(menuBar.filledImageNames.count)
     }
 
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -109,11 +123,11 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        automaticallyAdjustsScrollViewInsets = false
+        automaticallyAdjustsScrollViewInsets = true
         
         setupCollectionView()
         setupMenuBar()
+        setupNavigationBar()
         
         view.addSubview(launchView)
     }
@@ -132,9 +146,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.navigationBar.isTranslucent = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -149,10 +160,6 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTabl
     // MARK: MenuBarDelegate
     func didSelectMenuBarAtIndex(_ index: Int) {
         scrollToMenuIndex(index)
-    }
-    
-    func didSelectSettings() {
-        settingLauncher.showSettingLauncher()
     }
     
     // MARK: FeedCollectionViewDelegate

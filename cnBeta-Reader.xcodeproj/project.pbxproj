@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B699E0DB30DCA78E62948CD /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2919568B5C55AF5EDC6A36A8 /* Pods_cnBeta_Reader.framework */; };
+		349EE0EBE7CCD7A744DF1831 /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 314540B06B48F83C3AFE9BD8 /* Pods_cnBeta_Reader.framework */; };
 		962771371E025BC50043F894 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962771361E025BC50043F894 /* DetailController.swift */; };
 		9637AF3A1E26CA9100048BB8 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637AF391E26CA9100048BB8 /* SettingController.swift */; };
 		964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964963B01E08DE8D00EA079C /* Paragraph.swift */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
+		967BA8CE1E5BCB90007EEABA /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E31BA31E5BCA5000B51E31 /* Kingfisher.framework */; };
+		967BA8CF1E5BCB90007EEABA /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96E31BA31E5BCA5000B51E31 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
 		967F97931E0120570048D63B /* SavedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F97921E0120570048D63B /* SavedTableView.swift */; };
 		968872271E0905D000A45385 /* SavedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968872261E0905D000A45385 /* SavedCell.swift */; };
@@ -33,6 +35,7 @@
 		96C5C8B31DFE1DA600A61681 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8B21DFE1DA600A61681 /* FeedCell.swift */; };
 		96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8D11DFE761400A61681 /* FeedCollectionView.swift */; };
 		96CA4A221E440AD700AD7822 /* LaunchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CA4A211E440AD700AD7822 /* LaunchingView.swift */; };
+		96D6274A1E51882B00631B4A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D627491E51882B00631B4A /* SettingViewController.swift */; };
 		96EBAF351E19BD8000D45BD7 /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 96EBAF341E19BD8000D45BD7 /* Model.xcmappingmodel */; };
 		96EE0AE11E0C830E0099892B /* FetchContentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EE0AE01E0C830E0099892B /* FetchContentOperation.swift */; };
 		96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583421E04FBCF0041B9D2 /* CustomImageView.swift */; };
@@ -40,10 +43,23 @@
 		96F583481E0504BE0041B9D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583471E0504BE0041B9D2 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		967BA8D01E5BCB90007EEABA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				967BA8CF1E5BCB90007EEABA /* Kingfisher.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		1A8DCF951B9574D68CA2FA65 /* Pods-cnBeta-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.debug.xcconfig"; sourceTree = "<group>"; };
-		1FC7753AA844B4877496AEC6 /* Pods-cnBeta-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.release.xcconfig"; sourceTree = "<group>"; };
-		2919568B5C55AF5EDC6A36A8 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		27F80BF882EC1B8947DBD39D /* Pods-cnBeta-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.debug.xcconfig"; sourceTree = "<group>"; };
+		314540B06B48F83C3AFE9BD8 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		962771361E025BC50043F894 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		9637AF391E26CA9100048BB8 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		964963B01E08DE8D00EA079C /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
@@ -72,12 +88,16 @@
 		96C5C8B21DFE1DA600A61681 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		96C5C8D11DFE761400A61681 /* FeedCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCollectionView.swift; sourceTree = "<group>"; };
 		96CA4A211E440AD700AD7822 /* LaunchingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchingView.swift; sourceTree = "<group>"; };
+		96D627491E51882B00631B4A /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		96E31B9E1E5BC8A800B51E31 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = "../../Library/Developer/Xcode/DerivedData/cnBeta-Reader-dxkwubspapagscdxoczngnndfldt/Build/Products/Debug-iphonesimulator/Kingfisher/Kingfisher.framework"; sourceTree = "<group>"; };
+		96E31BA31E5BCA5000B51E31 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = "../../Library/Developer/Xcode/DerivedData/cnBeta-Reader-dxkwubspapagscdxoczngnndfldt/Build/Products/Debug-iphoneos/Kingfisher/Kingfisher.framework"; sourceTree = "<group>"; };
 		96EBAF331E19BD0500D45BD7 /* cnBeta-Reader 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader 2.xcdatamodel"; sourceTree = "<group>"; };
 		96EBAF341E19BD8000D45BD7 /* Model.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model.xcmappingmodel; sourceTree = "<group>"; };
 		96EE0AE01E0C830E0099892B /* FetchContentOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchContentOperation.swift; sourceTree = "<group>"; };
 		96F583421E04FBCF0041B9D2 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		96F583451E0500190041B9D2 /* WebCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCell.swift; sourceTree = "<group>"; };
 		96F583471E0504BE0041B9D2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D22097E59FC78B40BAC45982 /* Pods-cnBeta-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,19 +105,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B699E0DB30DCA78E62948CD /* Pods_cnBeta_Reader.framework in Frameworks */,
+				967BA8CE1E5BCB90007EEABA /* Kingfisher.framework in Frameworks */,
+				349EE0EBE7CCD7A744DF1831 /* Pods_cnBeta_Reader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		51F7A3D932F634D061B02AE4 /* Frameworks */ = {
+		756BE0C2DADB94360DA21631 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2919568B5C55AF5EDC6A36A8 /* Pods_cnBeta_Reader.framework */,
+				27F80BF882EC1B8947DBD39D /* Pods-cnBeta-Reader.debug.xcconfig */,
+				D22097E59FC78B40BAC45982 /* Pods-cnBeta-Reader.release.xcconfig */,
 			);
-			name = Frameworks;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		964963B21E08DEDB00EA079C /* Model */ = {
@@ -140,7 +162,9 @@
 		968C5CF21E1475E300DFAE46 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				968C5CF01E14756200DFAE46 /* SettingLauncher.swift */,
 				968C5CF31E1475F900DFAE46 /* SettingCell.swift */,
+				96D627491E51882B00631B4A /* SettingViewController.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -150,8 +174,8 @@
 			children = (
 				96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */,
 				96C5C88E1DFCDE2E00A61681 /* Products */,
-				A1DDB1214308A307992AA914 /* Pods */,
-				51F7A3D932F634D061B02AE4 /* Frameworks */,
+				C695F8733315CD35C98F42A5 /* Frameworks */,
+				756BE0C2DADB94360DA21631 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -170,10 +194,10 @@
 				966DCA5E1E05DFC500D0172D /* Helper */,
 				96C5C8CB1DFE44EB00A61681 /* CoreData */,
 				96C5C8AD1DFD14FE00A61681 /* ApiService */,
+				968C5CF21E1475E300DFAE46 /* Setting */,
 				96C5C8A91DFCE90100A61681 /* views */,
 				96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */,
 				96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */,
-				968C5CF01E14756200DFAE46 /* SettingLauncher.swift */,
 				962771361E025BC50043F894 /* DetailController.swift */,
 				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
 				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
@@ -188,7 +212,6 @@
 		96C5C8A91DFCE90100A61681 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				968C5CF21E1475E300DFAE46 /* Setting */,
 				96F583441E04FC250041B9D2 /* WebDetail */,
 				967F97911E011FC40048D63B /* SavedFeed */,
 				967F97901E011FA90048D63B /* NewFeed */,
@@ -246,13 +269,14 @@
 			name = WebDetail;
 			sourceTree = "<group>";
 		};
-		A1DDB1214308A307992AA914 /* Pods */ = {
+		C695F8733315CD35C98F42A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1A8DCF951B9574D68CA2FA65 /* Pods-cnBeta-Reader.debug.xcconfig */,
-				1FC7753AA844B4877496AEC6 /* Pods-cnBeta-Reader.release.xcconfig */,
+				96E31BA31E5BCA5000B51E31 /* Kingfisher.framework */,
+				96E31B9E1E5BC8A800B51E31 /* Kingfisher.framework */,
+				314540B06B48F83C3AFE9BD8 /* Pods_cnBeta_Reader.framework */,
 			);
-			name = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,13 +286,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96C5C89F1DFCDE2E00A61681 /* Build configuration list for PBXNativeTarget "cnBeta-Reader" */;
 			buildPhases = (
-				ECEC500818C5DA33CA265AAC /* [CP] Check Pods Manifest.lock */,
+				A79487D55CA00B929A6F1670 /* [CP] Check Pods Manifest.lock */,
 				96C5C8891DFCDE2E00A61681 /* Sources */,
 				96C5C88A1DFCDE2E00A61681 /* Frameworks */,
 				96C5C88B1DFCDE2E00A61681 /* Resources */,
 				968872281E0915F100A45385 /* ShellScript */,
-				E5420118117EE361184FAEAD /* [CP] Embed Pods Frameworks */,
-				E60E3CE5134A914133175CC8 /* [CP] Copy Pods Resources */,
+				A59DD22A46C355F2CF4C5ECE /* [CP] Embed Pods Frameworks */,
+				099BB3DB0E764263EAE39BC8 /* [CP] Copy Pods Resources */,
+				967BA8D01E5BCB90007EEABA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -328,35 +353,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		968872281E0915F100A45385 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" fc4241c937e243a3b48b4a50cfba2b291910144c c4611082081fbab89770d1e25c71354b32c4d74013854b78f77d64d522b7b621";
-		};
-		E5420118117EE361184FAEAD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E60E3CE5134A914133175CC8 /* [CP] Copy Pods Resources */ = {
+		099BB3DB0E764263EAE39BC8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -371,7 +368,35 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ECEC500818C5DA33CA265AAC /* [CP] Check Pods Manifest.lock */ = {
+		968872281E0915F100A45385 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" fc4241c937e243a3b48b4a50cfba2b291910144c c4611082081fbab89770d1e25c71354b32c4d74013854b78f77d64d522b7b621";
+		};
+		A59DD22A46C355F2CF4C5ECE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A79487D55CA00B929A6F1670 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -393,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96D6274A1E51882B00631B4A /* SettingViewController.swift in Sources */,
 				96C5C8A81DFCE88500A61681 /* Extensions.swift in Sources */,
 				968872271E0905D000A45385 /* SavedCell.swift in Sources */,
 				96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */,
@@ -533,7 +559,7 @@
 		};
 		96C5C8A01DFCDE2E00A61681 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A8DCF951B9574D68CA2FA65 /* Pods-cnBeta-Reader.debug.xcconfig */;
+			baseConfigurationReference = 27F80BF882EC1B8947DBD39D /* Pods-cnBeta-Reader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -554,7 +580,7 @@
 		};
 		96C5C8A11DFCDE2E00A61681 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FC7753AA844B4877496AEC6 /* Pods-cnBeta-Reader.release.xcconfig */;
+			baseConfigurationReference = D22097E59FC78B40BAC45982 /* Pods-cnBeta-Reader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

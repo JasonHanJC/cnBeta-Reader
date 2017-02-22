@@ -17,7 +17,7 @@ class ZoomImageController: NSObject, UIScrollViewDelegate {
     let blackView = UIView()
     
     let imageScrollView = UIScrollView()
-    let imageView = CustomImageView()
+    let imageView = UIImageView()
     
     lazy var saveButton: UIButton = {
         let button = UIButton()

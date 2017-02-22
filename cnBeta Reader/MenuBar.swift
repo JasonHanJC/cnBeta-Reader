@@ -10,7 +10,6 @@ import UIKit
 
 protocol MenuBarDelegate: class {
     func didSelectMenuBarAtIndex(_ index: Int)
-    func didSelectSettings()
 }
 
 class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -18,47 +17,41 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.rgb(230, green: 32, blue: 32, alpha: 1.0)
+        collectionView.backgroundColor = .white
+            //UIColor.rgb(230, green: 32, blue: 32, alpha: 1.0)
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
     }()
     
-    lazy var logoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .clear
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "Whitelogo")
-        imageView.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLogoImageTap))
-        imageView.addGestureRecognizer(tapGesture)
-        return imageView
+    let topLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.80, alpha: 1)
+        return view
     }()
     
-    func handleLogoImageTap(_ sender: UITapGestureRecognizer) {
-        delegate?.didSelectSettings()
-    }
-    
     let cellId = "cellId"
-    let imageNames = ["Feed", "Saved"]
+    let filledImageNames = ["feed_filled", "Saved"]
+    let hollowImageNames = ["feed_hollow", "Save"]
     let sectionName = ["Feed", "Saved"]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor =  UIColor.rgb(230, green: 32, blue: 32, alpha: 1)
+        backgroundColor = .clear
+            //UIColor.rgb(230, green: 32, blue: 32, alpha: 1)
 
         
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
         
         addSubview(collectionView)
-        addSubview(logoImageView)
+        addSubview(topLine)
         
-        addConstraintsWithFormat("H:|[v0(40)]-(>=60)-[v1(150)]|", views: logoImageView, collectionView)
+        addConstraintsWithFormat("H:|[v0]|", views: topLine)
+        addConstraintsWithFormat("V:|[v0(0.5)]", views: topLine)
+        
+        addConstraintsWithFormat("H:|[v0]|", views: collectionView)
         addConstraintsWithFormat("V:|[v0]|", views: collectionView)
-        addConstraintsWithFormat("V:[v0(46)]", views: logoImageView)
-        
-        addConstraint(NSLayoutConstraint(item: logoImageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
         setupHorizontalBar()
 
@@ -80,27 +73,34 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         horizontalBarLeftAnchorConstraint?.isActive = true
         
         horizontalBar.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        horizontalBar.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 1/CGFloat(imageNames.count)).isActive = true
+        horizontalBar.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 1/CGFloat(filledImageNames.count)).isActive = true
         horizontalBar.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
     
     // MARK: Collection view delegate and datasource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageNames.count
+        return filledImageNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MenuCell
         
-        cell.imageView.image = UIImage(named: imageNames[indexPath.item])?.withRenderingMode(.alwaysTemplate)
-        cell.label.text = sectionName[indexPath.item]
+        // the first one is selected at the beginning
+        if (indexPath.item == 0) {
+            cell.imageView.image = UIImage(named: filledImageNames[indexPath.item])!
+        } else {
+            cell.imageView.image = UIImage(named: hollowImageNames[indexPath.item])!
+        }
+        
+        cell.filledImage = UIImage(named: filledImageNames[indexPath.item])!
+        cell.hollowImage = UIImage(named: hollowImageNames[indexPath.item])!
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / CGFloat(imageNames.count), height: collectionView.frame.height)
+        return CGSize(width: collectionView.frame.width / CGFloat(filledImageNames.count), height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

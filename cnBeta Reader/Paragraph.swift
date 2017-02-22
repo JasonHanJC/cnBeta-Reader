@@ -45,7 +45,7 @@ class Paragraph: NSObject, NSCoding {
         if type == .title {
             self.paragraphHeight = computeHeight(content ,font: Constants.TITLE_FONT_DETAIL)
         } else if (type == .text) || (type == .summary) {
-            self.paragraphHeight = computeHeight(content ,font: Constants.CONTENT_FONT_DETAIL_BOLD)
+            self.paragraphHeight = computeHeight(content ,font: Constants.CONTENT_FONT_DETAIL_NORMAL)
         } else {
             self.paragraphHeight = Float(Constants.SCREEN_WIDTH / 4 * 3 + 8 + 8)
         }

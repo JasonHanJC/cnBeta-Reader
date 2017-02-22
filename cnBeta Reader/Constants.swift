@@ -8,6 +8,9 @@
 
 struct Constants {
     
+    //PingFang SC ["PingFangSC-Ultralight", "PingFangSC-Regular", "PingFangSC-Semibold", "PingFangSC-Thin", "PingFangSC-Light", "PingFangSC-Medium"]
+    //Avenir ["Avenir-Medium", "Avenir-HeavyOblique", "Avenir-Book", "Avenir-Light", "Avenir-Roman", "Avenir-BookOblique", "Avenir-MediumOblique", "Avenir-Black", "Avenir-BlackOblique", "Avenir-Heavy", "Avenir-LightOblique", "Avenir-Oblique"]
+    
     // MARK: screen info
     static let SCREEN_WIDTH = UIScreen.main.bounds.width
     static let SCREEN_HEIGHT = UIScreen.main.bounds.height
@@ -20,20 +23,19 @@ struct Constants {
     // fetch number
     static let FETCH_LIMIT = 20
     
-    // font size
-    static let TITLE_FONT_SIZE_DETAIL: CGFloat = 21.0
-    static let TITLE_FONT_SIZE: CGFloat = 21.0
+    // font
+    static let TITLE_FONT_DETAIL: UIFont = UIFont.init(name: "PingFangSC-Semibold", size: 22) ?? UIFont.systemFont(ofSize: 16)
     
-    static let TITLE_FONT_DETAIL: UIFont = UIFont.systemFont(ofSize: 21.0, weight: 0.3)
+    static let CONTENT_FONT_DETAIL_NORMAL: UIFont = UIFont.init(name: "PingFangSC-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
     
-    static let CONTENT_FONT_SIZE_DETAIL: CGFloat = 18.0
-    static let CONTENT_FONT_SIZE: CGFloat = 18.0
+    static let TIME_FONT_FONT_DETAIL: UIFont = UIFont.init(name: "Avenir", size: 12) ?? UIFont.systemFont(ofSize: 16)
     
-    static let CONTENT_FONT_DETAIL_BOLD: UIFont = UIFont.systemFont(ofSize: 18.0, weight: 0.3)
-    static let CONTENT_FONT_DETAIL_NORMAL: UIFont = UIFont.systemFont(ofSize: 18.0, weight: 0.0)
+    // colors
+    static let TITLE_TEXT_COLOR: UIColor =  UIColor(red:0, green:0, blue:0, alpha:1.0)
     
-
+    static let SUMMARY_TEXT_COLOR: UIColor = UIColor(red:0.45, green:0.46, blue:0.47, alpha:1.0)
     
-    static let TIME_FONT_SIZE_DETAIL: CGFloat = 13.0
-    static let TIME_FONT_SIZE: CGFloat = 12.0
+    static let TIME_LABEL_TEXT_COLOR: UIColor = UIColor(red:0.95, green:0.43, blue:0.39, alpha:1.0)
+    
+    static let All_ICONS_COLOR: UIColor = UIColor(red:0.95, green:0.43, blue:0.39, alpha:1.0)
 }
