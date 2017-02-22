@@ -25,7 +25,7 @@ class SavedCell: BaseCell {
             
             if let publishedDate = feed?.publishedDate {
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "EEE, dd-MMM-yyyy HH:mm"
+                dateFormatter.dateFormat = "MMM-dd-yyyy HH:mm"
                 dateLabel.text = dateFormatter.string(from: publishedDate as Date)
             }
             

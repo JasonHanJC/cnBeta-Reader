@@ -67,7 +67,7 @@ class FeedCell: BaseCell {
     
     let topLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0.80, alpha: 1)
+        view.backgroundColor = Constants.SEPRATE_LINE_COLOR
         return view
     }()
     

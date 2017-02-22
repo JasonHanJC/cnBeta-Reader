@@ -50,7 +50,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         if let date = selectedFeed?.publishedDate {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MMM-yyyy HH:mm"
+            dateFormatter.dateFormat = "EEE MMM-dd-yyyy HH:mm"
             timeLabelText = dateFormatter.string(from: date as Date)
         }
 
