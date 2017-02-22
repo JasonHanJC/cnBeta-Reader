@@ -1,7 +1,10 @@
 //
-//  DispatchQueue+Alamofire.swift
+//  Kingfisher.swift
+//  Kingfisher
 //
-//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Created by Wei Wang on 16/9/14.
+//
+//  Copyright (c) 2017 Wei Wang <onevcat@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,18 +23,49 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//
 
-import Dispatch
 import Foundation
+import ImageIO
 
-extension DispatchQueue {
-    static var userInteractive: DispatchQueue { return DispatchQueue.global(qos: .userInteractive) }
-    static var userInitiated: DispatchQueue { return DispatchQueue.global(qos: .userInitiated) }
-    static var utility: DispatchQueue { return DispatchQueue.global(qos: .utility) }
-    static var background: DispatchQueue { return DispatchQueue.global(qos: .background) }
+#if os(macOS)
+    import AppKit
+    public typealias Image = NSImage
+    public typealias Color = NSColor
+    public typealias ImageView = NSImageView
+    typealias Button = NSButton
+#else
+    import UIKit
+    public typealias Image = UIImage
+    public typealias Color = UIColor
+    #if !os(watchOS)
+    public typealias ImageView = UIImageView
+    typealias Button = UIButton
+    #endif
+#endif
 
-    func after(_ delay: TimeInterval, execute closure: @escaping () -> Void) {
-        asyncAfter(deadline: .now() + delay, execute: closure)
+public final class Kingfisher<Base> {
+    public let base: Base
+    public init(_ base: Base) {
+        self.base = base
     }
 }
+
+/**
+ A type that has Kingfisher extensions.
+ */
+public protocol KingfisherCompatible {
+    associatedtype CompatibleType
+    var kf: CompatibleType { get }
+}
+
+public extension KingfisherCompatible {
+    public var kf: Kingfisher<Self> {
+        get { return Kingfisher(self) }
+    }
+}
+
+extension Image: KingfisherCompatible { }
+#if !os(watchOS)
+extension ImageView: KingfisherCompatible { }
+extension Button: KingfisherCompatible { }
+#endif

@@ -12,4 +12,5 @@ target 'cnBeta-Reader' do
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'DZNEmptyDataSet'
+    pod 'Kingfisher', '~> 3.0'
 end

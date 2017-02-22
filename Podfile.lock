@@ -1,10 +1,11 @@
 PODS:
-  - Alamofire (4.2.0)
+  - Alamofire (4.3.0)
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - DZNEmptyDataSet (1.8.1)
   - Fabric (1.6.11)
   - Kanna (2.1.1)
+  - Kingfisher (3.5.0)
   - MJRefresh (3.1.12)
   - Toast-Swift (2.0.0)
 
@@ -14,18 +15,20 @@ DEPENDENCIES:
   - DZNEmptyDataSet
   - Fabric
   - Kanna (~> 2.1.0)
+  - Kingfisher (~> 3.0)
   - MJRefresh
   - Toast-Swift (~> 2.0.0)
 
 SPEC CHECKSUMS:
-  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   Kanna: 9b4b086c218703f2b94f5b21a466217dd2f9332e
+  Kingfisher: 7c62087039d93d26c54c8dd9b0b588d2ce55cef6
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   Toast-Swift: 5b2f8f720f7e78e48511f693df1f9c9a6e38a25a
 
-PODFILE CHECKSUM: d6f764f68decd8c2cdbb30097df368399f169cc0
+PODFILE CHECKSUM: 1f972f078f388b56b4a52d078cf4fdcc483404da
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.2.0
