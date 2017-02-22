@@ -93,7 +93,7 @@ class WebCell: BaseCell {
     
     let timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.font = Constants.TIME_FONT_FONT_DETAIL
+        timeLabel.font = Constants.TIME_LABEL_FONT_DETAIL
         timeLabel.textColor = Constants.TIME_LABEL_TEXT_COLOR
         timeLabel.numberOfLines = 0
         timeLabel.backgroundColor = .white

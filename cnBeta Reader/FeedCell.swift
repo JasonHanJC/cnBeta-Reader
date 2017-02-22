@@ -13,7 +13,7 @@ class FeedCell: BaseCell {
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted ? UIColor(white: 0.80, alpha: 1) : .white
-            dateLabel.textColor = isHighlighted ? .white : .black
+            dateLabel.textColor = isHighlighted ? .white : Constants.TIME_LABEL_TEXT_COLOR
             titleLabel.textColor = isHighlighted ? .white : .black
             contentLabel.textColor = isHighlighted ? .white : .gray
         }
@@ -24,7 +24,7 @@ class FeedCell: BaseCell {
             
             if let publishedDate = feed?.publishedDate {
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "EEE, dd-MMM-yyyy HH:mm"
+                dateFormatter.dateFormat = "HH:mm"
                 dateLabel.text = dateFormatter.string(from: publishedDate as Date)
             }
             
@@ -40,8 +40,8 @@ class FeedCell: BaseCell {
     
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .black
+        label.font = Constants.TIME_LABEL_FONT_FEED
+        label.textColor = Constants.TIME_LABEL_TEXT_COLOR
         label.text = "Dummy date"
         label.numberOfLines = 1
         return label
@@ -49,34 +49,29 @@ class FeedCell: BaseCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = Constants.TITLE_FONT_FEED
         label.textColor = .black
         label.text = "Dummy title"
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         return label
     }()
     
     let contentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = Constants.CONTENT_FONT_FEED
         label.textColor = .gray
         label.text = "Dummy content"
         label.numberOfLines = 0
         return label
     }()
     
-    let line: UIView = {
+    let topLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = UIColor(white: 0.80, alpha: 1)
         return view
     }()
     
-    let circle: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Circle")
-        return imageView
-    }()
-    
+
     let feedContentView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -89,17 +84,14 @@ class FeedCell: BaseCell {
         
         backgroundColor = .white
         
-        addSubview(line)
-        addSubview(circle)
         addSubview(feedContentView)
+        addSubview(topLine)
         
-        addConstraintsWithFormat("H:|-15-[v0(1)]-8-[v1]-15-|", views: line, feedContentView)
-        addConstraintsWithFormat("V:|[v0]|", views: line)
-        addConstraintsWithFormat("V:|[v0]|", views: feedContentView)
+        addConstraintsWithFormat("H:|-20-[v0]-20-|", views: feedContentView)
+        addConstraintsWithFormat("V:|-30-[v0]-30-|", views: feedContentView)
         
-        addConstraintsWithFormat("V:|-9-[v0(9)]", views: circle)
-        addConstraintsWithFormat("H:[v0(9)]", views: circle)
-        addConstraint(NSLayoutConstraint(item: circle, attribute: .centerX, relatedBy: .equal, toItem: line, attribute: .centerX, multiplier: 1, constant: 0))
+        addConstraintsWithFormat("V:|[v0(0.5)]", views: topLine)
+        addConstraintsWithFormat("H:|[v0]|", views: topLine)
         
         setupContentView()
     }
@@ -110,7 +102,7 @@ class FeedCell: BaseCell {
         feedContentView.addSubview(titleLabel)
         feedContentView.addSubview(contentLabel)
         
-        feedContentView.addConstraintsWithFormat("V:|-6-[v0]-1-[v1]-8-[v2]", views: dateLabel, titleLabel, contentLabel)
+        feedContentView.addConstraintsWithFormat("V:|[v0]-4-[v1]-12-[v2]", views: dateLabel, titleLabel, contentLabel)
         feedContentView.addConstraintsWithFormat("H:|[v0]|", views: dateLabel)
         feedContentView.addConstraintsWithFormat("H:|[v0]|", views: titleLabel)
         feedContentView.addConstraintsWithFormat("H:|[v0]|", views: contentLabel)

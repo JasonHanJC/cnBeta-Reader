@@ -24,11 +24,14 @@ struct Constants {
     static let FETCH_LIMIT = 20
     
     // font
-    static let TITLE_FONT_DETAIL: UIFont = UIFont.init(name: "PingFangSC-Semibold", size: 22) ?? UIFont.systemFont(ofSize: 16)
+    static let TITLE_FONT_DETAIL: UIFont = UIFont.init(name: "PingFangSC-Semibold", size: 22) ?? UIFont.systemFont(ofSize: 22)
+    static let TITLE_FONT_FEED: UIFont = UIFont.init(name: "PingFangSC-Semibold", size: 20) ?? UIFont.systemFont(ofSize: 20)
     
     static let CONTENT_FONT_DETAIL_NORMAL: UIFont = UIFont.init(name: "PingFangSC-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+    static let CONTENT_FONT_FEED: UIFont = UIFont.init(name: "PingFangSC-Regular", size: 13) ?? UIFont.systemFont(ofSize: 13)
     
-    static let TIME_FONT_FONT_DETAIL: UIFont = UIFont.init(name: "Avenir", size: 12) ?? UIFont.systemFont(ofSize: 16)
+    static let TIME_LABEL_FONT_DETAIL: UIFont = UIFont.init(name: "Avenir", size: 12) ?? UIFont.systemFont(ofSize: 12)
+    static let TIME_LABEL_FONT_FEED: UIFont = UIFont.init(name: "Avenir-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)
     
     // colors
     static let TITLE_TEXT_COLOR: UIColor =  UIColor(red:0, green:0, blue:0, alpha:1.0)
