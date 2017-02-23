@@ -31,15 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = UINavigationController(rootViewController: homeController)
         
-        //UINavigationBar.appearance().isHidden = true
         UINavigationBar.appearance().barTintColor = UIColor.white
         UIApplication.shared.statusBarStyle = .default
-        
-//        let statusBarBackgroudView = UIView()
-//        statusBarBackgroudView.backgroundColor = UIColor.rgb(194, green: 31, blue: 31, alpha: 1.0)
-//        window?.addSubview(statusBarBackgroudView)
-//        window?.addConstraintsWithFormat("H:|[v0]|", views: statusBarBackgroudView)
-//        window?.addConstraintsWithFormat("V:|[v0(20)]", views: statusBarBackgroudView)
 
         Fabric.with([Crashlytics.self])
         
