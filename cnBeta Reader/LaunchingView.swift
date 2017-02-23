@@ -14,7 +14,7 @@ class LaunchingView: UIView {
         let layer = CALayer()
         layer.frame = CGRect(x: 0, y: 0, width: 140, height: 140)
         let path = CAShapeLayer()
-        path.frame = CGRect(x: -0, y: 0, width: 140, height: 140)
+        path.frame = CGRect(x: 0, y: 0, width: 140, height: 140)
         path.path = self.setBezierPath().cgPath
         path.fillColor = UIColor.white.cgColor
         layer.addSublayer(path)

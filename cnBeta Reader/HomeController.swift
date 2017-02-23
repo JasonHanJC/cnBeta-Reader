@@ -75,7 +75,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func scrollToMenuIndex(_ menuIndex: Int) {
         let indexPath = IndexPath(item: menuIndex, section: 0)
-        collectionView?.scrollToItem(at: indexPath, at: [], animated: true)
+        collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
     }
     
     // MARK: collection view delegate and datasource
