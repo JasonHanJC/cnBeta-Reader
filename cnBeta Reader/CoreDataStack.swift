@@ -66,7 +66,6 @@ class CoreDataStack: NSObject {
                     do {
                         try self.mainContext.save()
                         
-                        print("saved")
                     } catch let error as NSError {
                         print("Error: \(error.localizedDescription)")
                         abort()

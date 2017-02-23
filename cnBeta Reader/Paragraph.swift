@@ -52,11 +52,11 @@ class Paragraph: NSObject, NSCoding {
     }
     
     fileprivate func computeHeight(_ string: String, font: UIFont) -> Float {
-        let size = CGSize(width: Constants.SCREEN_WIDTH - 8 - 8, height: CGFloat(FLT_MAX))
+        let size = CGSize(width: Constants.SCREEN_WIDTH - 24 - 24, height: CGFloat(FLT_MAX))
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let estimatedFrame = NSString(string: string).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: font], context: nil)
         
-        return ceilf(Float(estimatedFrame.size.height)) + 20
+        return ceilf(Float(estimatedFrame.size.height))
     }
     
     required init?(coder aDecoder: NSCoder) {

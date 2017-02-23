@@ -23,7 +23,9 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     var contentArray: [Paragraph]?
     var allImageParagraphs: [Paragraph]?
     
-    let cellId = "cellId"
+    let titleCellId = "titleCellId"
+    let textCellId = "textCellId"
+    let summCellId = "summCellId"
     
     let zoomImageController: ZoomImageController = {
         let controller = ZoomImageController()
@@ -38,7 +40,9 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        collectionView?.register(WebCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(TextCell.self, forCellWithReuseIdentifier: textCellId)
+        collectionView?.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
+        collectionView?.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
         collectionView?.backgroundColor = .white
 
         view.backgroundColor = .white
@@ -61,8 +65,12 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             contentArray?.append(titleParagraph)
         }
         
-        if let urlString = selectedFeed?.link?.replacingOccurrences(of: "http://www.cnbeta.com/articles/", with: "http://m.cnbeta.com/view/") {
-            
+        print(selectedFeed?.link ?? "")
+        
+        if let last10  = selectedFeed?.link?.substring(from:(selectedFeed?.link?.index((selectedFeed?.link?.endIndex)!, offsetBy: -10))!) {
+        
+            let urlString = "http://m.cnbeta.com/view/\(last10)"
+        
             print(urlString)
             URLString = urlString
             
@@ -160,12 +168,27 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! WebCell
         
-        cell.paragraph = contentArray?[indexPath.item]
-        cell.timeLabel.text = timeLabelText
-
-        return cell
+        let currentParagragh = contentArray?[indexPath.item]
+        if currentParagragh?.type == .title {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: titleCellId, for: indexPath) as! TitleCell
+            
+            cell.paragraph = contentArray?[indexPath.item]
+            cell.timeLabel.text = timeLabelText
+            
+            return cell
+        } else if currentParagragh?.type == .summary {
+        
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: summCellId, for: indexPath) as! SummCell
+        
+            cell.paragraph = contentArray?[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: textCellId, for: indexPath) as! TextCell
+            
+            cell.paragraph = contentArray?[indexPath.item]
+            return cell
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -188,9 +211,18 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let height = contentArray?[indexPath.item].paragraphHeight
+        let paragraph = contentArray?[indexPath.item]
         
-        return CGSize(width: collectionView.frame.width, height: CGFloat(height!))
+        if paragraph?.type == .title {
+            let height = contentArray?[indexPath.item].paragraphHeight
+            
+            return CGSize(width: collectionView.frame.width, height: 30 + CGFloat(height!) + 6 + 16)
+        } else {
+        
+            let height = contentArray?[indexPath.item].paragraphHeight
+        
+            return CGSize(width: collectionView.frame.width, height: CGFloat(height!) + 36)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -205,73 +237,75 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     func getWebContentWithUrl(_ urlString: String, completion: @escaping contentParsingCompletion) {
         
-            let url = URL(string: urlString);
-            let cnbetaData = try? Data(contentsOf: url!)
+        
+        let url = URL(string: urlString);
+        let cnbetaData = try? Data(contentsOf: url!)
             
-            if let cnbetaData = cnbetaData {
+        if let cnbetaData = cnbetaData {
                 
-                var contents = [Paragraph]()
+            var contents = [Paragraph]()
                 
                 
-                if let doc = HTML(html: cnbetaData, encoding: .utf8) {
+            if let doc = HTML(html: cnbetaData, encoding: .utf8) {
                     
-                    // article sum
-                    for link in doc.css("div.article-summ") {
-                        if link.text != "" {
-                            let paragraph = Paragraph.init(type: .summary, content: link.text!, alignment: .alignmentLeft,  textStyle: .normal)
-                            contents.append(paragraph)
-
-                        }
-                    }
-
-                    // article content
-                    for link in doc.css("div.articleCont p") {
+                // article sum
+                for link in doc.css("div.article-summ") {
                         
-                        let text = link.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-                        
-                        if text == "" {
-                            // image or video
-                            // print("image")
-                            for imageNode in link.css("img") {
-                                if let imageSrc = imageNode["src"] {
-                                    //print(imageSrc)
-                                    let paragraph = Paragraph.init(type: .image, content: imageSrc, alignment: .alignmentCenter)
-                                    contents.append(paragraph)
-                                }
-                            }
-                            
-                        } else {
-                            var textStyle: TextStyle = .normal
-                            if link.css("strong").first?.text != nil {
-                                textStyle = .strong
-                            }
-                            
-                            var textAlignment: ParagraphAlignment = .alignmentLeft
-                            if link["style"] == "text-align: center;" {
-                                textAlignment = .alignmentCenter
-                            } else if link["style"] == "text-align: right;"{
-                                textAlignment = .alignmentRight
-                            }
-                            
-                            let paragraph = Paragraph.init(type: .text, content: text!, alignment: textAlignment,  textStyle: textStyle)
-                            
-                            contents.append(paragraph)
-                            
-                        }
+                    if link.text != "" {
+                        let paragraph = Paragraph.init(type: .summary, content: link.text!, alignment: .alignmentLeft,  textStyle: .normal)
+                        contents.append(paragraph)
+
                     }
                 }
-                
-                let data = NSKeyedArchiver.archivedData(withRootObject: contents)
-                self.selectedFeed?.savedContent = data as NSData
-                
-                if self.URLString == urlString {
-                    completion(contents)
-                }
-            } else {
-                print("The url is inaccessible")
-                if self.URLString == urlString {
-                    completion(nil)
+                    
+                // article content
+                for link in doc.css("div.articleCont p") {
+                        
+                    let text = link.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                        
+                    if text == "" {
+                        // image or video
+                        // print("image")
+                        for imageNode in link.css("img") {
+                            if let imageSrc = imageNode["src"] {
+                                //print(imageSrc)
+                                let paragraph = Paragraph.init(type: .image, content: imageSrc, alignment: .alignmentCenter)
+                                contents.append(paragraph)
+                            }
+                        }
+                            
+                    } else {
+                        var textStyle: TextStyle = .normal
+                        if link.css("strong").first?.text != nil {
+                            textStyle = .strong
+                        }
+                            
+                        var textAlignment: ParagraphAlignment = .alignmentLeft
+                        if link["style"] == "text-align: center;" {
+                            textAlignment = .alignmentCenter
+                        } else if link["style"] == "text-align: right;"{
+                            textAlignment = .alignmentRight
+                        }
+                            
+                        let paragraph = Paragraph.init(type: .text, content: text!, alignment: textAlignment,  textStyle: textStyle)
+                            
+                        contents.append(paragraph)
+                            
+                    }
                 }
             }
+                
+            let data = NSKeyedArchiver.archivedData(withRootObject: contents)
+            self.selectedFeed?.savedContent = data as NSData
+                
+            if self.URLString == urlString {
+                completion(contents)
+            }
+        } else {
+            print("The url is inaccessible")
+            if self.URLString == urlString {
+                completion(nil)
+            }
         }
+    }
 }
