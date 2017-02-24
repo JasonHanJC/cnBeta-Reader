@@ -25,6 +25,8 @@ class TextCell: BaseCell {
                 } else {
                     textLabel.textAlignment = .right
                 }
+                
+                textLabel.textColor = Constants.DETAIL_TEXT_NORMAL_COLOR
             }
         }
     }

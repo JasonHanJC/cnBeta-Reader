@@ -10,6 +10,12 @@ import UIKit
 
 class SummCell: TextCell {
     
+    override var paragraph: Paragraph? {
+        didSet {
+            textLabel.textColor = Constants.DETAIL_TEXT_SUMM_COLOR
+        }
+    }
+    
     let blockView: UIView = {
         let view = UIView()
         view.backgroundColor = Constants.All_ICONS_COLOR

@@ -26,6 +26,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     let titleCellId = "titleCellId"
     let textCellId = "textCellId"
     let summCellId = "summCellId"
+    let imageCellId = "imageCellId"
     
     let zoomImageController: ZoomImageController = {
         let controller = ZoomImageController()
@@ -43,6 +44,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.register(TextCell.self, forCellWithReuseIdentifier: textCellId)
         collectionView?.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
         collectionView?.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
+        collectionView?.register(DetailImageCell.self, forCellWithReuseIdentifier: imageCellId)
         collectionView?.backgroundColor = .white
 
         view.backgroundColor = .white
@@ -183,10 +185,16 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
             cell.paragraph = contentArray?[indexPath.item]
             return cell
-        } else {
+        } else if currentParagragh?.type == .text {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: textCellId, for: indexPath) as! TextCell
             
             cell.paragraph = contentArray?[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
+            
+            cell.paragraph = contentArray?[indexPath.item]
+            
             return cell
         }
     }

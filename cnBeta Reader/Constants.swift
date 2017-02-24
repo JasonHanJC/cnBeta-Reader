@@ -35,7 +35,6 @@ struct Constants {
     
     // colors
     static let TITLE_TEXT_COLOR: UIColor =  UIColor(red:0, green:0, blue:0, alpha:1.0)
-    
     static let SUMMARY_TEXT_COLOR: UIColor = UIColor(red:0.45, green:0.46, blue:0.47, alpha:1.0)
     
     static let TIME_LABEL_TEXT_COLOR: UIColor = UIColor(red:0.95, green:0.43, blue:0.39, alpha:1.0)
@@ -43,4 +42,7 @@ struct Constants {
     static let All_ICONS_COLOR: UIColor = UIColor(red:0.95, green:0.43, blue:0.39, alpha:1.0)
     
     static let SEPRATE_LINE_COLOR: UIColor = UIColor.rgb(230, green: 233, blue: 236, alpha: 1)
+    
+    static let DETAIL_TEXT_NORMAL_COLOR: UIColor = UIColor.rgb(115, green: 118, blue: 121, alpha: 1)
+    static let DETAIL_TEXT_SUMM_COLOR: UIColor = UIColor.black
 }
