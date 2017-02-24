@@ -66,36 +66,36 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
     }
     
     func show() {
-        print(imagesInfo)
         
         if let window = UIApplication.shared.keyWindow {
-            
-            // Setup Page Control
-            pageControl.numberOfPages = imagesInfo.imageContent.count
-            pageControl.currentPage = imagesInfo.imageIndex
-
+        
             window.addSubview(self.collectionView)
             window.addSubview(self.fakeNavigationBar)
-            
-            collectionView.backgroundColor = UIColor(white: 0, alpha: 0.85)
-            collectionView.alpha = 0
             
             window.addConstraintsWithFormat("H:|[v0]|", views: self.collectionView)
             window.addConstraintsWithFormat("H:|[v0]|", views: self.fakeNavigationBar)
             window.addConstraintsWithFormat("V:|-20-[v0][v1(44)]|", views: self.collectionView, self.fakeNavigationBar)
             
+            collectionView.backgroundColor = UIColor(white: 0, alpha: 0.85)
+            collectionView.alpha = 0
+            
             setupFakeNavigationBar()
             
-            // scroll to selected image
-            let indexPath = IndexPath(item: imagesInfo.imageIndex, section: 0)
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            // Setup Page Control
+            pageControl.numberOfPages = imagesInfo.imageContent.count
+            pageControl.currentPage = imagesInfo.imageIndex
             
             
             // show the display view animated
-            UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
                 self.collectionView.alpha = 1
                 self.fakeNavigationBar.alpha = 1
             }, completion: nil)
+            
+            collectionView.layoutIfNeeded()
+            // scroll to selected image
+            let indexPath = IndexPath(item: self.imagesInfo.imageIndex, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
         }
     }
     
