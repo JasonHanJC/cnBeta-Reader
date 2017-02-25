@@ -20,6 +20,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     weak var delegate: FeedCollectionViewDelegate?
     
+    fileprivate var heightDic: [Int : CGFloat] = Dictionary()
+    
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
@@ -151,21 +153,25 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     // MARK: CollectionView layout delegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let feed = fetchedResultsController.object(at: indexPath)
-        let size = CGSize(width: Constants.SCREEN_WIDTH - 40, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        if heightDic[indexPath.item] == nil {
+            let feed = fetchedResultsController.object(at: indexPath)
+            let size = CGSize(width: Constants.SCREEN_WIDTH - 40, height: 1000)
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         
-        var estimatedTitleFrame: CGRect = .zero
-        if let title = feed.title {
-            estimatedTitleFrame = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: Constants.TITLE_FONT_FEED], context: nil)
+            var estimatedTitleFrame: CGRect = .zero
+            if let title = feed.title {
+                estimatedTitleFrame = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: Constants.TITLE_FONT_FEED], context: nil)
+            }
+        
+            var estimatedContentFrame: CGRect = .zero
+            if let content = feed.contentSnippet {
+                estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: Constants.CONTENT_FONT_FEED], context: nil)
+            }
+            
+            heightDic[indexPath.item] = estimatedContentFrame.height + estimatedTitleFrame.height + 30 + 30 + 4 + 12 + 16
         }
         
-        var estimatedContentFrame: CGRect = .zero
-        if let content = feed.contentSnippet {
-            estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: Constants.CONTENT_FONT_FEED], context: nil)
-        }
-        
-        return CGSize(width: frame.width, height: estimatedContentFrame.height + estimatedTitleFrame.height + 30 + 30 + 4 + 12 + 16)
+        return CGSize(width: frame.width, height: heightDic[indexPath.item]!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -225,9 +231,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         
         do {
             try fetchedResultsController.performFetch()
-            
+            self.heightDic.removeAll()
             self.collectionView.reloadData()
-            
         } catch let err {
             print(err)
         }

@@ -11,22 +11,26 @@ import Alamofire
 import Toast_Swift
 import Kanna
 import CoreData
+import Kingfisher
 
 typealias contentParsingCompletion = ([Paragraph]?) -> Void
 
 class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var selectedFeed: Feed?
-    fileprivate var URLString: String?
-    var timeLabelText: String?
+    private var URLString: String?
+    private var timeLabelText: String?
     
-    var contentArray: [Paragraph]?
-    var allImageParagraphs: [Paragraph]?
+    private var updateImageURL: String = ""
+    private var heightDic: [Int : CGFloat] = Dictionary()
     
-    let titleCellId = "titleCellId"
-    let textCellId = "textCellId"
-    let summCellId = "summCellId"
-    let imageCellId = "imageCellId"
+    private var contentArray: [Paragraph]?
+    private var allImageParagraphs: [Paragraph]?
+    
+    private let titleCellId = "titleCellId"
+    private let textCellId = "textCellId"
+    private let summCellId = "summCellId"
+    private let imageCellId = "imageCellId"
     
     let zoomImageController: ZoomImageController = {
         let controller = ZoomImageController()
@@ -193,9 +197,35 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
             
-            cell.paragraph = contentArray?[indexPath.item]
-            
+            let imageURLString = currentParagragh?.paragraphString
+            let resource = ImageResource(downloadURL: URL(string: imageURLString!)!, cacheKey: imageURLString)
+            cell.imageView.kf.setImage(with: resource, placeholder: Constants.IMAGE_PLACEHOLDER, options: [], progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                // update the imageCell
+                if self.heightDic[indexPath.item] == nil {
+                    if let image = image {
+                       self.heightDic[indexPath.item] = ((self.collectionView?.frame.width)! - 24 - 24) / image.size.width * image.size.height + 24
+                    }
+                    if let URLString = imageURL?.absoluteString {
+                        if URLString == imageURLString {
+                            UIView.animate(withDuration: 0, animations: { 
+                                self.collectionView?.performBatchUpdates({ 
+                                    self.collectionView?.reloadItems(at: [indexPath])
+                                }, completion: nil)
+                            })
+                        }
+                    }
+                }
+            })
+
             return cell
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let currentParagragh = contentArray?[indexPath.item]
+        if currentParagragh?.type == .image {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
+            cell.imageView.kf.cancelDownloadTask()
         }
     }
     
@@ -217,19 +247,25 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         }
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let paragraph = contentArray?[indexPath.item]
         
-        if paragraph?.type == .title {
+        if paragraph?.type == .title { // title cell
             let height = contentArray?[indexPath.item].paragraphHeight
             
             return CGSize(width: collectionView.frame.width, height: 30 + CGFloat(height!) + 6 + 16)
-        } else {
+        } else if paragraph?.type == .summary || paragraph?.type == .text { // text cell
         
             let height = contentArray?[indexPath.item].paragraphHeight
         
             return CGSize(width: collectionView.frame.width, height: CGFloat(height!) + 36)
+        } else { // image cell
+            if heightDic[indexPath.item] == nil {
+                return CGSize(width: collectionView.frame.width, height: 200)
+            } else {
+                return CGSize(width: collectionView.frame.width, height: heightDic[indexPath.item]!)
+            }
         }
     }
     

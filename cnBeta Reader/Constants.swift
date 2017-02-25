@@ -13,8 +13,6 @@ struct Constants {
     static let SCREEN_HEIGHT = UIScreen.main.bounds.height
     
     // api
-    static let API_URL = "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.cnbeta.com/rss&num=100"
-
     static let API_URL_2 = "http://cloud.feedly.com/v3/streams/contents?streamId=feed%2Fhttp://rss.cnbeta.com/rss&count=100"
     
     // fetch number
@@ -45,4 +43,7 @@ struct Constants {
     
     static let DETAIL_TEXT_NORMAL_COLOR: UIColor = UIColor.rgb(115, green: 118, blue: 121, alpha: 1)
     static let DETAIL_TEXT_SUMM_COLOR: UIColor = UIColor.black
+    
+    // image placeholder
+    static let IMAGE_PLACEHOLDER: UIImage = UIImage(named: "image_placeholder")!
 }

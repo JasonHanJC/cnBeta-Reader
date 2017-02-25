@@ -11,8 +11,8 @@ import CoreData
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let feedCellId = "feedCellId"
-    let saveCellId = "saveCellId"
+    private let feedCellId = "feedCellId"
+    private let saveCellId = "saveCellId"
     
     lazy var launchView: LaunchingView = {
         let launchView = LaunchingView(frame: self.view.bounds)
@@ -108,7 +108,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     // MARK: scrollview delegate
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-      
+        
         let retio = scrollView.frame.width / menuBar.collectionView.frame.width
         
         menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / retio / CGFloat(menuBar.filledImageNames.count)

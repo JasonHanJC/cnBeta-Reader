@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Fabric
 import Crashlytics
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let homeController = HomeController(collectionViewLayout: layout)
     
         //CoreDataStack.sharedInstance.clearData()
+        //ImageCache.default.clearDiskCache()
         
         window?.rootViewController = UINavigationController(rootViewController: homeController)
         
@@ -47,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
     
         CoreDataStack.sharedInstance.save()
+        ImageCache.default.cleanExpiredDiskCache()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -60,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         
         CoreDataStack.sharedInstance.save()
+        ImageCache.default.cleanExpiredDiskCache()
     }
 }
 
