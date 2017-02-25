@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		349EE0EBE7CCD7A744DF1831 /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 314540B06B48F83C3AFE9BD8 /* Pods_cnBeta_Reader.framework */; };
+		6E390F1A9A62C45C74B87B4D /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DECF497873D4D1F456ECB90 /* Pods_cnBeta_Reader.framework */; };
 		961DEF861E5EAB7D0045EA37 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DEF851E5EAB7D0045EA37 /* TitleCell.swift */; };
 		961DEF881E5EABBB0045EA37 /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DEF871E5EABBB0045EA37 /* DetailImageCell.swift */; };
 		961DEF8A1E5EBE8A0045EA37 /* SummCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DEF891E5EBE8A0045EA37 /* SummCell.swift */; };
@@ -15,8 +15,6 @@
 		9637AF3A1E26CA9100048BB8 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637AF391E26CA9100048BB8 /* SettingController.swift */; };
 		964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964963B01E08DE8D00EA079C /* Paragraph.swift */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
-		967BA8CE1E5BCB90007EEABA /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E31BA31E5BCA5000B51E31 /* Kingfisher.framework */; };
-		967BA8CF1E5BCB90007EEABA /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96E31BA31E5BCA5000B51E31 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
 		967F97931E0120570048D63B /* SavedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F97921E0120570048D63B /* SavedTableView.swift */; };
 		968872271E0905D000A45385 /* SavedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968872261E0905D000A45385 /* SavedCell.swift */; };
@@ -46,23 +44,8 @@
 		96F583481E0504BE0041B9D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F583471E0504BE0041B9D2 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		967BA8D01E5BCB90007EEABA /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				967BA8CF1E5BCB90007EEABA /* Kingfisher.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		27F80BF882EC1B8947DBD39D /* Pods-cnBeta-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.debug.xcconfig"; sourceTree = "<group>"; };
-		314540B06B48F83C3AFE9BD8 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DECF497873D4D1F456ECB90 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961DEF851E5EAB7D0045EA37 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		961DEF871E5EABBB0045EA37 /* DetailImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
 		961DEF891E5EBE8A0045EA37 /* SummCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummCell.swift; sourceTree = "<group>"; };
@@ -103,7 +86,8 @@
 		96F583421E04FBCF0041B9D2 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		96F583451E0500190041B9D2 /* TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		96F583471E0504BE0041B9D2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		D22097E59FC78B40BAC45982 /* Pods-cnBeta-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.release.xcconfig"; sourceTree = "<group>"; };
+		E8AE5877348E83CA03A49BEE /* Pods-cnBeta-Reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.debug.xcconfig"; sourceTree = "<group>"; };
+		FD867D75F0C255F96D971C7D /* Pods-cnBeta-Reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cnBeta-Reader.release.xcconfig"; path = "Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,23 +95,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				967BA8CE1E5BCB90007EEABA /* Kingfisher.framework in Frameworks */,
-				349EE0EBE7CCD7A744DF1831 /* Pods_cnBeta_Reader.framework in Frameworks */,
+				6E390F1A9A62C45C74B87B4D /* Pods_cnBeta_Reader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		756BE0C2DADB94360DA21631 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				27F80BF882EC1B8947DBD39D /* Pods-cnBeta-Reader.debug.xcconfig */,
-				D22097E59FC78B40BAC45982 /* Pods-cnBeta-Reader.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		964963B21E08DEDB00EA079C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +155,7 @@
 				96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */,
 				96C5C88E1DFCDE2E00A61681 /* Products */,
 				C695F8733315CD35C98F42A5 /* Frameworks */,
-				756BE0C2DADB94360DA21631 /* Pods */,
+				CC02752A65503F0D83C48DCF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -283,9 +257,18 @@
 			children = (
 				96E31BA31E5BCA5000B51E31 /* Kingfisher.framework */,
 				96E31B9E1E5BC8A800B51E31 /* Kingfisher.framework */,
-				314540B06B48F83C3AFE9BD8 /* Pods_cnBeta_Reader.framework */,
+				4DECF497873D4D1F456ECB90 /* Pods_cnBeta_Reader.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CC02752A65503F0D83C48DCF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E8AE5877348E83CA03A49BEE /* Pods-cnBeta-Reader.debug.xcconfig */,
+				FD867D75F0C255F96D971C7D /* Pods-cnBeta-Reader.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,14 +278,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96C5C89F1DFCDE2E00A61681 /* Build configuration list for PBXNativeTarget "cnBeta-Reader" */;
 			buildPhases = (
-				A79487D55CA00B929A6F1670 /* [CP] Check Pods Manifest.lock */,
+				FBBD086278669FA13C88759A /* [CP] Check Pods Manifest.lock */,
 				96C5C8891DFCDE2E00A61681 /* Sources */,
 				96C5C88A1DFCDE2E00A61681 /* Frameworks */,
 				96C5C88B1DFCDE2E00A61681 /* Resources */,
 				968872281E0915F100A45385 /* ShellScript */,
-				A59DD22A46C355F2CF4C5ECE /* [CP] Embed Pods Frameworks */,
-				099BB3DB0E764263EAE39BC8 /* [CP] Copy Pods Resources */,
-				967BA8D01E5BCB90007EEABA /* Embed Frameworks */,
+				F6221A881012EAD7A37DEDDA /* [CP] Embed Pods Frameworks */,
+				E274A59466FE74AA016DCCD1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -362,7 +344,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		099BB3DB0E764263EAE39BC8 /* [CP] Copy Pods Resources */ = {
+		968872281E0915F100A45385 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" fc4241c937e243a3b48b4a50cfba2b291910144c c4611082081fbab89770d1e25c71354b32c4d74013854b78f77d64d522b7b621";
+		};
+		E274A59466FE74AA016DCCD1 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -377,20 +372,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		968872281E0915F100A45385 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" fc4241c937e243a3b48b4a50cfba2b291910144c c4611082081fbab89770d1e25c71354b32c4d74013854b78f77d64d522b7b621";
-		};
-		A59DD22A46C355F2CF4C5ECE /* [CP] Embed Pods Frameworks */ = {
+		F6221A881012EAD7A37DEDDA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -405,7 +387,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cnBeta-Reader/Pods-cnBeta-Reader-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A79487D55CA00B929A6F1670 /* [CP] Check Pods Manifest.lock */ = {
+		FBBD086278669FA13C88759A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -571,7 +553,7 @@
 		};
 		96C5C8A01DFCDE2E00A61681 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27F80BF882EC1B8947DBD39D /* Pods-cnBeta-Reader.debug.xcconfig */;
+			baseConfigurationReference = E8AE5877348E83CA03A49BEE /* Pods-cnBeta-Reader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -592,7 +574,7 @@
 		};
 		96C5C8A11DFCDE2E00A61681 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D22097E59FC78B40BAC45982 /* Pods-cnBeta-Reader.release.xcconfig */;
+			baseConfigurationReference = FD867D75F0C255F96D971C7D /* Pods-cnBeta-Reader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
