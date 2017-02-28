@@ -277,23 +277,32 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paragraph = contentArray?[indexPath.item]
-        
-        if paragraph?.type == .title { // title cell
-            let height = contentArray?[indexPath.item].paragraphHeight
+        if heightDic[indexPath.item] == nil {
             
-            return CGSize(width: collectionView.frame.width, height: 30 + CGFloat(height!) + 6 + 16)
-        } else if paragraph?.type == .summary || paragraph?.type == .text { // text cell
-        
-            let height = contentArray?[indexPath.item].paragraphHeight
-        
-            return CGSize(width: collectionView.frame.width, height: CGFloat(height!) + 36)
-        } else { // image cell
-            if heightDic[indexPath.item] == nil {
+            let size = CGSize(width: Constants.SCREEN_WIDTH - 24 - 24, height: CGFloat(FLT_MAX))
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+            var estimatedContentFrame: CGRect = .zero
+            
+            if paragraph?.type == .title { // title cell
+                
+                if let text = paragraph?.paragraphString {
+                    estimatedContentFrame = NSString(string: text).boundingRect(with: size, options: options, attributes: Constants.DETAIL_TITLE_STYLE, context: nil)
+                }
+            
+                heightDic[indexPath.item] =  30 + estimatedContentFrame.height + 6 + 16
+            } else if paragraph?.type == .summary || paragraph?.type == .text { // text cell
+
+                if let text = paragraph?.paragraphString {
+                    estimatedContentFrame = NSString(string: text).boundingRect(with: size, options: options, attributes: Constants.DETAIL_NORMAL_STYLE, context: nil)
+                }
+            
+                heightDic[indexPath.item] = estimatedContentFrame.height + 36
+            } else { // image cell
                 return CGSize(width: collectionView.frame.width, height: 200)
-            } else {
-                return CGSize(width: collectionView.frame.width, height: heightDic[indexPath.item]!)
-            }
+            } 
         }
+        
+        return CGSize(width: collectionView.frame.width, height: heightDic[indexPath.item]!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

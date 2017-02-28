@@ -13,8 +13,8 @@ class TitleCell: BaseCell {
     var paragraph: Paragraph? {
         didSet {
             if let p = paragraph {
-                textLabel.text = p.paragraphString!
-                textLabel.textAlignment = .left
+                let attrString = NSAttributedString(string: p.paragraphString!, attributes: Constants.DETAIL_TITLE_STYLE)
+                textLabel.attributedText = attrString
             }
         }
     }

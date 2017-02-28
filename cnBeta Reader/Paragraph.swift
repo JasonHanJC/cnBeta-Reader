@@ -41,22 +41,7 @@ class Paragraph: NSObject, NSCoding {
         self.paragraphString = content
         self.alignment = alignment
         self.textStyle = textStyle
-        
-        if type == .title {
-            self.paragraphHeight = computeHeight(content ,font: Constants.TITLE_FONT_DETAIL)
-        } else if (type == .text) || (type == .summary) {
-            self.paragraphHeight = computeHeight(content ,font: Constants.CONTENT_FONT_DETAIL_NORMAL)
-        } else {
-            self.paragraphHeight = Float(Constants.SCREEN_WIDTH / 4 * 3 + 8 + 8)
-        }
-    }
-    
-    fileprivate func computeHeight(_ string: String, font: UIFont) -> Float {
-        let size = CGSize(width: Constants.SCREEN_WIDTH - 24 - 24, height: CGFloat(FLT_MAX))
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: string).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: font], context: nil)
-        
-        return ceilf(Float(estimatedFrame.size.height))
+        self.paragraphHeight = 0
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -15,7 +15,8 @@ class TextCell: BaseCell {
         didSet {
             if let p = paragraph {
                 if let text = p.paragraphString {
-                        textLabel.text = text
+                    let attrString = NSAttributedString(string: text, attributes: Constants.DETAIL_NORMAL_STYLE)
+                    textLabel.attributedText = attrString
                 }
                 
                 if p.alignment == .alignmentLeft {

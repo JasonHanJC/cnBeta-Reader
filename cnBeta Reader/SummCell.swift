@@ -28,6 +28,6 @@ class SummCell: TextCell {
         addSubview(blockView)
         
         addConstraintsWithFormat("H:|[v0(20)]", views: blockView)
-        addConstraintsWithFormat("V:|-36-[v0(20)]", views: blockView)
+        addConstraintsWithFormat("V:|-41-[v0(20)]", views: blockView)
     }
 }

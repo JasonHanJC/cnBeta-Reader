@@ -111,12 +111,12 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         
         var estimatedTitleFrame: CGRect = .zero
         if let title = feed.title {
-            estimatedTitleFrame = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: Constants.TITLE_FONT_FEED], context: nil)
+            estimatedTitleFrame = NSString(string: title).boundingRect(with: size, options: options, attributes: Constants.FEED_TITLE_STYLE, context: nil)
         }
         
         var estimatedContentFrame: CGRect = .zero
         if let content = feed.contentSnippet {
-            estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: Constants.CONTENT_FONT_FEED], context: nil)
+            estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: Constants.FEED_SUMM_STYLE, context: nil)
         }
         
         return CGSize(width: frame.width, height: estimatedContentFrame.height + estimatedTitleFrame.height + 30 + 30 + 4 + 12 + 16)

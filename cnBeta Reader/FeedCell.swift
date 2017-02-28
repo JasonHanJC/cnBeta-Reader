@@ -29,11 +29,14 @@ class FeedCell: BaseCell {
             }
             
             if let title = feed?.title {
-                titleLabel.text = title
+                let attrString = NSAttributedString(string: title, attributes: Constants.FEED_TITLE_STYLE)
+                titleLabel.attributedText = attrString
             }
             
             if let content = feed?.contentSnippet {
-                contentLabel.text = content
+                
+                let attrString = NSAttributedString(string: content, attributes: Constants.FEED_SUMM_STYLE)
+                contentLabel.attributedText = attrString
             }
         }
     }
