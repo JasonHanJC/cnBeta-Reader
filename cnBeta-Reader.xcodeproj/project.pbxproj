@@ -142,11 +142,41 @@
 		968C5CF21E1475E300DFAE46 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				9637AF391E26CA9100048BB8 /* SettingController.swift */,
 				968C5CF01E14756200DFAE46 /* SettingLauncher.swift */,
 				968C5CF31E1475F900DFAE46 /* SettingCell.swift */,
 				96D627491E51882B00631B4A /* SettingViewController.swift */,
 			);
 			name = Setting;
+			sourceTree = "<group>";
+		};
+		96BB73741E650E2500583DFB /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				967F97911E011FC40048D63B /* SavedFeed */,
+				967F97901E011FA90048D63B /* NewFeed */,
+				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
+			);
+			name = HomePage;
+			sourceTree = "<group>";
+		};
+		96BB73761E650E5C00583DFB /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				96F583441E04FC250041B9D2 /* DetailCells */,
+				962771361E025BC50043F894 /* DetailController.swift */,
+			);
+			name = DetailPage;
+			sourceTree = "<group>";
+		};
+		96BB73771E650EA200583DFB /* DisplayView */ = {
+			isa = PBXGroup;
+			children = (
+				96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */,
+				96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */,
+				96B47D771E4CE973001A3AAF /* ImageCell.swift */,
+			);
+			name = DisplayView;
 			sourceTree = "<group>";
 		};
 		96C5C8841DFCDE2E00A61681 = {
@@ -176,12 +206,10 @@
 				96C5C8AD1DFD14FE00A61681 /* ApiService */,
 				968C5CF21E1475E300DFAE46 /* Setting */,
 				96C5C8A91DFCE90100A61681 /* views */,
-				96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */,
-				96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */,
-				962771361E025BC50043F894 /* DetailController.swift */,
-				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
+				96BB73771E650EA200583DFB /* DisplayView */,
+				96BB73761E650E5C00583DFB /* DetailPage */,
+				96BB73741E650E2500583DFB /* HomePage */,
 				96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */,
-				9637AF391E26CA9100048BB8 /* SettingController.swift */,
 				96C5C8991DFCDE2E00A61681 /* LaunchScreen.storyboard */,
 				96C5C8CC1DFE463300A61681 /* Support */,
 				96C5C8971DFCDE2E00A61681 /* Assets.xcassets */,
@@ -192,13 +220,9 @@
 		96C5C8A91DFCE90100A61681 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				96F583441E04FC250041B9D2 /* WebDetail */,
-				967F97911E011FC40048D63B /* SavedFeed */,
-				967F97901E011FA90048D63B /* NewFeed */,
 				96C5C8AA1DFCE90F00A61681 /* Menubar */,
 				96C5C8A51DFCE84F00A61681 /* BaseCell.swift */,
 				96CA4A211E440AD700AD7822 /* LaunchingView.swift */,
-				96B47D771E4CE973001A3AAF /* ImageCell.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -241,7 +265,7 @@
 			name = Support;
 			sourceTree = "<group>";
 		};
-		96F583441E04FC250041B9D2 /* WebDetail */ = {
+		96F583441E04FC250041B9D2 /* DetailCells */ = {
 			isa = PBXGroup;
 			children = (
 				96F583451E0500190041B9D2 /* TextCell.swift */,
@@ -249,7 +273,7 @@
 				961DEF871E5EABBB0045EA37 /* DetailImageCell.swift */,
 				961DEF891E5EBE8A0045EA37 /* SummCell.swift */,
 			);
-			name = WebDetail;
+			name = DetailCells;
 			sourceTree = "<group>";
 		};
 		C695F8733315CD35C98F42A5 /* Frameworks */ = {
