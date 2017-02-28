@@ -17,6 +17,9 @@ typealias contentParsingCompletion = ([Paragraph]?) -> Void
 
 class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var activity: NSUserActivity?
+    private let activituType: String = NSUserActivityTypeBrowsingWeb
+    
     var selectedFeed: Feed?
     private var URLString: String?
     private var timeLabelText: String?
@@ -71,6 +74,14 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             contentArray?.append(titleParagraph)
         }
         
+        
+        // setup activity
+        self.activity = NSUserActivity(activityType: activituType)
+        self.activity?.webpageURL = URL(string:(selectedFeed?.link)!)
+        self.activity?.title = "webView"
+        self.activity?.isEligibleForHandoff = true
+        self.activity?.becomeCurrent()
+        
         print(selectedFeed?.link ?? "")
         
         if let last10  = selectedFeed?.link?.substring(from:(selectedFeed?.link?.index((selectedFeed?.link?.endIndex)!, offsetBy: -10))!) {
@@ -106,6 +117,16 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 }
             }
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.activity?.invalidate()
+    }
+    
+    deinit {
+        print("DetailController deinit")
     }
     
     func getAllImageParagraphs(_ allContents: [Paragraph]?) {
@@ -200,18 +221,24 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             let imageURLString = currentParagragh?.paragraphString
             let resource = ImageResource(downloadURL: URL(string: imageURLString!)!, cacheKey: imageURLString)
             cell.imageView.kf.setImage(with: resource, placeholder: Constants.IMAGE_PLACEHOLDER, options: [], progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
-                // update the imageCell
-                if self.heightDic[indexPath.item] == nil {
-                    if let image = image {
-                       self.heightDic[indexPath.item] = ((self.collectionView?.frame.width)! - 24 - 24) / image.size.width * image.size.height + 24
-                    }
-                    if let URLString = imageURL?.absoluteString {
-                        if URLString == imageURLString {
-                            UIView.animate(withDuration: 0, animations: { 
-                                self.collectionView?.performBatchUpdates({ 
-                                    self.collectionView?.reloadItems(at: [indexPath])
-                                }, completion: nil)
-                            })
+                
+                if error != nil {
+                    print(error.debugDescription)
+                    cell.imageView.image = UIImage(named: "image_broken")
+                } else {
+                    // update the imageCell
+                    if self.heightDic[indexPath.item] == nil {
+                        if let image = image {
+                            self.heightDic[indexPath.item] = ((self.collectionView?.frame.width)! - 24 - 24) / image.size.width * image.size.height + 24
+                        }
+                        if let URLString = imageURL?.absoluteString {
+                            if URLString == imageURLString {
+                                UIView.animate(withDuration: 0, animations: {
+                                    self.collectionView?.performBatchUpdates({
+                                        self.collectionView?.reloadItems(at: [indexPath])
+                                    }, completion: nil)
+                                })
+                            }
                         }
                     }
                 }
