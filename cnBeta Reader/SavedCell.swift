@@ -72,7 +72,7 @@ class SavedCell: BaseCell {
     }()
     
     
-    let feedContentView: UIView = {
+    let saveContentView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         return view
@@ -84,13 +84,12 @@ class SavedCell: BaseCell {
         
         backgroundColor = .white
         
-        addSubview(feedContentView)
+        addSubview(saveContentView)
         addSubview(topLine)
         
-        addConstraintsWithFormat("H:|-20-[v0]-20-|", views: feedContentView)
-        addConstraintsWithFormat("V:|-30-[v0]-30-|", views: feedContentView)
+        addConstraintsWithFormat("H:|-20-[v0]-20-|", views: saveContentView)
+        addConstraintsWithFormat("V:|[v0(0.5)]-29.5-[v1]-30-|", views: topLine, saveContentView)
         
-        addConstraintsWithFormat("V:|[v0(0.5)]", views: topLine)
         addConstraintsWithFormat("H:|[v0]|", views: topLine)
         
         setupContentView()
@@ -98,13 +97,13 @@ class SavedCell: BaseCell {
     
     func setupContentView() {
         
-        feedContentView.addSubview(dateLabel)
-        feedContentView.addSubview(titleLabel)
-        feedContentView.addSubview(contentLabel)
+        saveContentView.addSubview(dateLabel)
+        saveContentView.addSubview(titleLabel)
+        saveContentView.addSubview(contentLabel)
         
-        feedContentView.addConstraintsWithFormat("V:|[v0]-4-[v1]-12-[v2]", views: dateLabel, titleLabel, contentLabel)
-        feedContentView.addConstraintsWithFormat("H:|[v0]|", views: dateLabel)
-        feedContentView.addConstraintsWithFormat("H:|[v0]|", views: titleLabel)
-        feedContentView.addConstraintsWithFormat("H:|[v0]|", views: contentLabel)
+        saveContentView.addConstraintsWithFormat("V:|[v0]-4-[v1]-12-[v2]", views: dateLabel, titleLabel, contentLabel)
+        saveContentView.addConstraintsWithFormat("H:|[v0]|", views: dateLabel)
+        saveContentView.addConstraintsWithFormat("H:|[v0]|", views: titleLabel)
+        saveContentView.addConstraintsWithFormat("H:|[v0]|", views: contentLabel)
     }
 }

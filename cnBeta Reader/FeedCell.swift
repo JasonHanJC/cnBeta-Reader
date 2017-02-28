@@ -88,9 +88,8 @@ class FeedCell: BaseCell {
         addSubview(topLine)
         
         addConstraintsWithFormat("H:|-20-[v0]-20-|", views: feedContentView)
-        addConstraintsWithFormat("V:|-30-[v0]-30-|", views: feedContentView)
+        addConstraintsWithFormat("V:|[v0(0.5)]-29.5-[v1]-30-|", views: topLine, feedContentView)
         
-        addConstraintsWithFormat("V:|[v0(0.5)]", views: topLine)
         addConstraintsWithFormat("H:|[v0]|", views: topLine)
         
         setupContentView()
