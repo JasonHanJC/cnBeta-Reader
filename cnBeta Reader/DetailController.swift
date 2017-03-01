@@ -34,6 +34,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     private let textCellId = "textCellId"
     private let summCellId = "summCellId"
     private let imageCellId = "imageCellId"
+    private let emptyCellId = "emptyCellId"
     
     let zoomImageController: ZoomImageController = {
         let controller = ZoomImageController()
@@ -52,6 +53,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
         collectionView?.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
         collectionView?.register(DetailImageCell.self, forCellWithReuseIdentifier: imageCellId)
+        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: emptyCellId)
         collectionView?.backgroundColor = .white
 
         view.backgroundColor = .white
@@ -191,10 +193,16 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return contentArray?.count ?? 0
+        return (contentArray?.count ?? 1) + 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if indexPath.item == collectionView.numberOfItems(inSection: 0) - 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: emptyCellId, for: indexPath)
+            cell.backgroundColor = .white
+            return cell
+        }
         
         let currentParagragh = contentArray?[indexPath.item]
         if currentParagragh?.type == .title {
@@ -249,10 +257,12 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let currentParagragh = contentArray?[indexPath.item]
-        if currentParagragh?.type == .image {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
-            cell.imageView.kf.cancelDownloadTask()
+        if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
+            let currentParagragh = contentArray?[indexPath.item]
+            if currentParagragh?.type == .image {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
+                cell.imageView.kf.cancelDownloadTask()
+            }
         }
     }
     
@@ -276,6 +286,11 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if indexPath.item == collectionView.numberOfItems(inSection: 0) - 1 {
+            return CGSize(width: collectionView.frame.width, height:24)
+        }
+        
         let paragraph = contentArray?[indexPath.item]
         if heightDic[indexPath.item] == nil {
             
