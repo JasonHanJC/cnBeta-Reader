@@ -15,6 +15,7 @@
 		9637AF3A1E26CA9100048BB8 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637AF391E26CA9100048BB8 /* SettingController.swift */; };
 		964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964963B01E08DE8D00EA079C /* Paragraph.swift */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
+		967C17811E67E3200003AC4C /* ImageIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967C17801E67E3200003AC4C /* ImageIndexView.swift */; };
 		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
 		967F97931E0120570048D63B /* SavedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967F97921E0120570048D63B /* SavedTableView.swift */; };
 		968872271E0905D000A45385 /* SavedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968872261E0905D000A45385 /* SavedCell.swift */; };
@@ -53,6 +54,7 @@
 		9637AF391E26CA9100048BB8 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		964963B01E08DE8D00EA079C /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		9666F0C81DFF22F00043465D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = "cnBeta Reader/CoreDataStack.swift"; sourceTree = "<group>"; };
+		967C17801E67E3200003AC4C /* ImageIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageIndexView.swift; sourceTree = "<group>"; };
 		967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
 		967F97921E0120570048D63B /* SavedTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedTableView.swift; sourceTree = "<group>"; };
 		968872261E0905D000A45385 /* SavedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedCell.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */,
 				96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */,
 				96B47D771E4CE973001A3AAF /* ImageCell.swift */,
+				967C17801E67E3200003AC4C /* ImageIndexView.swift */,
 			);
 			name = DisplayView;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				96F583461E0500190041B9D2 /* TextCell.swift in Sources */,
 				96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */,
 				967F97931E0120570048D63B /* SavedTableView.swift in Sources */,
+				967C17811E67E3200003AC4C /* ImageIndexView.swift in Sources */,
 				96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */,
 				96C5C8B31DFE1DA600A61681 /* FeedCell.swift in Sources */,
 			);

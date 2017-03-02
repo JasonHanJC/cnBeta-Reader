@@ -52,6 +52,11 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
         return pageControl
     }()
     
+    let imageIndexView: ImageIndexView = {
+        let view = ImageIndexView()
+        return view
+    }()
+    
     @objc fileprivate func dismis() {
         
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
@@ -61,6 +66,7 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
             self.collectionView.removeFromSuperview()
             self.pageControl.removeFromSuperview()
             self.fakeNavigationBar.removeFromSuperview()
+            self.imageIndexView.removeFromSuperview()
         })
 
     }
@@ -81,11 +87,6 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
             
             setupFakeNavigationBar()
             
-            // Setup Page Control
-            pageControl.numberOfPages = imagesInfo.imageContent.count
-            pageControl.currentPage = imagesInfo.imageIndex
-            
-            
             // show the display view animated
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
                 self.collectionView.alpha = 1
@@ -104,9 +105,22 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
         fakeNavigationBar.addConstraintsWithFormat("H:[v0(24)]-10-|", views: saveButton)
         fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0(24)]", views: saveButton)
         
-        fakeNavigationBar.addSubview(self.pageControl)
-        fakeNavigationBar.addConstraintsWithFormat("H:|-40-[v0]-40-|", views: self.pageControl)
-        fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0]-10-|", views: self.pageControl)
+        if (imagesInfo.imageContent.count > 10) {
+            fakeNavigationBar.addSubview(self.imageIndexView)
+            fakeNavigationBar.addConstraintsWithFormat("H:|-10-[v0]-40-|", views: self.imageIndexView)
+            fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0]-10-|", views: self.imageIndexView)
+            
+            imageIndexView.sumLabel.text = "/  \(imagesInfo.imageContent.count)"
+            imageIndexView.indexLabel.text = "\(imagesInfo.imageIndex + 1)"
+        } else {
+            fakeNavigationBar.addSubview(self.pageControl)
+            fakeNavigationBar.addConstraintsWithFormat("H:|-40-[v0]-40-|", views: self.pageControl)
+            fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0]-10-|", views: self.pageControl)
+        
+            // Setup Page Control
+            pageControl.numberOfPages = imagesInfo.imageContent.count
+            pageControl.currentPage = imagesInfo.imageIndex
+        }
         
         fakeNavigationBar.alpha = 0
     }
@@ -149,7 +163,11 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
     // MARK: UIScrollViewDelegate
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let index = targetContentOffset.pointee.x / scrollView.frame.size.width
-        pageControl.currentPage = Int(index)
+        if (imagesInfo.imageContent.count > 10) {
+            imageIndexView.indexLabel.text = "\(Int(index) + 1)"
+        } else {
+            pageControl.currentPage = Int(index)
+        }
     }
     
     // save image
