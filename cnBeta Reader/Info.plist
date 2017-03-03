@@ -47,7 +47,7 @@
 	<string>cnBeta reader wants to save image to your library.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>NSUserActivityTypeBrowsingWeb</string>
+		<string>com.juncheng.app.cnBetaReader.OpenWebPage</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

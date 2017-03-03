@@ -14,6 +14,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     private let feedCellId = "feedCellId"
     private let saveCellId = "saveCellId"
     
+    private var currentCellIndex = 0
+    
     lazy var launchView: LaunchingView = {
         let launchView = LaunchingView(frame: self.view.bounds)
         return launchView
@@ -118,6 +120,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let index = Int(targetContentOffset.pointee.x / scrollView.frame.width)
         let indexPath = IndexPath(item: index, section: 0)
         menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+        currentCellIndex = index
     }
 
     // MARK: Lifecycle
@@ -152,7 +155,15 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView?.collectionViewLayout.invalidateLayout()
+        coordinator.animate(alongsideTransition: nil) { (context) in
+            let indexPath = IndexPath(item: self.currentCellIndex, section: 0)
+            self.collectionView?.scrollToItem(at: indexPath, at: [], animated: false)
+        }
+    }
+    
 }
 
 extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTableViewDelegate, SettingLauncherDelegate {

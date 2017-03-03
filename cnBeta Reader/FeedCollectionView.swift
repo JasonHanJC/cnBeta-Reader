@@ -107,6 +107,10 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         collectionView.emptyDataSetDelegate = self
     }
     
+    override func layoutSubviews() {
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if let count = fetchedResultsController.sections?.count {
             return count;
@@ -152,7 +156,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     // MARK: CollectionView layout delegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+
         if heightDic[indexPath.item] == nil {
             let feed = fetchedResultsController.object(at: indexPath)
             let size = CGSize(width: Constants.SCREEN_WIDTH - 40, height: 1000)
@@ -236,7 +240,6 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         } catch let err {
             print(err)
         }
-    
     }
 }
 

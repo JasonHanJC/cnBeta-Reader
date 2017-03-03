@@ -25,13 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let layout = UICollectionViewFlowLayout()
-        let homeController = HomeController(collectionViewLayout: layout)
-    
         //CoreDataStack.sharedInstance.clearData()
         //ImageCache.default.clearDiskCache()
         
+        
+        let layout = UICollectionViewFlowLayout()
+        let homeController = HomeController(collectionViewLayout: layout)
         window?.rootViewController = UINavigationController(rootViewController: homeController)
+        
         
         UINavigationBar.appearance().barTintColor = UIColor.white
         UIApplication.shared.statusBarStyle = .default

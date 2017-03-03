@@ -59,6 +59,10 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition:[])
     }
     
+    override func layoutSubviews() {
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     var horizontalBarLeftAnchorConstraint: NSLayoutConstraint?
     
     weak var delegate: MenuBarDelegate?

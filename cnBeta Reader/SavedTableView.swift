@@ -81,6 +81,10 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         collectionView.emptyDataSetSource = self
     }
     
+    override func layoutSubviews() {
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = fetchedResultsController.sections?[0].numberOfObjects {
             return count

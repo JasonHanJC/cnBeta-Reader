@@ -18,7 +18,7 @@ typealias contentParsingCompletion = ([Paragraph]?) -> Void
 class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var activity: NSUserActivity?
-    private let activituType: String = NSUserActivityTypeBrowsingWeb
+    private let activituType: String = "com.juncheng.app.cnBetaReader.OpenWebPage"
     
     var selectedFeed: Feed?
     private var URLString: String?
@@ -44,6 +44,12 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     let imageDisplayController: ImageDisplayController = {
         let controller = ImageDisplayController()
         return controller
+    }()
+    
+    lazy var actionSheet: SettingLauncher = {
+        let actionSheet = SettingLauncher()
+        actionSheet.delegate = self
+        return actionSheet
     }()
     
     override func viewDidLoad() {
@@ -131,6 +137,10 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         print("DetailController deinit")
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView?.collectionViewLayout.invalidateLayout()
+    }
+    
     func getAllImageParagraphs(_ allContents: [Paragraph]?) {
         if let allContents = allContents {
             for paragraph in allContents {
@@ -180,10 +190,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     func handleNavMore(_ sender: UIBarButtonItem) {
-        view.makeToast("Nothing in here yet", duration: 1.2, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
-        
-        // TODO: open in browser and share
-        //UIApplication.shared.openURL(URL(string: (selectedFeed?.link)!)!)
+        self.actionSheet.showSettingLauncher()
     }
     
     
@@ -402,5 +409,19 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 completion(nil)
             }
         }
+    }
+}
+
+extension DetailController: SettingLauncherDelegate {
+    
+    // SettingLauncherDelegate
+    func didSelectSetting(_ setting: Setting) {
+        if setting.name == .openInBrowser {
+            UIApplication.shared.openURL(URL(string: (selectedFeed?.link)!)!)
+        }
+    }
+    
+    func didCancelByUser() {
+        
     }
 }
