@@ -58,13 +58,6 @@ class ApiService: NSObject {
                                         if let doc = HTML(html: content, encoding: .utf8) {
                                             newFeed.contentSnippet = doc.text ?? ""
                                         }
-                                        
-//                                        let content_1 = content.replacingOccurrences(of: "<strong>", with: "")
-//                                        var content_2 = content_1.replacingOccurrences(of: "</strong>", with: "")
-//                                        if let removeRange = content_2.range(of: "<a target=") {
-//                                            content_2.removeSubrange(removeRange.lowerBound..<content_2.endIndex)
-//                                        }
-//                                        newFeed.contentSnippet = content_2
                                     }
                                 }
                                 newFeed.isRead = false
@@ -84,12 +77,6 @@ class ApiService: NSObject {
                                             if let doc = HTML(html: content, encoding: .utf8) {
                                                 newFeed.contentSnippet = doc.text ?? ""
                                             }
-//                                            let content_1 = content.replacingOccurrences(of: "<strong>", with: "")
-//                                            var content_2 = content_1.replacingOccurrences(of: "</strong>", with: "")
-//                                            if let removeRange = content_2.range(of: "<a target=") {
-//                                                content_2.removeSubrange(removeRange.lowerBound..<content_2.endIndex)
-//                                            }
-//                                            newFeed.contentSnippet = content_2
                                         }
                                     }
 
