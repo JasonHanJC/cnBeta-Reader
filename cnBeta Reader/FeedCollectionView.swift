@@ -20,7 +20,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     weak var delegate: FeedCollectionViewDelegate?
     
-    fileprivate var heightDic: [Int : CGFloat] = Dictionary()
+    fileprivate let headerHeight: CGFloat = 34.0
+    fileprivate var heightDic: [IndexPath : CGFloat] = Dictionary()
     
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
@@ -28,7 +29,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         fetchRequest.fetchLimit = Constants.FETCH_LIMIT
 
         let context = CoreDataStack.sharedInstance.mainContext
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         frc.delegate = self
         
         return frc as! NSFetchedResultsController<Feed>
@@ -50,6 +51,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     fileprivate lazy var refreshFooter: MJRefreshBackNormalFooter = {
         let refreshFooter = MJRefreshBackNormalFooter.init(refreshingBlock: {
             
+            var numberOfAllItems: Int = 0;
+            
             self.fetchedResultsController.fetchRequest.fetchLimit += Constants.FETCH_LIMIT
 
             do {
@@ -70,7 +73,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     }()
     
     fileprivate lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = StickyHeaderFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor.white
         cv.dataSource = self
@@ -100,8 +103,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         collectionView.mj_header = refreshHeader
         collectionView.mj_footer = refreshFooter
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.register(CustomFeedHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
         
         collectionView.emptyDataSetSource = self
         collectionView.emptyDataSetDelegate = self
@@ -156,8 +159,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     // MARK: CollectionView layout delegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        if heightDic[indexPath.item] == nil {
+        
+        if heightDic[indexPath] == nil {
             let feed = fetchedResultsController.object(at: indexPath)
             let size = CGSize(width: Constants.SCREEN_WIDTH - 40, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
@@ -172,10 +175,10 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: Constants.FEED_SUMM_STYLE, context: nil)
             }
             
-            heightDic[indexPath.item] = estimatedContentFrame.height + estimatedTitleFrame.height + 30 + 30 + 4 + 12 + 16
+            heightDic[indexPath] = estimatedContentFrame.height + estimatedTitleFrame.height + 30 + 30 + 4 + 12 + 16
         }
         
-        return CGSize(width: frame.width, height: heightDic[indexPath.item]!)
+        return CGSize(width: frame.width, height: heightDic[indexPath]!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -184,7 +187,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
 
     // collection view header
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 0);
+        return CGSize(width: collectionView.frame.width, height: headerHeight);
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -193,9 +196,30 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         // Create header
         if (kind == UICollectionElementKindSectionHeader) {
             // Create Header
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId, for: indexPath)
-//            headerView.frame = CGRectMake(0, 0, view.frame.width, 50)
-            headerView.backgroundColor = .red
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId, for: indexPath) as! CustomFeedHeader
+            
+            if let dateString = fetchedResultsController.object(at: indexPath).sectionIdentifier {
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd-MMM-yyyy"
+                let feedDate = dateFormatter.date(from: dateString)
+            
+                let displayDateFormatter = DateFormatter()
+            
+                let elapsedTimeInSeconds = Date().timeIntervalSince(feedDate! as Date)
+                let secondInDays: TimeInterval = 60 * 60 * 24
+            
+                if elapsedTimeInSeconds <= secondInDays {
+                    headerView.timeLabel.text = "Today"
+                }
+                else if elapsedTimeInSeconds > secondInDays && elapsedTimeInSeconds <= 2 * secondInDays {
+                    headerView.timeLabel.text = "Yesterday"
+                }
+                else if elapsedTimeInSeconds > secondInDays {
+                    displayDateFormatter.dateFormat = "MMM-dd-yyyy"
+                    headerView.timeLabel.text = displayDateFormatter.string(from: feedDate!)
+                }
+            }
             reusableView = headerView
         }
         return reusableView!
@@ -224,7 +248,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        collectionView.performBatchUpdates({ 
+//        collectionView.performBatchUpdates({
 //            for operation in self.blockOperation {
 //                operation.start()
 //            }
@@ -233,8 +257,9 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
 //            
 //        })
         
+        
         do {
-            try fetchedResultsController.performFetch()
+            try controller.performFetch()
             self.heightDic.removeAll()
             self.collectionView.reloadData()
         } catch let err {
