@@ -25,6 +25,8 @@ struct Constants {
     static let TITLE_FONT_DETAIL: UIFont = UIFont.init(name: "PingFangSC-Semibold", size: 22) ?? UIFont.systemFont(ofSize: 22)
     static let TITLE_FONT_FEED: UIFont = UIFont.init(name: "PingFangSC-Semibold", size: 20) ?? UIFont.systemFont(ofSize: 20)
     
+    static let FEED_HEADER_FONT: UIFont = UIFont.init(name: "PingFangSC-Semibold", size: 12) ?? UIFont.systemFont(ofSize: 12)
+    
     static let CONTENT_FONT_DETAIL_NORMAL: UIFont = UIFont.init(name: "PingFangSC-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
     static let CONTENT_FONT_FEED: UIFont = UIFont.init(name: "PingFangSC-Regular", size: 13) ?? UIFont.systemFont(ofSize: 13)
     
