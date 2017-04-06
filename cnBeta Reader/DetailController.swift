@@ -36,11 +36,6 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     private let imageCellId = "imageCellId"
     private let emptyCellId = "emptyCellId"
     
-    let zoomImageController: ZoomImageController = {
-        let controller = ZoomImageController()
-        return controller
-    }()
-    
     let imageDisplayController: ImageDisplayController = {
         let controller = ImageDisplayController()
         return controller
@@ -55,16 +50,10 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        collectionView?.register(TextCell.self, forCellWithReuseIdentifier: textCellId)
-        collectionView?.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
-        collectionView?.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
-        collectionView?.register(DetailImageCell.self, forCellWithReuseIdentifier: imageCellId)
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: emptyCellId)
-        collectionView?.backgroundColor = .white
-
         view.backgroundColor = .white
         
         setupNavigationBar()
+        setupCollectionView()
         
         contentArray = [Paragraph]()
         allImageParagraphs = [Paragraph]()
@@ -99,7 +88,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             print(urlString)
             URLString = urlString
             
-            if let data = selectedFeed?.savedContent as? Data {
+            if let data = selectedFeed?.savedContent as Data? {
                 
                 if let content = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Paragraph] {
                     contentArray? += content
@@ -149,6 +138,15 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 }
             }
         }
+    }
+    
+    func setupCollectionView() {
+        collectionView?.register(TextCell.self, forCellWithReuseIdentifier: textCellId)
+        collectionView?.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
+        collectionView?.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
+        collectionView?.register(DetailImageCell.self, forCellWithReuseIdentifier: imageCellId)
+        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: emptyCellId)
+        collectionView?.backgroundColor = .white
     }
     
     func setupNavigationBar() {
@@ -241,17 +239,17 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                     print(error.debugDescription)
                     cell.imageView.image = UIImage(named: "image_broken")
                 } else {
-                    // update the imageCell
+                    // update the imageCel
+                    print(self.heightDic[indexPath.item] ?? "no height record")
                     if self.heightDic[indexPath.item] == nil {
                         if let image = image {
                             self.heightDic[indexPath.item] = ((self.collectionView?.frame.width)! - 24 - 24) / image.size.width * image.size.height + 24
                         }
                         if let URLString = imageURL?.absoluteString {
                             if URLString == imageURLString {
+                                //print("The strings are the same")
                                 UIView.animate(withDuration: 0, animations: {
-                                    self.collectionView?.performBatchUpdates({
-                                        self.collectionView?.reloadItems(at: [indexPath])
-                                    }, completion: nil)
+                                    self.collectionView?.reloadItems(at: [indexPath])
                                 })
                             }
                         }
@@ -301,7 +299,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         let paragraph = contentArray?[indexPath.item]
         if heightDic[indexPath.item] == nil {
             
-            let size = CGSize(width: Constants.SCREEN_WIDTH - 24 - 24, height: CGFloat(FLT_MAX))
+            let size = CGSize(width: Constants.SCREEN_WIDTH - 24 - 24, height: CGFloat(CGFloat.greatestFiniteMagnitude))
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             var estimatedContentFrame: CGRect = .zero
             
@@ -416,8 +414,14 @@ extension DetailController: SettingLauncherDelegate {
     
     // SettingLauncherDelegate
     func didSelectSetting(_ setting: Setting) {
+        
+        // TODO: CHECK THE SETTING FOR DEFAULT BROWSER
         if setting.name == .openInBrowser {
-            UIApplication.shared.openURL(URL(string: (selectedFeed?.link)!)!)
+            if OpenInChromeController.sharedInstance().isChromeInstalled() {
+                OpenInChromeController.sharedInstance().open(inChrome: URL(string: (selectedFeed?.link)!)!)
+            } else {
+                UIApplication.shared.openURL(URL(string: (selectedFeed?.link)!)!)
+            }
         }
     }
     
