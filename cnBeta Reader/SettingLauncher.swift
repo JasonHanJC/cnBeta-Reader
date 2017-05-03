@@ -113,7 +113,7 @@ class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataS
         collectionView.dataSource = self;
         collectionView.register(SettingCell.self, forCellWithReuseIdentifier: cellId)
         
-        settings = [Setting(name: .settings, imageName: "Setting"), Setting(name: .sendFeedback, imageName: "FeedBack"), Setting(name: .cancel, imageName: "Cancel")]
+        settings = [Setting(name: .openInBrowser, imageName: "Open in browser"), Setting(name: .share, imageName: "Share"), Setting(name: .cancel, imageName: "Cancel")]
     }
     
     deinit {

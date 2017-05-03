@@ -66,7 +66,7 @@ class ApiService: NSObject {
                                 
                                 newFeedsCount += 1
                             } else {
-                                if date?.compare(latestFeedDate as! Date) == .orderedDescending {
+                                if date?.compare(latestFeedDate! as Date) == .orderedDescending {
                                     let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed", context: privateContext) as! Feed
                                     newFeed.title = item["title"] as? String
                                     newFeed.author = "cnBeta Reader"

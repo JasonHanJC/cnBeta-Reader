@@ -11,6 +11,7 @@
 
 #import <MJRefresh/MJRefresh.h>
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
+#import "OpenInChromeController.h"
 
 
 #endif /* Bridging_Header_h */

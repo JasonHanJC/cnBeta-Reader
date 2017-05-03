@@ -41,15 +41,15 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 
                 DispatchQueue.main.async {
                     self.collectionView.mj_header.endRefreshing()
-                    self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
+                    //self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
                 }
             })
         })
         return refreshHeader!
     }()
     
-    fileprivate lazy var refreshFooter: MJRefreshBackNormalFooter = {
-        let refreshFooter = MJRefreshBackNormalFooter.init(refreshingBlock: {
+    fileprivate lazy var refreshFooter: MJRefreshAutoStateFooter = {
+        let refreshFooter = MJRefreshAutoStateFooter.init(refreshingBlock: {
             
             var numberOfAllItems: Int = 0;
             
@@ -66,9 +66,9 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
             } catch let err {
                 print(err)
             }
-            
-            
         })
+        
+        refreshFooter?.triggerAutomaticallyRefreshPercent = 0.5
         return refreshFooter!
     }()
     
@@ -108,6 +108,8 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         
         collectionView.emptyDataSetSource = self
         collectionView.emptyDataSetDelegate = self
+        
+        collectionView.mj_header.beginRefreshing()
     }
     
     override func layoutSubviews() {

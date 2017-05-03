@@ -10,8 +10,8 @@ import UIKit
 
 enum SettingNames: String {
     case cancel = "Cancel"
-    case settings = "Settings"
-    case sendFeedback = "Send Feedback"
+    case share = "Share"
+    case openInBrowser = "Open in browser"
 }
 
 class Setting: NSObject {
@@ -21,5 +21,8 @@ class Setting: NSObject {
     init(name: SettingNames, imageName: String) {
         self.name = name
         self.imageName = imageName
+        
     }
+    
+    
 }

@@ -237,10 +237,9 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 
                 if error != nil {
                     print(error.debugDescription)
-                    cell.imageView.image = UIImage(named: "image_broken")
+                    //.imageView.image = UIImage(named: "image_broken")
                 } else {
                     // update the imageCel
-                    print(self.heightDic[indexPath.item] ?? "no height record")
                     if self.heightDic[indexPath.item] == nil {
                         if let image = image {
                             self.heightDic[indexPath.item] = ((self.collectionView?.frame.width)! - 24 - 24) / image.size.width * image.size.height + 24
@@ -265,7 +264,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
             let currentParagragh = contentArray?[indexPath.item]
             if currentParagragh?.type == .image {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
+                let cell = cell as! DetailImageCell
                 cell.imageView.kf.cancelDownloadTask()
             }
         }
@@ -318,7 +317,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             
                 heightDic[indexPath.item] = estimatedContentFrame.height + 36
             } else { // image cell
-                return CGSize(width: collectionView.frame.width, height: 200)
+                return CGSize(width: collectionView.frame.width, height: 30)
             } 
         }
         

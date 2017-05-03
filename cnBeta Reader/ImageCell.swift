@@ -11,33 +11,8 @@ import Kingfisher
 
 class ImageCell: UICollectionViewCell, UIScrollViewDelegate {
     
-    var zoomImage: UIImage? {
-        didSet {
-            imageView.image = zoomImage
-        }
-    }
-    
     let imageScrollView = UIScrollView()
     let imageView = UIImageView()
-    
-    var imageString: String? {
-        didSet {
-            // init the image view
-            imageView.image = nil;
-            
-            // init the scroll view zoom
-            imageScrollView.zoomScale = 1.0;
-            
-            // make the toast
-            self.makeToastActivity(self.center)
-            
-            let resource = ImageResource(downloadURL: URL(string: imageString!)!, cacheKey: imageString)
-            imageView.kf.setImage(with: resource, completionHandler: {
-                (image, error, cacheType, imageUrl) in
-                self.hideToastActivity()
-            })
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +22,7 @@ class ImageCell: UICollectionViewCell, UIScrollViewDelegate {
         imageScrollView.bounces = false
         imageScrollView.backgroundColor = .clear
         imageScrollView.clipsToBounds = false
-        imageScrollView.zoomScale = 1.0;
+        imageScrollView.zoomScale = 1.0
         imageScrollView.minimumZoomScale = 1.0
         imageScrollView.maximumZoomScale = 3.0
         imageScrollView.bouncesZoom = false
@@ -63,6 +38,12 @@ class ImageCell: UICollectionViewCell, UIScrollViewDelegate {
         imageView.isUserInteractionEnabled = true
         imageScrollView.addSubview(imageView)
 
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        imageView.image = nil
     }
     
     required init?(coder aDecoder: NSCoder) {

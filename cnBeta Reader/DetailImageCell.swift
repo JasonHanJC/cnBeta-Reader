@@ -12,7 +12,7 @@ class DetailImageCell: BaseCell {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(named: "image_placeholder")
         imageView.clipsToBounds = true
         return imageView

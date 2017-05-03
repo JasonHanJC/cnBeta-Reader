@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -25,8 +26,15 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
         collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismis))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismiss))
+        tapGesture.numberOfTapsRequired = 1
         collectionView.addGestureRecognizer(tapGesture)
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction))
+        doubleTap.numberOfTapsRequired = 2
+        collectionView.addGestureRecognizer(doubleTap)
+
+        tapGesture.require(toFail: doubleTap)
         
         return collectionView
     }()
@@ -44,31 +52,45 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
         return button
     }()
     
-    let pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        
-        pageControl.pageIndicatorTintColor = .lightGray
-        pageControl.currentPageIndicatorTintColor = .white
-        return pageControl
-    }()
+    var pageControl: CNPageControlBaguette?
     
     let imageIndexView: ImageIndexView = {
         let view = ImageIndexView()
         return view
     }()
     
-    @objc fileprivate func dismis() {
+    @objc fileprivate func dismiss() {
         
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
             self.collectionView.alpha = 0
             self.fakeNavigationBar.alpha = 0
         }, completion: {_ in
             self.collectionView.removeFromSuperview()
-            self.pageControl.removeFromSuperview()
+            self.pageControl?.removeFromSuperview()
+            self.pageControl = nil
             self.fakeNavigationBar.removeFromSuperview()
             self.imageIndexView.removeFromSuperview()
         })
 
+    }
+    
+    @objc fileprivate func doubleTapAction() {
+        // zoom the image
+        let currentImageCell = self.collectionView.visibleCells[0] as! ImageCell
+        guard currentImageCell.imageView.image != nil else {
+            return
+        }
+    
+        if currentImageCell.imageScrollView.zoomScale > 1 {
+            UIView.animate(withDuration: 0.2, animations: { 
+                currentImageCell.imageScrollView.zoomScale = 1
+            })
+        } else {
+            UIView.animate(withDuration: 0.2, animations: {
+                currentImageCell.imageScrollView.zoomScale = 2
+            })
+        }
+    
     }
     
     func show() {
@@ -82,7 +104,7 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
             window.addConstraintsWithFormat("H:|[v0]|", views: self.fakeNavigationBar)
             window.addConstraintsWithFormat("V:|-20-[v0][v1(44)]|", views: self.collectionView, self.fakeNavigationBar)
             
-            collectionView.backgroundColor = UIColor(white: 0, alpha: 0.85)
+            collectionView.backgroundColor = UIColor(white: 0.3, alpha: 0.6)
             collectionView.alpha = 0
             
             setupFakeNavigationBar()
@@ -113,13 +135,20 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
             imageIndexView.sumLabel.text = "/  \(imagesInfo.imageContent.count)"
             imageIndexView.indexLabel.text = "\(imagesInfo.imageIndex + 1)"
         } else {
-            fakeNavigationBar.addSubview(self.pageControl)
-            fakeNavigationBar.addConstraintsWithFormat("H:|-40-[v0]-40-|", views: self.pageControl)
-            fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0]-10-|", views: self.pageControl)
+          
+            self.pageControl = CNPageControlBaguette()
+            self.pageControl?.radius = 4;
+            self.pageControl?.tintColor = .lightGray
+            self.pageControl?.currentPageTintColor = .white
+            self.pageControl?.hideForSinglePage = true;
+
+            fakeNavigationBar.addSubview(self.pageControl!)
+            fakeNavigationBar.addConstraintsWithFormat("H:|-40-[v0]-40-|", views: self.pageControl!)
+            fakeNavigationBar.addConstraintsWithFormat("V:|-10-[v0]-10-|", views: self.pageControl!)
         
             // Setup Page Control
-            pageControl.numberOfPages = imagesInfo.imageContent.count
-            pageControl.currentPage = imagesInfo.imageIndex
+            pageControl?.numberOfPages = imagesInfo.imageContent.count
+            pageControl?.progress = Double(imagesInfo.imageIndex)
         }
         
         fakeNavigationBar.alpha = 0
@@ -138,13 +167,17 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ImageCell
         
-        cell.imageString = imagesInfo.imageContent[indexPath.item].paragraphString
+        let imageString = imagesInfo.imageContent[indexPath.item].paragraphString
+        let resource = ImageResource(downloadURL: URL(string: imageString!)!, cacheKey: imageString)
+        
+        cell.imageView.kf.indicatorType = .activity
+        cell.imageView.kf.setImage(with: resource)
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//
+        (cell as! ImageCell).imageScrollView.zoomScale = 1 
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
@@ -162,17 +195,18 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
     
     // MARK: UIScrollViewDelegate
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
         let index = targetContentOffset.pointee.x / scrollView.frame.size.width
         if (imagesInfo.imageContent.count > 10) {
             imageIndexView.indexLabel.text = "\(Int(index) + 1)"
         } else {
-            pageControl.currentPage = Int(index)
+            pageControl?.set(progress: Int(index), animated: true)
         }
     }
     
     // save image
     @objc fileprivate func handleSaveAction() {
-        if let cell = collectionView.cellForItem(at: IndexPath(item: pageControl.currentPage, section: 0)) as? ImageCell {
+        if let cell = collectionView.cellForItem(at: IndexPath(item: (pageControl?.currentPage)!, section: 0)) as? ImageCell {
             
             if let savedImage = cell.imageView.image {
                 UIImageWriteToSavedPhotosAlbum(savedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil);
@@ -202,7 +236,7 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
     }
     
     deinit {
-        print("ZoomImageController deinit")
+        print("ImageDisplayController deinit")
     }
 
 }

@@ -8,10 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		6E390F1A9A62C45C74B87B4D /* Pods_cnBeta_Reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DECF497873D4D1F456ECB90 /* Pods_cnBeta_Reader.framework */; };
+		961D958E1E8ED9F50053E262 /* CNBasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961D958D1E8ED9F50053E262 /* CNBasePageControl.swift */; };
+		961D95901E8EE1900053E262 /* CNPageControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961D958F1E8EE1900053E262 /* CNPageControllable.swift */; };
+		961D95921E8EFAEC0053E262 /* CNPageControlBaguette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961D95911E8EFAEC0053E262 /* CNPageControlBaguette.swift */; };
+		961D95961E92FD030053E262 /* OpenInChromeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 961D95951E92FD030053E262 /* OpenInChromeController.m */; };
+		961D95981E92FF670053E262 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 961D95971E92FF670053E262 /* LICENSE.txt */; };
 		961DEF861E5EAB7D0045EA37 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DEF851E5EAB7D0045EA37 /* TitleCell.swift */; };
 		961DEF881E5EABBB0045EA37 /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DEF871E5EABBB0045EA37 /* DetailImageCell.swift */; };
 		961DEF8A1E5EBE8A0045EA37 /* SummCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DEF891E5EBE8A0045EA37 /* SummCell.swift */; };
 		962771371E025BC50043F894 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962771361E025BC50043F894 /* DetailController.swift */; };
+		962CCD931E790325009A92C7 /* StickyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962CCD921E790325009A92C7 /* StickyHeaderFlowLayout.swift */; };
+		962CCD961E79E737009A92C7 /* CustomFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962CCD951E79E737009A92C7 /* CustomFeedHeader.swift */; };
 		9637AF3A1E26CA9100048BB8 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637AF391E26CA9100048BB8 /* SettingController.swift */; };
 		964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964963B01E08DE8D00EA079C /* Paragraph.swift */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
@@ -25,6 +32,7 @@
 		96A0C9081E2978A400E70F26 /* ImageDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */; };
 		96B47D781E4CE973001A3AAF /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B47D771E4CE973001A3AAF /* ImageCell.swift */; };
 		96B662E21E1C5CAA006DCEF3 /* ZoomImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */; };
+		96C542E51EB92A43000E3EA4 /* spinningwheel.gif in Resources */ = {isa = PBXBuildFile; fileRef = 96C542E41EB92A43000E3EA4 /* spinningwheel.gif */; };
 		96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */; };
 		96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* HomeController.swift */; };
 		96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8971DFCDE2E00A61681 /* Assets.xcassets */; };
@@ -47,10 +55,18 @@
 
 /* Begin PBXFileReference section */
 		4DECF497873D4D1F456ECB90 /* Pods_cnBeta_Reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cnBeta_Reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		961D958D1E8ED9F50053E262 /* CNBasePageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CNBasePageControl.swift; sourceTree = "<group>"; };
+		961D958F1E8EE1900053E262 /* CNPageControllable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CNPageControllable.swift; sourceTree = "<group>"; };
+		961D95911E8EFAEC0053E262 /* CNPageControlBaguette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CNPageControlBaguette.swift; sourceTree = "<group>"; };
+		961D95941E92FD030053E262 /* OpenInChromeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenInChromeController.h; sourceTree = "<group>"; };
+		961D95951E92FD030053E262 /* OpenInChromeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInChromeController.m; sourceTree = "<group>"; };
+		961D95971E92FF670053E262 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		961DEF851E5EAB7D0045EA37 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		961DEF871E5EABBB0045EA37 /* DetailImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
 		961DEF891E5EBE8A0045EA37 /* SummCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummCell.swift; sourceTree = "<group>"; };
 		962771361E025BC50043F894 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		962CCD921E790325009A92C7 /* StickyHeaderFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyHeaderFlowLayout.swift; sourceTree = "<group>"; };
+		962CCD951E79E737009A92C7 /* CustomFeedHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFeedHeader.swift; sourceTree = "<group>"; };
 		9637AF391E26CA9100048BB8 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		964963B01E08DE8D00EA079C /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		9666F0C81DFF22F00043465D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = "cnBeta Reader/CoreDataStack.swift"; sourceTree = "<group>"; };
@@ -65,6 +81,7 @@
 		96B007B91E01DFD70098BD71 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		96B47D771E4CE973001A3AAF /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomImageController.swift; sourceTree = "<group>"; };
+		96C542E41EB92A43000E3EA4 /* spinningwheel.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinningwheel.gif; sourceTree = "<group>"; };
 		96C5C88D1DFCDE2E00A61681 /* cnBeta-Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cnBeta-Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96C5C8921DFCDE2E00A61681 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -104,6 +121,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		961D95931E92FCEA0053E262 /* OpenInChrome */ = {
+			isa = PBXGroup;
+			children = (
+				961D95971E92FF670053E262 /* LICENSE.txt */,
+				961D95941E92FD030053E262 /* OpenInChromeController.h */,
+				961D95951E92FD030053E262 /* OpenInChromeController.m */,
+			);
+			name = OpenInChrome;
+			sourceTree = "<group>";
+		};
 		964963B21E08DEDB00EA079C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +138,16 @@
 				968C5CF51E14765800DFAE46 /* Setting.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		964DFA8B1E8DD7EC0041864F /* CustomPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				961D958D1E8ED9F50053E262 /* CNBasePageControl.swift */,
+				961D958F1E8EE1900053E262 /* CNPageControllable.swift */,
+				961D95911E8EFAEC0053E262 /* CNPageControlBaguette.swift */,
+			);
+			name = CustomPageControl;
 			sourceTree = "<group>";
 		};
 		966DCA5E1E05DFC500D0172D /* Helper */ = {
@@ -158,6 +195,8 @@
 				967F97911E011FC40048D63B /* SavedFeed */,
 				967F97901E011FA90048D63B /* NewFeed */,
 				96C5C8921DFCDE2E00A61681 /* HomeController.swift */,
+				962CCD921E790325009A92C7 /* StickyHeaderFlowLayout.swift */,
+				962CCD951E79E737009A92C7 /* CustomFeedHeader.swift */,
 			);
 			name = HomePage;
 			sourceTree = "<group>";
@@ -203,6 +242,9 @@
 		96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */ = {
 			isa = PBXGroup;
 			children = (
+				96C542E41EB92A43000E3EA4 /* spinningwheel.gif */,
+				961D95931E92FCEA0053E262 /* OpenInChrome */,
+				964DFA8B1E8DD7EC0041864F /* CustomPageControl */,
 				964963B21E08DEDB00EA079C /* Model */,
 				966DCA5E1E05DFC500D0172D /* Helper */,
 				96C5C8CB1DFE44EB00A61681 /* CoreData */,
@@ -363,6 +405,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96C542E51EB92A43000E3EA4 /* spinningwheel.gif in Resources */,
+				961D95981E92FF670053E262 /* LICENSE.txt in Resources */,
 				96C5C89B1DFCDE2E00A61681 /* LaunchScreen.storyboard in Resources */,
 				96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */,
 			);
@@ -436,27 +480,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				961D958E1E8ED9F50053E262 /* CNBasePageControl.swift in Sources */,
 				96D6274A1E51882B00631B4A /* SettingViewController.swift in Sources */,
 				96C5C8A81DFCE88500A61681 /* Extensions.swift in Sources */,
 				968872271E0905D000A45385 /* SavedCell.swift in Sources */,
 				96C5C8AC1DFCE94200A61681 /* MenuBar.swift in Sources */,
 				96C5C8A61DFCE84F00A61681 /* BaseCell.swift in Sources */,
+				962CCD961E79E737009A92C7 /* CustomFeedHeader.swift in Sources */,
 				96F583431E04FBCF0041B9D2 /* CustomImageView.swift in Sources */,
 				96B47D781E4CE973001A3AAF /* ImageCell.swift in Sources */,
 				96CA4A221E440AD700AD7822 /* LaunchingView.swift in Sources */,
 				96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */,
 				968C5CF61E14765800DFAE46 /* Setting.swift in Sources */,
+				961D95921E8EFAEC0053E262 /* CNPageControlBaguette.swift in Sources */,
 				96B662E21E1C5CAA006DCEF3 /* ZoomImageController.swift in Sources */,
 				961DEF8A1E5EBE8A0045EA37 /* SummCell.swift in Sources */,
 				967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */,
 				961DEF861E5EAB7D0045EA37 /* TitleCell.swift in Sources */,
+				961D95901E8EE1900053E262 /* CNPageControllable.swift in Sources */,
 				964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */,
 				9637AF3A1E26CA9100048BB8 /* SettingController.swift in Sources */,
 				968C5CF11E14756200DFAE46 /* SettingLauncher.swift in Sources */,
 				96EE0AE11E0C830E0099892B /* FetchContentOperation.swift in Sources */,
 				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
+				962CCD931E790325009A92C7 /* StickyHeaderFlowLayout.swift in Sources */,
 				968C5CF41E1475F900DFAE46 /* SettingCell.swift in Sources */,
 				96F583481E0504BE0041B9D2 /* Constants.swift in Sources */,
+				961D95961E92FD030053E262 /* OpenInChromeController.m in Sources */,
 				9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */,
 				962771371E025BC50043F894 /* DetailController.swift in Sources */,
 				961DEF881E5EABBB0045EA37 /* DetailImageCell.swift in Sources */,
