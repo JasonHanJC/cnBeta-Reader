@@ -41,6 +41,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 
                 DispatchQueue.main.async {
                     self.collectionView.mj_header.endRefreshing()
+                    
                     //self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
                 }
             })
@@ -86,6 +87,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     override func setupViews() {
         
+        // load the data from local device
         do {
             try fetchedResultsController.performFetch()
         } catch let err {
@@ -109,6 +111,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         collectionView.emptyDataSetSource = self
         collectionView.emptyDataSetDelegate = self
         
+        // update the data from sever
         collectionView.mj_header.beginRefreshing()
     }
     

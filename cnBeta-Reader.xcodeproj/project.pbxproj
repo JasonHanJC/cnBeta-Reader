@@ -31,8 +31,6 @@
 		968C5CF61E14765800DFAE46 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968C5CF51E14765800DFAE46 /* Setting.swift */; };
 		96A0C9081E2978A400E70F26 /* ImageDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */; };
 		96B47D781E4CE973001A3AAF /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B47D771E4CE973001A3AAF /* ImageCell.swift */; };
-		96B662E21E1C5CAA006DCEF3 /* ZoomImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */; };
-		96C542E51EB92A43000E3EA4 /* spinningwheel.gif in Resources */ = {isa = PBXBuildFile; fileRef = 96C542E41EB92A43000E3EA4 /* spinningwheel.gif */; };
 		96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */; };
 		96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C5C8921DFCDE2E00A61681 /* HomeController.swift */; };
 		96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C5C8971DFCDE2E00A61681 /* Assets.xcassets */; };
@@ -80,8 +78,6 @@
 		96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayController.swift; sourceTree = "<group>"; };
 		96B007B91E01DFD70098BD71 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		96B47D771E4CE973001A3AAF /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
-		96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomImageController.swift; sourceTree = "<group>"; };
-		96C542E41EB92A43000E3EA4 /* spinningwheel.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinningwheel.gif; sourceTree = "<group>"; };
 		96C5C88D1DFCDE2E00A61681 /* cnBeta-Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cnBeta-Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C5C8901DFCDE2E00A61681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96C5C8921DFCDE2E00A61681 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -213,7 +209,6 @@
 		96BB73771E650EA200583DFB /* DisplayView */ = {
 			isa = PBXGroup;
 			children = (
-				96B662E11E1C5CAA006DCEF3 /* ZoomImageController.swift */,
 				96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */,
 				96B47D771E4CE973001A3AAF /* ImageCell.swift */,
 				967C17801E67E3200003AC4C /* ImageIndexView.swift */,
@@ -242,7 +237,6 @@
 		96C5C88F1DFCDE2E00A61681 /* cnBeta Reader */ = {
 			isa = PBXGroup;
 			children = (
-				96C542E41EB92A43000E3EA4 /* spinningwheel.gif */,
 				961D95931E92FCEA0053E262 /* OpenInChrome */,
 				964DFA8B1E8DD7EC0041864F /* CustomPageControl */,
 				964963B21E08DEDB00EA079C /* Model */,
@@ -405,7 +399,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96C542E51EB92A43000E3EA4 /* spinningwheel.gif in Resources */,
 				961D95981E92FF670053E262 /* LICENSE.txt in Resources */,
 				96C5C89B1DFCDE2E00A61681 /* LaunchScreen.storyboard in Resources */,
 				96C5C8981DFCDE2E00A61681 /* Assets.xcassets in Resources */,
@@ -493,7 +486,6 @@
 				96C5C8D21DFE761400A61681 /* FeedCollectionView.swift in Sources */,
 				968C5CF61E14765800DFAE46 /* Setting.swift in Sources */,
 				961D95921E8EFAEC0053E262 /* CNPageControlBaguette.swift in Sources */,
-				96B662E21E1C5CAA006DCEF3 /* ZoomImageController.swift in Sources */,
 				961DEF8A1E5EBE8A0045EA37 /* SummCell.swift in Sources */,
 				967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */,
 				961DEF861E5EAB7D0045EA37 /* TitleCell.swift in Sources */,
