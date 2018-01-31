@@ -9,13 +9,15 @@
 import UIKit
 import CoreData
 
-class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
+class HomeController: UIViewController {
     
+    // MARK: - Private properties
     private let feedCellId = "feedCellId"
     private let saveCellId = "saveCellId"
     
     private var currentCellIndex = 0
     
+    // MARK: - Lazy views
     lazy var launchView: LaunchingView = {
         let launchView = LaunchingView(frame: self.view.bounds)
         return launchView
@@ -50,25 +52,21 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return collectionView
     }()
     
+    // MARK: - Layout Views
     func setupNavigationBar() {
         
         let myLogoView = UIImageView(image: UIImage(named: "logo"))
         navigationItem.titleView = myLogoView
         
-        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        fixedSpace.width = -8
+//        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+//        fixedSpace.width = -8
         
         let settingBtn = UIBarButtonItem(image: UIImage(named: "setting"), style: .plain, target: self, action: #selector(handleSetting))
         settingBtn.tintColor = Constants.All_ICONS_COLOR
         
-        navigationItem.rightBarButtonItems = [fixedSpace, settingBtn]
+        navigationItem.rightBarButtonItem = settingBtn
     }
     
-    @objc fileprivate func handleSetting() {
-        
-    }
-
-
     fileprivate func setupMenuBar() {
         
         view.addSubview(menuBar)
@@ -89,6 +87,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     fileprivate func setupCollectionView() {
         
         view.addSubview(collectionView)
+        
         if #available(iOS 11.0, *) {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
@@ -111,55 +110,12 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         collectionView.isPagingEnabled = true
     }
     
-    func scrollToMenuIndex(_ menuIndex: Int) {
-        let indexPath = IndexPath(item: menuIndex, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: [], animated: false)
-    }
-    
-    // MARK: collection view delegate and datasource
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2;
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedCellId, for: indexPath) as! FeedCollectionView
-            cell.delegate = self
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: saveCellId, for: indexPath) as! SavedTableView
-            cell.delegate = self
-            return cell
-        }
+    // MARK: - Private methods
+    @objc fileprivate func handleSetting() {
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        collectionView.backgroundColor = indexPath.item == 1 ? UIColor.white : UIColor(white: 0.95, alpha: 1)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 50)
-    }
-    
-    // MARK: scrollview delegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let retio = scrollView.frame.width / menuBar.collectionView.frame.width
-        
-        menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / retio / CGFloat(menuBar.filledImageNames.count)
-    }
-
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let index = Int(targetContentOffset.pointee.x / scrollView.frame.width)
-        let indexPath = IndexPath(item: index, section: 0)
-        menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-        currentCellIndex = index
-    }
-
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         automaticallyAdjustsScrollViewInsets = true
@@ -203,9 +159,61 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
 }
 
+extension HomeController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    // MARK: collection view delegate and datasource
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedCellId, for: indexPath) as! FeedCollectionView
+            cell.delegate = self
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: saveCellId, for: indexPath) as! SavedTableView
+            cell.delegate = self
+            return cell
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //        collectionView.backgroundColor = indexPath.item == 1 ? UIColor.white : UIColor(white: 0.95, alpha: 1)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height - 50)
+    }
+}
+
+extension HomeController {
+    
+    // MARK: scrollview delegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let retio = scrollView.frame.width / menuBar.collectionView.frame.width
+        menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / retio / CGFloat(menuBar.filledImageNames.count)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let index = Int(targetContentOffset.pointee.x / scrollView.frame.width)
+        let indexPath = IndexPath(item: index, section: 0)
+        menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+        currentCellIndex = index
+    }
+}
+
 extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTableViewDelegate, SettingLauncherDelegate {
     
-    // MARK: MenuBarDelegate
+    fileprivate func scrollToMenuIndex(_ menuIndex: Int) {
+        let indexPath = IndexPath(item: menuIndex, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: [], animated: false)
+    }
+    
+    // MARK: - MenuBarDelegate
     func didSelectMenuBarAtIndex(_ index: Int) {
         scrollToMenuIndex(index)
     }
