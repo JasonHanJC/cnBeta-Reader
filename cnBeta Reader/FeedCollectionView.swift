@@ -21,7 +21,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     weak var delegate: FeedCollectionViewDelegate?
     
     fileprivate let headerHeight: CGFloat = 34.0
-    fileprivate var heightDic: [IndexPath : CGFloat] = Dictionary()
+    fileprivate var heightDic: [String : CGFloat] = Dictionary()
     
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
@@ -32,6 +32,12 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         frc.delegate = self
         
+        do {
+            try frc.performFetch()
+        } catch let err {
+            print(err)
+        }
+        
         return frc as! NSFetchedResultsController<Feed>
     }()
     
@@ -41,8 +47,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 
                 DispatchQueue.main.async {
                     self.collectionView.mj_header.endRefreshing()
-                    
-                    //self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
+                    self.makeToast("\(newFeedsCount) new feeds", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
                 }
             })
         })
@@ -61,15 +66,13 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 
                 self.collectionView.reloadData()
                 
-                //  self.makeToast("No more feed", duration: 1.2, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 100))
-
                 self.collectionView.mj_footer.endRefreshing()
             } catch let err {
                 print(err)
             }
         })
         
-        refreshFooter?.triggerAutomaticallyRefreshPercent = 0.5
+        refreshFooter?.triggerAutomaticallyRefreshPercent = 0.6
         return refreshFooter!
     }()
     
@@ -86,14 +89,6 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     fileprivate let headerId = "headerId"
     
     override func setupViews() {
-        
-        // load the data from local device
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let err {
-            print(err)
-        }
-        
         super.setupViews()
         
         backgroundColor = .white
@@ -136,26 +131,12 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCell
         
-        let feed = fetchedResultsController.object(at: indexPath) 
+        let feed = fetchedResultsController.object(at: indexPath)
         cell.feed = feed;
         
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-//        let translation = collectionView.panGestureRecognizer.translation(in: collectionView.superview)
-//        
-//        if translation.y < 0 && collectionView.contentOffset.y < (collectionView.contentSize.height - collectionView.frame.height) && collectionView.contentOffset.y > collectionView.frame.height {
-//            cell.alpha = 0
-//            let rotationTransform = CATransform3DTranslate(CATransform3DIdentity, 0, 50, 0)
-//            cell.layer.transform = rotationTransform
-//            UIView.animate(withDuration: 0.3, animations: {
-//                cell.alpha = 1
-//                cell.layer.transform = CATransform3DIdentity
-//            })
-//        }
-    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feedObject = fetchedResultsController.object(at: indexPath)
@@ -165,7 +146,9 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     // MARK: CollectionView layout delegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if heightDic[indexPath] == nil {
+        let feed = fetchedResultsController.object(at: indexPath)
+
+        if heightDic[feed.id!] == nil {
             let feed = fetchedResultsController.object(at: indexPath)
             let size = CGSize(width: Constants.SCREEN_WIDTH - 40, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
@@ -180,10 +163,10 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
                 estimatedContentFrame = NSString(string: content).boundingRect(with: size, options: options, attributes: Constants.FEED_SUMM_STYLE, context: nil)
             }
             
-            heightDic[indexPath] = estimatedContentFrame.height + estimatedTitleFrame.height + 30 + 30 + 4 + 12 + 16
+            heightDic[feed.id!] = estimatedContentFrame.height + estimatedTitleFrame.height + 30 + 30 + 4 + 12 + 16
         }
         
-        return CGSize(width: frame.width, height: heightDic[indexPath]!)
+        return CGSize(width: frame.width, height: heightDic[feed.id!]!)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -232,17 +215,10 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     
     // MARK: NSFetchedResultsController delegate
     
-//    var blockOperation = [BlockOperation]()
-    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
 
         if type == .insert {
-//            blockOperation.append(BlockOperation(block: {
-//                UIView.animate(withDuration: 1, animations: {
-//                    self.collectionView.insertItems(at: [newIndexPath!])
-//                    print(newIndexPath!)
-//                })
-//            }))
+
         } else if type == .update {
             
         } else if type == .delete {
@@ -253,23 +229,9 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        collectionView.performBatchUpdates({
-//            for operation in self.blockOperation {
-//                operation.start()
-//            }
-//        }, completion: { (completed) in
-//            
-//            
-//        })
-        
-        
-        do {
-            try controller.performFetch()
-            self.heightDic.removeAll()
-            self.collectionView.reloadData()
-        } catch let err {
-            print(err)
-        }
+
+        // self.heightDic.removeAll()
+        self.collectionView.reloadData()
     }
 }
 
@@ -278,23 +240,14 @@ extension FeedCollectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     // MARK: DZNEmptyDataSetSource
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "No new feeds yet, try pull down to refreash"
-        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
+        let attribute = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0), NSAttributedStringKey.foregroundColor : UIColor.darkGray]
         
         return NSAttributedString(string: text, attributes: attribute)
     }
-    
-//    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
-//        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
-//        return NSAttributedString(string: "Hit", attributes: attribute)
-//    }
     
     // MARK: DZNEmptyDataSetDelegate
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
         return true
     }
-    
-//    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
-//        print("tap")
-//    }
     
 }

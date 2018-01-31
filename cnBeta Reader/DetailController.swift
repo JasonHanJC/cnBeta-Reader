@@ -18,7 +18,7 @@ typealias contentParsingCompletion = ([Paragraph]?) -> Void
 class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var activity: NSUserActivity?
-    private let activituType: String = "com.juncheng.app.cnBetaReader.OpenWebPage"
+    private let activityType: String = "com.juncheng.app.cnBetaReader.OpenWebPage"
     
     var selectedFeed: Feed?
     private var URLString: String?
@@ -73,7 +73,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         
         // setup activity
-        self.activity = NSUserActivity(activityType: activituType)
+        self.activity = NSUserActivity(activityType: activityType)
         self.activity?.webpageURL = URL(string:(selectedFeed?.link)!)
         self.activity?.title = "webView"
         self.activity?.isEligibleForHandoff = true
@@ -81,7 +81,12 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         
         print(selectedFeed?.link ?? "")
         
-        if let last10  = selectedFeed?.link?.substring(from:(selectedFeed?.link?.index((selectedFeed?.link?.endIndex)!, offsetBy: -10))!) {
+        // let last10 = selectedFeed?.link?[selectedFeed?.link?.index((selectedFeed?.link?.endIndex)!, offsetBy: -10))!...]
+        
+        if let link = selectedFeed?.link {
+            
+            let index = link.index(link.endIndex, offsetBy: -10)
+            let last10 = String(link[index...])
         
             let urlString = "http://m.cnbeta.com/view/\(last10)"
         
@@ -141,6 +146,14 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     func setupCollectionView() {
+        
+//        if #available(iOS 11.0, *) {
+//            collectionView?.translatesAutoresizingMaskIntoConstraints = false
+//            collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+//        } else {
+//            // Fallback on earlier versions
+//        }
+        
         collectionView?.register(TextCell.self, forCellWithReuseIdentifier: textCellId)
         collectionView?.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
         collectionView?.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
@@ -169,7 +182,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         navigationItem.rightBarButtonItems = [moreButton, saveButton]
     }
     
-    func handleSave(_ sender: UIBarButtonItem) {
+    @objc func handleSave(_ sender: UIBarButtonItem) {
         
         if selectedFeed?.isSaved == false {
             view.makeToast("Feed saved", duration: 0.5, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
@@ -183,11 +196,11 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         CoreDataStack.sharedInstance.save()
     }
     
-    func handleNavBack(_ sender: UIBarButtonItem) {
+    @objc func handleNavBack(_ sender: UIBarButtonItem) {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func handleNavMore(_ sender: UIBarButtonItem) {
+    @objc func handleNavMore(_ sender: UIBarButtonItem) {
         self.actionSheet.showSettingLauncher()
     }
     
@@ -344,24 +357,23 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 
             var contents = [Paragraph]()
                 
-                
-            if let doc = HTML(html: cnbetaData, encoding: .utf8) {
-                    
+            do {
+                let doc = try HTML(html: cnbetaData, encoding: .utf8)
                 // article sum
                 for link in doc.css("div.article-summ") {
-                        
+                    
                     if link.text != "" {
                         let paragraph = Paragraph.init(type: .summary, content: link.text!, alignment: .alignmentLeft,  textStyle: .normal)
                         contents.append(paragraph)
-
+                        
                     }
                 }
-                    
+                
                 // article content
                 for link in doc.css("div.articleCont p") {
-                        
+                    
                     let text = link.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-                        
+                    
                     if text == "" {
                         // image or video
                         // print("image")
@@ -372,30 +384,33 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                                 contents.append(paragraph)
                             }
                         }
-                            
+                        
                     } else {
                         var textStyle: TextStyle = .normal
                         if link.css("strong").first?.text != nil {
                             textStyle = .strong
                         }
-                            
+                        
                         var textAlignment: ParagraphAlignment = .alignmentLeft
                         if link["style"] == "text-align: center;" {
                             textAlignment = .alignmentCenter
                         } else if link["style"] == "text-align: right;"{
                             textAlignment = .alignmentRight
                         }
-                            
+                        
                         let paragraph = Paragraph.init(type: .text, content: text!, alignment: textAlignment,  textStyle: textStyle)
-                            
+                        
                         contents.append(paragraph)
-                            
+                        
                     }
                 }
+            } catch let err {
+                print(err.localizedDescription)
             }
+            
                 
             let data = NSKeyedArchiver.archivedData(withRootObject: contents)
-            self.selectedFeed?.savedContent = data as NSData
+            self.selectedFeed?.savedContent = data
                 
             if self.URLString == urlString {
                 completion(contents)

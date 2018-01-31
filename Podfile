@@ -8,9 +8,9 @@ target 'cnBeta-Reader' do
     pod 'MJRefresh'
     pod 'Toast-Swift', '~> 2.0.0'
     pod 'Alamofire', '~> 4.0'
-    pod 'Kanna', '~> 2.1.0'
+    pod 'Kanna', :git => 'https://github.com/tid-kijyun/Kanna.git', :branch => 'feature/v4.0.0'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'DZNEmptyDataSet'
-    pod 'Kingfisher', '~> 3.0'
+    pod 'Kingfisher', '~> 4.0'
 end

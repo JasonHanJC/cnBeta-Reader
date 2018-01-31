@@ -12,10 +12,10 @@ class FeedCell: BaseCell {
     
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? UIColor(white: 0.80, alpha: 1) : .white
-            dateLabel.textColor = isHighlighted ? .white : Constants.TIME_LABEL_TEXT_COLOR
-            titleLabel.textColor = isHighlighted ? .white : .black
-            contentLabel.textColor = isHighlighted ? .white : .gray
+//            backgroundColor = isHighlighted ? UIColor(white: 0.80, alpha: 1) : .white
+//            dateLabel.textColor = isHighlighted ? .white : Constants.TIME_LABEL_TEXT_COLOR
+//            titleLabel.textColor = isHighlighted ? .white : .black
+//            contentLabel.textColor = isHighlighted ? .white : .gray
         }
     }
     

@@ -54,29 +54,15 @@ class CoreDataStack: NSObject {
             
     func save() {
         
-        if !mainContext.hasChanges && !privateContext.hasChanges {
+        guard mainContext.hasChanges else {
             return
         }
         
-        privateContext.perform({
-            do {
-                try self.privateContext.save()
-                
-                self.mainContext.performAndWait {
-                    do {
-                        try self.mainContext.save()
-                        
-                    } catch let error as NSError {
-                        print("Error: \(error.localizedDescription)")
-                        abort()
-                    }
-                }
-            } catch let error as NSError {
-                print("Error: \(error.localizedDescription)")
-                abort()
-            }
-        })
-
+        do {
+            try self.mainContext.save()
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
+        }
         
     }
     

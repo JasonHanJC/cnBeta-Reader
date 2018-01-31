@@ -102,7 +102,7 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
             
             window.addConstraintsWithFormat("H:|[v0]|", views: self.collectionView)
             window.addConstraintsWithFormat("H:|[v0]|", views: self.fakeNavigationBar)
-            window.addConstraintsWithFormat("V:|-20-[v0][v1(44)]|", views: self.collectionView, self.fakeNavigationBar)
+            window.addConstraintsWithFormat("V:|[v0][v1(44)]|", views: self.collectionView, self.fakeNavigationBar)
             
             collectionView.backgroundColor = UIColor(white: 0.3, alpha: 0.6)
             collectionView.alpha = 0
@@ -214,7 +214,7 @@ class ImageDisplayController: NSObject, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
             print("Image save failed\(error.localizedDescription)")

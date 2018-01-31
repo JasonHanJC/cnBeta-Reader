@@ -60,13 +60,14 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     
     override func setupViews() {
         
+
+        super.setupViews()
+        
         do {
             try fetchedResultsController.performFetch()
         } catch let err {
             print(err)
         }
-        
-        super.setupViews()
         
         addSubview(collectionView)
         addConstraintsWithFormat("H:|[v0]|", views: collectionView)
@@ -177,7 +178,7 @@ extension SavedTableView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     // MARK: DZNEmptyDataSetSource
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let text = "No saved feed yet, try save some interesting one."
-        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
+        let attribute = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18.0), NSAttributedStringKey.foregroundColor : UIColor.darkGray]
         
         return NSAttributedString(string: text, attributes: attribute)
     }

@@ -21,6 +21,8 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
             //UIColor.rgb(230, green: 32, blue: 32, alpha: 1.0)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -69,7 +71,8 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     func setupHorizontalBar() {
         let horizontalBar = UIView()
-        horizontalBar.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        horizontalBar.backgroundColor = .clear
+            // UIColor(white: 0.95, alpha: 1)
         horizontalBar.translatesAutoresizingMaskIntoConstraints = false
         addSubview(horizontalBar)
         

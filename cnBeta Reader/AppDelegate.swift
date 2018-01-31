@@ -24,11 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        CoreDataStack.sharedInstance.clearData()
-        ImageCache.default.clearDiskCache()
+        // CoreDataStack.sharedInstance.clearData()
+        // ImageCache.default.clearDiskCache()
         
-        let layout = UICollectionViewFlowLayout()
-        let homeController = HomeController(collectionViewLayout: layout)
+        let homeController = HomeController()
         window?.rootViewController = UINavigationController(rootViewController: homeController)
         
         UINavigationBar.appearance().barTintColor = UIColor.white

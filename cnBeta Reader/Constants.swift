@@ -52,55 +52,54 @@ struct Constants {
     
     // text stytle
     // feed summ style dictionary
-    static let FEED_SUMM_STYLE: [String: Any] = {
+    static let FEED_SUMM_STYLE: [NSAttributedStringKey : Any] = {
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .byWordWrapping
         paraStyle.alignment = .left
         paraStyle.minimumLineHeight = 22
         
-        let dic = [NSParagraphStyleAttributeName: paraStyle, NSKernAttributeName: 0.2, NSFontAttributeName: CONTENT_FONT_FEED] as [String : Any]
+        let dic = [NSAttributedStringKey.paragraphStyle: paraStyle, NSAttributedStringKey.kern: 0.2, NSAttributedStringKey.font: CONTENT_FONT_FEED] as [NSAttributedStringKey : Any]
         return dic
     }()
     
-    static let FEED_TITLE_STYLE: [String: Any] = {
+    static let FEED_TITLE_STYLE: [NSAttributedStringKey: Any] = {
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .byWordWrapping
         paraStyle.alignment = .left
         paraStyle.minimumLineHeight = 28
         
-        let dic = [NSParagraphStyleAttributeName : paraStyle, NSKernAttributeName: 0.2, NSFontAttributeName: TITLE_FONT_FEED] as [String : Any]
+        let dic = [NSAttributedStringKey.paragraphStyle : paraStyle, NSAttributedStringKey.kern: 0.2, NSAttributedStringKey.font: TITLE_FONT_FEED] as [NSAttributedStringKey : Any] 
         return dic
     }()
     
-    ///////////////
     
-    static let DETAIL_SUMM_STYLE: [String: Any] = {
+    static let DETAIL_SUMM_STYLE: [NSAttributedStringKey : Any] = {
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .byWordWrapping
         paraStyle.alignment = .left
         paraStyle.minimumLineHeight = 26
         
-        let dic = [NSParagraphStyleAttributeName: paraStyle, NSKernAttributeName: 0.16, NSFontAttributeName: CONTENT_FONT_DETAIL_NORMAL] as [String : Any]
+        let dic = [NSAttributedStringKey.paragraphStyle: paraStyle, NSAttributedStringKey.kern: 0.16, NSAttributedStringKey.font: CONTENT_FONT_DETAIL_NORMAL] as [NSAttributedStringKey : Any]
         return dic
     }()
     
-    static let DETAIL_NORMAL_STYLE: [String: Any] = {
+    static let DETAIL_NORMAL_STYLE: [NSAttributedStringKey : Any] = {
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .byWordWrapping
         paraStyle.alignment = .left
         paraStyle.minimumLineHeight = 26
         
-        let dic = [NSParagraphStyleAttributeName: paraStyle, NSKernAttributeName: 0.16, NSFontAttributeName: CONTENT_FONT_DETAIL_NORMAL] as [String : Any]
+        let dic = [NSAttributedStringKey.paragraphStyle: paraStyle, NSAttributedStringKey.kern: 0.16, NSAttributedStringKey.font: CONTENT_FONT_DETAIL_NORMAL] as [NSAttributedStringKey : Any]
         return dic
     }()
     
-    static let DETAIL_TITLE_STYLE: [String: Any] = {
+    static let DETAIL_TITLE_STYLE: [NSAttributedStringKey : Any] = {
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .byWordWrapping
         paraStyle.alignment = .left
         paraStyle.minimumLineHeight = 30
         
-        let dic = [NSParagraphStyleAttributeName : paraStyle, NSKernAttributeName: 0.22, NSFontAttributeName: TITLE_FONT_DETAIL] as [String : Any]
+        let dic = [NSAttributedStringKey.paragraphStyle : paraStyle, NSAttributedStringKey.kern: 0.22, NSAttributedStringKey.font: TITLE_FONT_DETAIL] as [NSAttributedStringKey : Any]
         return dic
     }()
     

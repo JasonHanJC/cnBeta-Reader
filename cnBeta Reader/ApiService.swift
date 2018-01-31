@@ -36,9 +36,9 @@ class ApiService: NSObject {
         
         let privateContext = CoreDataStack.sharedInstance.privateContext
         
-        privateContext.perform { 
+        privateContext.perform {
                     
-            let latestFeedDate: NSDate? = CoreDataStack.sharedInstance.getLatestFeed()?.publishedDate
+            let latestFeedDate: Date? = CoreDataStack.sharedInstance.getLatestFeed()?.publishedDate
             var newFeedsCount: Int = 0
             
             if let jsonDictionaries = data as? [String : AnyObject] {
@@ -49,15 +49,21 @@ class ApiService: NSObject {
                             let date = self.getNSDateFromTimestamp(publishDate! / 1000.0)
                             if latestFeedDate == nil {
                                 let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed", context: privateContext) as! Feed
+                                newFeed.id = item["id"] as? String
                                 newFeed.title = item["title"] as? String
                                 newFeed.author = "cnBeta Reader"
-                                newFeed.publishedDate = date as NSDate?
+                                newFeed.publishedDate = date
                                 newFeed.link = item["originId"] as? String
                                 if let summary = item["summary"] as? [String : AnyObject] {
                                     if let content = summary["content"] as? String {
-                                        if let doc = HTML(html: content, encoding: .utf8) {
+                                        
+                                        do {
+                                            let doc = try HTML(html: content, encoding: .utf8)
                                             newFeed.contentSnippet = doc.text ?? ""
+                                        } catch let err {
+                                            print(err.localizedDescription)
                                         }
+                                        
                                     }
                                 }
                                 newFeed.isRead = false
@@ -68,15 +74,21 @@ class ApiService: NSObject {
                             } else {
                                 if date?.compare(latestFeedDate! as Date) == .orderedDescending {
                                     let newFeed = CoreDataStack.sharedInstance.createObjectForEntity("Feed", context: privateContext) as! Feed
+                                    newFeed.id = item["id"] as? String
                                     newFeed.title = item["title"] as? String
                                     newFeed.author = "cnBeta Reader"
-                                    newFeed.publishedDate = date as NSDate?
+                                    newFeed.publishedDate = date
                                     newFeed.link = item["originId"] as? String
                                     if let summary = item["summary"] as? [String : AnyObject] {
                                         if let content = summary["content"] as? String {
-                                            if let doc = HTML(html: content, encoding: .utf8) {
+                                            
+                                            do {
+                                                let doc = try HTML(html: content, encoding: .utf8)
                                                 newFeed.contentSnippet = doc.text ?? ""
+                                            } catch let err {
+                                                print(err.localizedDescription)
                                             }
+                                            
                                         }
                                     }
 
@@ -92,8 +104,16 @@ class ApiService: NSObject {
                 }
             }
             
-            CoreDataStack.sharedInstance.save()
-            completion(newFeedsCount)
+            do {
+                try CoreDataStack.sharedInstance.privateContext.save()
+                
+                CoreDataStack.sharedInstance.save()
+                
+                completion(newFeedsCount)
+            } catch let backgroundSaveErr {
+                print(backgroundSaveErr.localizedDescription)
+            }
+            
         }
         
      //   DispatchQueue.global(qos: .default).async {
