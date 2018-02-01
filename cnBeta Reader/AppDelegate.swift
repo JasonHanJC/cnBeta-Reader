@@ -28,7 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // ImageCache.default.clearDiskCache()
         
         let homeController = HomeController()
-        window?.rootViewController = UINavigationController(rootViewController: homeController)
+        let navigationController = UINavigationController(rootViewController: homeController)
+        window?.rootViewController = navigationController
         
         UINavigationBar.appearance().barTintColor = UIColor.white
         UIApplication.shared.statusBarStyle = .default

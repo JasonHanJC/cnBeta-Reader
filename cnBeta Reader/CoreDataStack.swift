@@ -157,5 +157,4 @@ extension CoreDataStack {
             print(err)
         }
     }
-    
 }

@@ -14,7 +14,7 @@ protocol SettingLauncherDelegate: class {
     func didCancelByUser()
 }
 
-class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SettingLauncher: NSObject {
     
     let blackView = UIView()
     
@@ -79,6 +79,24 @@ class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
+    override init() {
+        super.init()
+        
+        collectionView.delegate = self;
+        collectionView.dataSource = self;
+        collectionView.register(SettingCell.self, forCellWithReuseIdentifier: cellId)
+        
+        settings = [Setting(name: .openInBrowser, imageName: "Open in browser"), Setting(name: .share, imageName: "Share"), Setting(name: .cancel, imageName: "Cancel")]
+    }
+    
+    deinit {
+        print("setting launcher deinit")
+    }
+}
+
+extension SettingLauncher: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    // MARK: - CollectionView delegate and datasource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return settings.count
     }
@@ -102,21 +120,5 @@ class SettingLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let setting = settings[indexPath.item]
         handleDismiss(setting)
-    }
-    
-    
-    
-    override init() {
-        super.init()
-        
-        collectionView.delegate = self;
-        collectionView.dataSource = self;
-        collectionView.register(SettingCell.self, forCellWithReuseIdentifier: cellId)
-        
-        settings = [Setting(name: .openInBrowser, imageName: "Open in browser"), Setting(name: .share, imageName: "Share"), Setting(name: .cancel, imageName: "Cancel")]
-    }
-    
-    deinit {
-        print("setting launcher deinit")
     }
 }

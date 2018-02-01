@@ -23,12 +23,6 @@ class HomeController: UIViewController {
         return launchView
     }()
     
-    lazy var settingLauncher: SettingLauncher = {
-        let launcher = SettingLauncher()
-        launcher.delegate = self
-        return launcher
-    }()
-    
     lazy var menuBar: MenuBar = {
         let mb = MenuBar()
         mb.delegate = self
@@ -65,6 +59,8 @@ class HomeController: UIViewController {
         settingBtn.tintColor = Constants.All_ICONS_COLOR
         
         navigationItem.rightBarButtonItem = settingBtn
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     fileprivate func setupMenuBar() {
@@ -206,7 +202,7 @@ extension HomeController {
     }
 }
 
-extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTableViewDelegate, SettingLauncherDelegate {
+extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTableViewDelegate {
     
     fileprivate func scrollToMenuIndex(_ menuIndex: Int) {
         let indexPath = IndexPath(item: menuIndex, section: 0)
@@ -218,35 +214,30 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTabl
         scrollToMenuIndex(index)
     }
     
-    // MARK: FeedCollectionViewDelegate
+    // MARK: - FeedCollectionViewDelegate
     func feedCollectionViewDidSelectFeed(_ feed: Feed) {
-
-        let layout = UICollectionViewFlowLayout()
-        let detailController = DetailController(collectionViewLayout: layout)
-        detailController.selectedFeed = feed
-        detailController.navigationItem.title = "Detail"
-        
-        navigationController?.pushViewController(detailController, animated: true)
+        openDetailViewFor(feed: feed)
     }
     
-    // MARK: SavedTableViewDelegate
+    // MARK: - SavedTableViewDelegate
     func savedTableViewDidSelectFeed(_ feed: Feed) {
-        
-        let layout = UICollectionViewFlowLayout()
-        let detailController = DetailController(collectionViewLayout: layout)
+        openDetailViewFor(feed: feed)
+    }
+    
+    fileprivate func openDetailViewFor(feed: Feed) {
+        let detailController = DetailController()
         detailController.selectedFeed = feed
         detailController.navigationItem.title = "Detail"
         
         navigationController?.pushViewController(detailController, animated: true)
     }
-    
-    
-    // MARK: SettingLauncherDelegate
-    func didSelectSetting(_ setting: Setting) {
-        print(setting.name)
-    }
-    
-    func didCancelByUser() {
+}
 
+extension HomeController: UIGestureRecognizerDelegate {
+    
+    // MARK: - UIGestureRecognizerDelegate
+    // Enable swipe back for navigation controller
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

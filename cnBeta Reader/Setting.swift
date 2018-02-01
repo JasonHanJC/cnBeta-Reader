@@ -23,6 +23,4 @@ class Setting: NSObject {
         self.imageName = imageName
         
     }
-    
-    
 }

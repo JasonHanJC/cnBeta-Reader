@@ -10,6 +10,8 @@ import UIKit
 
 class LaunchingView: UIView {
     
+    var isDismissed = false
+    
     lazy var logoLayer: CALayer = {
         let layer = CALayer()
         layer.frame = CGRect(x: 0, y: 0, width: 140, height: 140)
@@ -68,29 +70,41 @@ class LaunchingView: UIView {
     }
     
     func startAnimateWithCompletion(completion: () -> Void) {
-        
-        let pathTransformAnim            = CAKeyframeAnimation(keyPath:"transform")
-        pathTransformAnim.values         = [NSValue(caTransform3D: CATransform3DIdentity),
-                                            NSValue(caTransform3D: CATransform3DMakeScale(0.5, 0.5, 1)),
-                                            NSValue(caTransform3D: CATransform3DMakeScale(20, 20, 1))]
-        pathTransformAnim.keyTimes       = [0, 0.4, 1]
-        pathTransformAnim.duration       = 0.8
-        pathTransformAnim.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut)
-        
-        logoLayer.add(pathTransformAnim, forKey: "pathUntitled1Anim")
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            //self.logoLayer.transform = CATransform3DMakeScale(0, 0, 1)
-        }) { (finished) in
-            UIView.animate(withDuration: 0.5, animations: {
-                //self.logoLayer.transform = CATransform3DMakeScale(20, 20, 1)
-                self.alpha = 0.0
-            }, completion: { (finished) in
-                self.removeFromSuperview()
-            })
+        guard isDismissed == false else {
+            return
         }
+        
+        let expandAnim = CAKeyframeAnimation(keyPath:"transform")
+        expandAnim.values = [NSValue(caTransform3D: CATransform3DIdentity),
+                                    NSValue(caTransform3D: CATransform3DMakeScale(0.5, 0.5, 1)),
+                                    NSValue(caTransform3D: CATransform3DMakeScale(20, 20, 1))]
+        expandAnim.keyTimes = [0, 0.4, 1]
+        expandAnim.duration = 0.8
+        expandAnim.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut)
+        expandAnim.delegate = self
+        expandAnim.fillMode = kCAFillModeForwards
+        expandAnim.isRemovedOnCompletion = false
+        logoLayer.add(expandAnim, forKey: "expandAnim")
+        
+        let dimAnim : CABasicAnimation = CABasicAnimation(keyPath: "opacity");
+        dimAnim.delegate = self
+        dimAnim.fromValue = 1
+        dimAnim.toValue = 0
+        dimAnim.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut)
+        dimAnim.duration = 0.8
+        dimAnim.fillMode = kCAFillModeForwards
+        dimAnim.isRemovedOnCompletion = false
+        layer.add(dimAnim, forKey: "dimAnim")
         
         completion()
     }
+}
 
+extension LaunchingView: CAAnimationDelegate {
+    
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if flag {
+            isDismissed = true
+        }
+    }
 }

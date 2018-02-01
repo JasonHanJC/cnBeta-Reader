@@ -15,7 +15,7 @@ import Kingfisher
 
 typealias contentParsingCompletion = ([Paragraph]?) -> Void
 
-class DetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class DetailController: UIViewController {
     
     var activity: NSUserActivity?
     private let activityType: String = "com.juncheng.app.cnBetaReader.OpenWebPage"
@@ -41,11 +41,23 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         return controller
     }()
     
-    lazy var actionSheet: SettingLauncher = {
-        let actionSheet = SettingLauncher()
-        actionSheet.delegate = self
-        return actionSheet
+    lazy var collectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
+        
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: flowLayout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = true
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
     }()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +83,6 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
             contentArray?.append(titleParagraph)
         }
         
-        
         // setup activity
         self.activity = NSUserActivity(activityType: activityType)
         self.activity?.webpageURL = URL(string:(selectedFeed?.link)!)
@@ -80,8 +91,6 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         self.activity?.becomeCurrent()
         
         print(selectedFeed?.link ?? "")
-        
-        // let last10 = selectedFeed?.link?[selectedFeed?.link?.index((selectedFeed?.link?.endIndex)!, offsetBy: -10))!...]
         
         if let link = selectedFeed?.link {
             
@@ -97,7 +106,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                 
                 if let content = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Paragraph] {
                     contentArray? += content
-                    collectionView?.reloadData()
+                    collectionView.reloadData()
                     
                     self.getAllImageParagraphs(self.contentArray)
                 }
@@ -110,7 +119,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
                         
                             if let newFeeds = contents {
                                 self.contentArray? += newFeeds
-                                self.collectionView?.reloadData()
+                                self.collectionView.reloadData()
                                 
                                 self.getAllImageParagraphs(self.contentArray)
                             }
@@ -132,7 +141,7 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        collectionView?.collectionViewLayout.invalidateLayout()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func getAllImageParagraphs(_ allContents: [Paragraph]?) {
@@ -146,20 +155,26 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     func setupCollectionView() {
+        view.addSubview(collectionView)
         
-//        if #available(iOS 11.0, *) {
-//            collectionView?.translatesAutoresizingMaskIntoConstraints = false
-//            collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//        } else {
-//            // Fallback on earlier versions
-//        }
+        if #available(iOS 11.0, *) {
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        } else {
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        }
         
-        collectionView?.register(TextCell.self, forCellWithReuseIdentifier: textCellId)
-        collectionView?.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
-        collectionView?.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
-        collectionView?.register(DetailImageCell.self, forCellWithReuseIdentifier: imageCellId)
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: emptyCellId)
-        collectionView?.backgroundColor = .white
+        collectionView.register(TextCell.self, forCellWithReuseIdentifier: textCellId)
+        collectionView.register(TitleCell.self, forCellWithReuseIdentifier: titleCellId)
+        collectionView.register(SummCell.self, forCellWithReuseIdentifier: summCellId)
+        collectionView.register(DetailImageCell.self, forCellWithReuseIdentifier: imageCellId)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: emptyCellId)
+        collectionView.backgroundColor = .white
     }
     
     func setupNavigationBar() {
@@ -168,8 +183,8 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         navigationItem.titleView = myLogoView
         
         let backButton = UIBarButtonItem(image: UIImage(named: "nav_back")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleNavBack))
-        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        fixedSpace.width = -8
+//        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+//        fixedSpace.width = -8
         
         let saveImage = (selectedFeed?.isSaved)! ? "Saved" : "Save"
         let saveButton = UIBarButtonItem(image: UIImage(named: saveImage), style: .plain, target: self, action: #selector(handleSave))
@@ -178,17 +193,17 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
         let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more"), style: .plain, target: self, action: #selector(handleNavMore))
         moreButton.tintColor = Constants.All_ICONS_COLOR
         
-        navigationItem.leftBarButtonItems = [fixedSpace, backButton]
+        navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItems = [moreButton, saveButton]
     }
     
     @objc func handleSave(_ sender: UIBarButtonItem) {
         
         if selectedFeed?.isSaved == false {
-            view.makeToast("Feed saved", duration: 0.5, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+            view.makeToast("Feed saved", duration: 0.5, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
             sender.image = UIImage(named: "Saved")?.withRenderingMode(.alwaysOriginal)
         } else {
-            view.makeToast("Feed unsaved", duration: 0.5, position: CGPoint(x: (self.collectionView?.frame.width)! / 2.0,y: (self.collectionView?.frame.height)! - 80))
+            view.makeToast("Feed unsaved", duration: 0.5, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
             sender.image = UIImage(named: "Save")?.withRenderingMode(.alwaysOriginal)
         }
         
@@ -201,151 +216,32 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     @objc func handleNavMore(_ sender: UIBarButtonItem) {
-        self.actionSheet.showSettingLauncher()
-    }
-    
-    
-    // MARK: Collection View Delegate and Data source
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1;
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (contentArray?.count ?? 1) + 1
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.item == collectionView.numberOfItems(inSection: 0) - 1 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: emptyCellId, for: indexPath)
-            cell.backgroundColor = .white
-            return cell
-        }
+        let openInBrowserSetting = Setting(name: .openInBrowser, imageName: "Open in browser")
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let currentParagragh = contentArray?[indexPath.item]
-        if currentParagragh?.type == .title {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: titleCellId, for: indexPath) as! TitleCell
-            
-            cell.paragraph = contentArray?[indexPath.item]
-            cell.timeLabel.text = timeLabelText
-            
-            return cell
-        } else if currentParagragh?.type == .summary {
-        
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: summCellId, for: indexPath) as! SummCell
-        
-            cell.paragraph = contentArray?[indexPath.item]
-            return cell
-        } else if currentParagragh?.type == .text {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: textCellId, for: indexPath) as! TextCell
-            
-            cell.paragraph = contentArray?[indexPath.item]
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
-            
-            let imageURLString = currentParagragh?.paragraphString
-            let resource = ImageResource(downloadURL: URL(string: imageURLString!)!, cacheKey: imageURLString)
-            cell.imageView.kf.setImage(with: resource, placeholder: Constants.IMAGE_PLACEHOLDER, options: [], progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
-                
-                if error != nil {
-                    print(error.debugDescription)
-                    //.imageView.image = UIImage(named: "image_broken")
+        let openInBrowserAction = UIAlertAction(title: openInBrowserSetting.name.rawValue, style: .default) { (action) in
+            // TODO: CHECK THE SETTING FOR DEFAULT BROWSER
+            if let title = action.title, title == SettingNames.openInBrowser.rawValue {
+                if OpenInChromeController.sharedInstance().isChromeInstalled() {
+                    OpenInChromeController.sharedInstance().open(inChrome: URL(string: (self.selectedFeed?.link)!)!)
                 } else {
-                    // update the imageCel
-                    if self.heightDic[indexPath.item] == nil {
-                        if let image = image {
-                            self.heightDic[indexPath.item] = ((self.collectionView?.frame.width)! - 24 - 24) / image.size.width * image.size.height + 24
-                        }
-                        if let URLString = imageURL?.absoluteString {
-                            if URLString == imageURLString {
-                                //print("The strings are the same")
-                                UIView.animate(withDuration: 0, animations: {
-                                    self.collectionView?.reloadItems(at: [indexPath])
-                                })
-                            }
-                        }
-                    }
+                    UIApplication.shared.openURL(URL(string: (self.selectedFeed?.link)!)!)
                 }
-            })
-
-            return cell
-        }
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
-            let currentParagragh = contentArray?[indexPath.item]
-            if currentParagragh?.type == .image {
-                let cell = cell as! DetailImageCell
-                cell.imageView.kf.cancelDownloadTask()
             }
         }
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let currentParagragh = contentArray?[indexPath.item]
-        if currentParagragh?.type == .image {
-            // get all images paragraph
-            var imageIndex: Int = 0
-            for imageParagraph in allImageParagraphs! {
-                if imageParagraph == currentParagragh {
-                    break
-                }
-                imageIndex += 1
-            }
-            
-            imageDisplayController.imagesInfo = (allImageParagraphs!, imageIndex)
-            imageDisplayController.show()
-            
-        }
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        if indexPath.item == collectionView.numberOfItems(inSection: 0) - 1 {
-            return CGSize(width: collectionView.frame.width, height:24)
-        }
+        actionSheet.addAction(openInBrowserAction)
+        actionSheet.addAction(cancelAction)
         
-        let paragraph = contentArray?[indexPath.item]
-        if heightDic[indexPath.item] == nil {
-            
-            let size = CGSize(width: Constants.SCREEN_WIDTH - 24 - 24, height: CGFloat(CGFloat.greatestFiniteMagnitude))
-            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            var estimatedContentFrame: CGRect = .zero
-            
-            if paragraph?.type == .title { // title cell
-                
-                if let text = paragraph?.paragraphString {
-                    estimatedContentFrame = NSString(string: text).boundingRect(with: size, options: options, attributes: Constants.DETAIL_TITLE_STYLE, context: nil)
-                }
-            
-                heightDic[indexPath.item] =  30 + estimatedContentFrame.height + 6 + 16
-            } else if paragraph?.type == .summary || paragraph?.type == .text { // text cell
-
-                if let text = paragraph?.paragraphString {
-                    estimatedContentFrame = NSString(string: text).boundingRect(with: size, options: options, attributes: Constants.DETAIL_NORMAL_STYLE, context: nil)
-                }
-            
-                heightDic[indexPath.item] = estimatedContentFrame.height + 36
-            } else { // image cell
-                return CGSize(width: collectionView.frame.width, height: 30)
-            } 
-        }
-        
-        return CGSize(width: collectionView.frame.width, height: heightDic[indexPath.item]!)
+        present(actionSheet, animated: true, completion: nil)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     func getWebContentWithUrl(_ urlString: String, completion: @escaping contentParsingCompletion) {
         
@@ -424,22 +320,137 @@ class DetailController: UICollectionViewController, UICollectionViewDelegateFlow
     }
 }
 
-extension DetailController: SettingLauncherDelegate {
+extension DetailController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    // SettingLauncherDelegate
-    func didSelectSetting(_ setting: Setting) {
+    // MARK: Collection View Delegate and Data source
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return (contentArray?.count ?? 1) + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        // TODO: CHECK THE SETTING FOR DEFAULT BROWSER
-        if setting.name == .openInBrowser {
-            if OpenInChromeController.sharedInstance().isChromeInstalled() {
-                OpenInChromeController.sharedInstance().open(inChrome: URL(string: (selectedFeed?.link)!)!)
-            } else {
-                UIApplication.shared.openURL(URL(string: (selectedFeed?.link)!)!)
+        if indexPath.item == collectionView.numberOfItems(inSection: 0) - 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: emptyCellId, for: indexPath)
+            cell.backgroundColor = .white
+            return cell
+        }
+        
+        let currentParagragh = contentArray?[indexPath.item]
+        if currentParagragh?.type == .title {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: titleCellId, for: indexPath) as! TitleCell
+            
+            cell.paragraph = contentArray?[indexPath.item]
+            cell.timeLabel.text = timeLabelText
+            
+            return cell
+        } else if currentParagragh?.type == .summary {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: summCellId, for: indexPath) as! SummCell
+            
+            cell.paragraph = contentArray?[indexPath.item]
+            return cell
+        } else if currentParagragh?.type == .text {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: textCellId, for: indexPath) as! TextCell
+            
+            cell.paragraph = contentArray?[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellId, for: indexPath) as! DetailImageCell
+            
+            let imageURLString = currentParagragh?.paragraphString
+            let resource = ImageResource(downloadURL: URL(string: imageURLString!)!, cacheKey: imageURLString)
+            cell.imageView.kf.setImage(with: resource, placeholder: Constants.IMAGE_PLACEHOLDER, options: [], progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
+                
+                if error != nil {
+                    print(error.debugDescription)
+                    //.imageView.image = UIImage(named: "image_broken")
+                } else {
+                    // update the imageCel
+                    if self.heightDic[indexPath.item] == nil {
+                        if let image = image {
+                            self.heightDic[indexPath.item] = (self.collectionView.frame.width - 24 - 24) / image.size.width * image.size.height + 24
+                        }
+                        if let URLString = imageURL?.absoluteString {
+                            if URLString == imageURLString {
+                                //print("The strings are the same")
+                                UIView.animate(withDuration: 0, animations: {
+                                    self.collectionView.reloadItems(at: [indexPath])
+                                })
+                            }
+                        }
+                    }
+                }
+            })
+            
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
+            let currentParagragh = contentArray?[indexPath.item]
+            if currentParagragh?.type == .image {
+                let cell = cell as! DetailImageCell
+                cell.imageView.kf.cancelDownloadTask()
             }
         }
     }
     
-    func didCancelByUser() {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currentParagragh = contentArray?[indexPath.item]
+        if currentParagragh?.type == .image {
+            // get all images paragraph
+            var imageIndex: Int = 0
+            for imageParagraph in allImageParagraphs! {
+                if imageParagraph == currentParagragh {
+                    break
+                }
+                imageIndex += 1
+            }
+            
+            imageDisplayController.imagesInfo = (allImageParagraphs!, imageIndex)
+            imageDisplayController.show()
+            
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        if indexPath.item == collectionView.numberOfItems(inSection: 0) - 1 {
+            return CGSize(width: collectionView.frame.width, height:24)
+        }
+        
+        let paragraph = contentArray?[indexPath.item]
+        if heightDic[indexPath.item] == nil {
+            
+            let size = CGSize(width: Constants.SCREEN_WIDTH - 24 - 24, height: CGFloat(CGFloat.greatestFiniteMagnitude))
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+            var estimatedContentFrame: CGRect = .zero
+            
+            if paragraph?.type == .title { // title cell
+                
+                if let text = paragraph?.paragraphString {
+                    estimatedContentFrame = NSString(string: text).boundingRect(with: size, options: options, attributes: Constants.DETAIL_TITLE_STYLE, context: nil)
+                }
+                
+                heightDic[indexPath.item] =  30 + estimatedContentFrame.height + 6 + 16
+            } else if paragraph?.type == .summary || paragraph?.type == .text { // text cell
+                
+                if let text = paragraph?.paragraphString {
+                    estimatedContentFrame = NSString(string: text).boundingRect(with: size, options: options, attributes: Constants.DETAIL_NORMAL_STYLE, context: nil)
+                }
+                
+                heightDic[indexPath.item] = estimatedContentFrame.height + 36
+            } else { // image cell
+                return CGSize(width: collectionView.frame.width, height: 30)
+            }
+        }
+        
+        return CGSize(width: collectionView.frame.width, height: heightDic[indexPath.item]!)
     }
 }

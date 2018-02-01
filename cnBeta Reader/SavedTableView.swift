@@ -29,6 +29,12 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         
+        do {
+            try frc.performFetch()
+        } catch let err {
+            print(err)
+        }
+        
         return frc as! NSFetchedResultsController<Feed>
     }()
     
@@ -60,14 +66,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     
     override func setupViews() {
         
-
         super.setupViews()
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let err {
-            print(err)
-        }
         
         addSubview(collectionView)
         addConstraintsWithFormat("H:|[v0]|", views: collectionView)
@@ -132,22 +131,22 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     }
     
     // MARK: NSFetchedResultsController delegate
-    var blockOperation = [BlockOperation]()
+//    var blockOperation = [BlockOperation]()
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         if type == .insert {
-//            if let indexPath = newIndexPath {
-//                collectionView.insertItems(at: [indexPath])
-//            }
-            collectionView.reloadData()
+            if let indexPath = newIndexPath {
+                collectionView.insertItems(at: [indexPath])
+            }
+//            collectionView.reloadData()
         } else if type == .update {
             // re configure the cell
         } else if type == .delete {
-//            if let indexPath = indexPath {
-//                collectionView.deleteItems(at: [indexPath])
-//            }
-            collectionView.reloadData()
+            if let indexPath = indexPath {
+                collectionView.deleteItems(at: [indexPath])
+            }
+//            collectionView.reloadData()
         } else if type == .move {
             if let indexPath = indexPath {
                 collectionView.deleteItems(at: [indexPath])
@@ -160,15 +159,7 @@ class SavedTableView: BaseCell, UICollectionViewDelegate, NSFetchedResultsContro
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        collectionView.performBatchUpdates({
-//            for operation in self.blockOperation {
-//                operation.start()
-//            }
-//        }, completion: { (completed) in
-//        
-//        
-//        })
-   
+//        collectionView.reloadData()
     }
 
 }
@@ -183,18 +174,8 @@ extension SavedTableView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
         return NSAttributedString(string: text, attributes: attribute)
     }
     
-//    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
-//        let attribute = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 18.0), NSForegroundColorAttributeName : UIColor.darkGray]
-//        return NSAttributedString(string: "Hit", attributes: attribute)
-//    }
-    
     // MARK: DZNEmptyDataSetDelegate
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView!) -> Bool {
         return false
     }
-    
-//    func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
-//        print("tap")
-//    }
-    
 }

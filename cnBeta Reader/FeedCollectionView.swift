@@ -26,6 +26,7 @@ class FeedCollectionView: BaseCell, UICollectionViewDataSource, UICollectionView
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Feed> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Feed")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publishedDate", ascending: false)]
+        fetchRequest.predicate = NSPredicate(format: "isSaved == 0", argumentArray: nil)
         fetchRequest.fetchLimit = Constants.FETCH_LIMIT
 
         let context = CoreDataStack.sharedInstance.mainContext
