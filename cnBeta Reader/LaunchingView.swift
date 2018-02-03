@@ -11,6 +11,7 @@ import UIKit
 class LaunchingView: UIView {
     
     var isDismissed = false
+    var completionHandler: (() -> Void)?
     
     lazy var logoLayer: CALayer = {
         let layer = CALayer()
@@ -69,7 +70,7 @@ class LaunchingView: UIView {
         return path
     }
     
-    func startAnimateWithCompletion(completion: () -> Void) {
+    func startAnimateWithCompletion(completion: @escaping () -> Void) {
         guard isDismissed == false else {
             return
         }
@@ -96,7 +97,7 @@ class LaunchingView: UIView {
         dimAnim.isRemovedOnCompletion = false
         layer.add(dimAnim, forKey: "dimAnim")
         
-        completion()
+        completionHandler = completion
     }
 }
 
@@ -104,6 +105,9 @@ extension LaunchingView: CAAnimationDelegate {
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if flag {
+            if !isDismissed {
+                completionHandler!()
+            }
             isDismissed = true
         }
     }

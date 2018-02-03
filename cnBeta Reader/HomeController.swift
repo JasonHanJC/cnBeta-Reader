@@ -40,7 +40,7 @@ class HomeController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .red
+        collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
@@ -131,8 +131,9 @@ class HomeController: UIViewController {
     }
     
     @objc func dismissLaunchView() {
-        self.launchView.startAnimateWithCompletion {
-            print("launch view dismissed")
+        self.launchView.startAnimateWithCompletion { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.launchView.removeFromSuperview()
         }
     }
     
@@ -225,8 +226,7 @@ extension HomeController: MenuBarDelegate, FeedCollectionViewDelegate, SavedTabl
     }
     
     fileprivate func openDetailViewFor(feed: Feed) {
-        let detailController = DetailController()
-        detailController.selectedFeed = feed
+        let detailController = DetailController(with: feed)
         detailController.navigationItem.title = "Detail"
         
         navigationController?.pushViewController(detailController, animated: true)

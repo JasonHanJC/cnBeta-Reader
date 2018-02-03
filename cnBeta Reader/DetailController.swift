@@ -20,7 +20,7 @@ class DetailController: UIViewController {
     var activity: NSUserActivity?
     private let activityType: String = "com.juncheng.app.cnBetaReader.OpenWebPage"
     
-    var selectedFeed: Feed?
+    let selectedFeed: Feed
     private var URLString: String?
     private var timeLabelText: String?
     
@@ -59,6 +59,15 @@ class DetailController: UIViewController {
     
     // MARK: - Lifecycle
     
+    init(with selectedFeed: Feed) {
+        self.selectedFeed = selectedFeed
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -70,14 +79,14 @@ class DetailController: UIViewController {
         contentArray = [Paragraph]()
         allImageParagraphs = [Paragraph]()
         
-        if let date = selectedFeed?.publishedDate {
+        if let date = selectedFeed.publishedDate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEE MMM-dd-yyyy HH:mm"
             timeLabelText = dateFormatter.string(from: date as Date)
         }
 
         // Create title
-        if let title = selectedFeed?.title {
+        if let title = selectedFeed.title {
             // print(title)
             let titleParagraph = Paragraph.init(type: .title, content: title, alignment: .alignmentLeft, textStyle: .strong)
             contentArray?.append(titleParagraph)
@@ -85,14 +94,14 @@ class DetailController: UIViewController {
         
         // setup activity
         self.activity = NSUserActivity(activityType: activityType)
-        self.activity?.webpageURL = URL(string:(selectedFeed?.link)!)
+        self.activity?.webpageURL = URL(string:(selectedFeed.link)!)
         self.activity?.title = "webView"
         self.activity?.isEligibleForHandoff = true
         self.activity?.becomeCurrent()
         
-        print(selectedFeed?.link ?? "")
+        print(selectedFeed.link ?? "")
         
-        if let link = selectedFeed?.link {
+        if let link = selectedFeed.link {
             
             let index = link.index(link.endIndex, offsetBy: -10)
             let last10 = String(link[index...])
@@ -102,7 +111,7 @@ class DetailController: UIViewController {
             print(urlString)
             URLString = urlString
             
-            if let data = selectedFeed?.savedContent as Data? {
+            if let data = selectedFeed.savedContent as Data? {
                 
                 if let content = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Paragraph] {
                     contentArray? += content
@@ -186,7 +195,7 @@ class DetailController: UIViewController {
 //        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
 //        fixedSpace.width = -8
         
-        let saveImage = (selectedFeed?.isSaved)! ? "Saved" : "Save"
+        let saveImage = selectedFeed.isSaved ? "Saved" : "Save"
         let saveButton = UIBarButtonItem(image: UIImage(named: saveImage), style: .plain, target: self, action: #selector(handleSave))
         saveButton.tintColor = Constants.All_ICONS_COLOR
         
@@ -199,7 +208,7 @@ class DetailController: UIViewController {
     
     @objc func handleSave(_ sender: UIBarButtonItem) {
         
-        if selectedFeed?.isSaved == false {
+        if selectedFeed.isSaved == false {
             view.makeToast("Feed saved", duration: 0.5, position: CGPoint(x: self.collectionView.frame.width / 2.0,y: self.collectionView.frame.height - 80))
             sender.image = UIImage(named: "Saved")?.withRenderingMode(.alwaysOriginal)
         } else {
@@ -207,7 +216,7 @@ class DetailController: UIViewController {
             sender.image = UIImage(named: "Save")?.withRenderingMode(.alwaysOriginal)
         }
         
-        selectedFeed?.isSaved = !(selectedFeed?.isSaved)!
+        selectedFeed.isSaved = !selectedFeed.isSaved
         CoreDataStack.sharedInstance.save()
     }
     
@@ -224,9 +233,9 @@ class DetailController: UIViewController {
             // TODO: CHECK THE SETTING FOR DEFAULT BROWSER
             if let title = action.title, title == SettingNames.openInBrowser.rawValue {
                 if OpenInChromeController.sharedInstance().isChromeInstalled() {
-                    OpenInChromeController.sharedInstance().open(inChrome: URL(string: (self.selectedFeed?.link)!)!)
+                    OpenInChromeController.sharedInstance().open(inChrome: URL(string: (self.selectedFeed.link)!)!)
                 } else {
-                    UIApplication.shared.openURL(URL(string: (self.selectedFeed?.link)!)!)
+                    UIApplication.shared.openURL(URL(string: (self.selectedFeed.link)!)!)
                 }
             }
         }
@@ -247,6 +256,7 @@ class DetailController: UIViewController {
         
         
         let url = URL(string: urlString);
+        
         let cnbetaData = try? Data(contentsOf: url!)
             
         if let cnbetaData = cnbetaData {
@@ -297,7 +307,6 @@ class DetailController: UIViewController {
                         let paragraph = Paragraph.init(type: .text, content: text!, alignment: textAlignment,  textStyle: textStyle)
                         
                         contents.append(paragraph)
-                        
                     }
                 }
             } catch let err {
@@ -306,7 +315,7 @@ class DetailController: UIViewController {
             
                 
             let data = NSKeyedArchiver.archivedData(withRootObject: contents)
-            self.selectedFeed?.savedContent = data
+            self.selectedFeed.savedContent = data
                 
             if self.URLString == urlString {
                 completion(contents)
@@ -363,22 +372,24 @@ extension DetailController: UICollectionViewDelegate, UICollectionViewDataSource
             
             let imageURLString = currentParagragh?.paragraphString
             let resource = ImageResource(downloadURL: URL(string: imageURLString!)!, cacheKey: imageURLString)
-            cell.imageView.kf.setImage(with: resource, placeholder: Constants.IMAGE_PLACEHOLDER, options: [], progressBlock: nil, completionHandler: { (image, error, cacheType, imageURL) in
-                
+           
+            cell.imageView.kf.indicatorType = .activity
+            cell.imageView.kf.setImage(with: resource, placeholder: nil, options: [], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
+                guard let strongSeft = self else { return }
                 if error != nil {
-                    print(error.debugDescription)
-                    //.imageView.image = UIImage(named: "image_broken")
+                    // print(error.debugDescription)
+                    cell.imageView.image = UIImage(named: "image_broken")
                 } else {
-                    // update the imageCel
-                    if self.heightDic[indexPath.item] == nil {
+                    // update the imageCell
+                    if strongSeft.heightDic[indexPath.item] == nil {
                         if let image = image {
-                            self.heightDic[indexPath.item] = (self.collectionView.frame.width - 24 - 24) / image.size.width * image.size.height + 24
+                            strongSeft.heightDic[indexPath.item] = (strongSeft.collectionView.frame.width - 24 - 24) / image.size.width * image.size.height + 24
                         }
                         if let URLString = imageURL?.absoluteString {
                             if URLString == imageURLString {
                                 //print("The strings are the same")
                                 UIView.animate(withDuration: 0, animations: {
-                                    self.collectionView.reloadItems(at: [indexPath])
+                                    strongSeft.collectionView.reloadItems(at: [indexPath])
                                 })
                             }
                         }
@@ -391,13 +402,13 @@ extension DetailController: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
-            let currentParagragh = contentArray?[indexPath.item]
-            if currentParagragh?.type == .image {
-                let cell = cell as! DetailImageCell
-                cell.imageView.kf.cancelDownloadTask()
-            }
-        }
+//        if indexPath.item != collectionView.numberOfItems(inSection: 0) - 1 {
+//            let currentParagragh = contentArray?[indexPath.item]
+//            if currentParagragh?.type == .image {
+//                let cell = cell as! DetailImageCell
+//                cell.imageView.kf.cancelDownloadTask()
+//            }
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -412,8 +423,8 @@ extension DetailController: UICollectionViewDelegate, UICollectionViewDataSource
                 imageIndex += 1
             }
             
-            imageDisplayController.imagesInfo = (allImageParagraphs!, imageIndex)
-            imageDisplayController.show()
+            let imagePresentController = ImagePresentViewController(with: (allImageParagraphs!, imageIndex))
+            navigationController?.pushViewController(imagePresentController, animated: true)
             
         }
     }
@@ -447,7 +458,7 @@ extension DetailController: UICollectionViewDelegate, UICollectionViewDataSource
                 
                 heightDic[indexPath.item] = estimatedContentFrame.height + 36
             } else { // image cell
-                return CGSize(width: collectionView.frame.width, height: 30)
+                return CGSize(width: collectionView.frame.width, height: 50)
             }
         }
         

@@ -19,8 +19,8 @@
 		962771371E025BC50043F894 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962771361E025BC50043F894 /* DetailController.swift */; };
 		962CCD931E790325009A92C7 /* StickyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962CCD921E790325009A92C7 /* StickyHeaderFlowLayout.swift */; };
 		962CCD961E79E737009A92C7 /* CustomFeedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962CCD951E79E737009A92C7 /* CustomFeedHeader.swift */; };
-		9637AF3A1E26CA9100048BB8 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637AF391E26CA9100048BB8 /* SettingController.swift */; };
 		964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964963B01E08DE8D00EA079C /* Paragraph.swift */; };
+		964F4BD620243E37005D9361 /* ImagePresentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964F4BD520243E37005D9361 /* ImagePresentViewController.swift */; };
 		9666F0CA1DFF22F00043465D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9666F0C81DFF22F00043465D /* CoreDataStack.swift */; };
 		967C17811E67E3200003AC4C /* ImageIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967C17801E67E3200003AC4C /* ImageIndexView.swift */; };
 		967F978F1E011E490048D63B /* cnBeta-Reader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 967F978D1E011E490048D63B /* cnBeta-Reader.xcdatamodeld */; };
@@ -63,8 +63,8 @@
 		962771361E025BC50043F894 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		962CCD921E790325009A92C7 /* StickyHeaderFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyHeaderFlowLayout.swift; sourceTree = "<group>"; };
 		962CCD951E79E737009A92C7 /* CustomFeedHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFeedHeader.swift; sourceTree = "<group>"; };
-		9637AF391E26CA9100048BB8 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		964963B01E08DE8D00EA079C /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
+		964F4BD520243E37005D9361 /* ImagePresentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePresentViewController.swift; sourceTree = "<group>"; };
 		9666F0C81DFF22F00043465D /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = "cnBeta Reader/CoreDataStack.swift"; sourceTree = "<group>"; };
 		967C17801E67E3200003AC4C /* ImageIndexView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageIndexView.swift; sourceTree = "<group>"; };
 		967F978E1E011E490048D63B /* cnBeta-Reader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "cnBeta-Reader.xcdatamodel"; sourceTree = "<group>"; };
@@ -173,7 +173,6 @@
 		968C5CF21E1475E300DFAE46 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				9637AF391E26CA9100048BB8 /* SettingController.swift */,
 				968C5CF01E14756200DFAE46 /* SettingLauncher.swift */,
 				968C5CF31E1475F900DFAE46 /* SettingCell.swift */,
 			);
@@ -207,6 +206,7 @@
 				96A0C9071E2978A400E70F26 /* ImageDisplayController.swift */,
 				96B47D771E4CE973001A3AAF /* ImageCell.swift */,
 				967C17801E67E3200003AC4C /* ImageIndexView.swift */,
+				964F4BD520243E37005D9361 /* ImagePresentViewController.swift */,
 			);
 			name = DisplayView;
 			sourceTree = "<group>";
@@ -500,7 +500,6 @@
 				961DEF861E5EAB7D0045EA37 /* TitleCell.swift in Sources */,
 				961D95901E8EE1900053E262 /* CNPageControllable.swift in Sources */,
 				964963B11E08DE8D00EA079C /* Paragraph.swift in Sources */,
-				9637AF3A1E26CA9100048BB8 /* SettingController.swift in Sources */,
 				968C5CF11E14756200DFAE46 /* SettingLauncher.swift in Sources */,
 				96C5C8931DFCDE2E00A61681 /* HomeController.swift in Sources */,
 				962CCD931E790325009A92C7 /* StickyHeaderFlowLayout.swift in Sources */,
@@ -516,6 +515,7 @@
 				96F583461E0500190041B9D2 /* TextCell.swift in Sources */,
 				96C5C8B11DFE1D6C00A61681 /* MenuCell.swift in Sources */,
 				967F97931E0120570048D63B /* SavedTableView.swift in Sources */,
+				964F4BD620243E37005D9361 /* ImagePresentViewController.swift in Sources */,
 				967C17811E67E3200003AC4C /* ImageIndexView.swift in Sources */,
 				96C5C8911DFCDE2E00A61681 /* AppDelegate.swift in Sources */,
 				96C5C8B31DFE1DA600A61681 /* FeedCell.swift in Sources */,
