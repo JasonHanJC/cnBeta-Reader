@@ -13,7 +13,7 @@ struct Constants {
     static let SCREEN_HEIGHT = UIScreen.main.bounds.height
     
     // MARK: - API
-    static let API_URL_2 = "http://cloud.feedly.com/v3/streams/contents?streamId=feed%2Fhttp://rss.cnbeta.com/rss&count=100"
+    static let API_URL_2 = "http://cloud.feedly.com/v3/streams/contents?streamId=feed%2Fhttps://www.cnbeta.com/backend.php&count=100"
     
     // MARK: - Fetch limit
     static let FETCH_LIMIT = 20
